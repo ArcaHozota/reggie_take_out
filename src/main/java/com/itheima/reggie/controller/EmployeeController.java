@@ -59,7 +59,7 @@ public class EmployeeController {
      * 員工退出登錄
      *
      * @param request 請求
-     * @return R.success(" 退出登錄的信息 ")
+     * @return R.success(退出登錄的信息)
      */
     @PostMapping("/logout")
     public R<String> logout(HttpServletRequest request) {
