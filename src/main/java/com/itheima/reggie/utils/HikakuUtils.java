@@ -3,7 +3,7 @@ package com.itheima.reggie.utils;
 /**
  * @author Administrator
  */
-public class ObUtils {
+public class HikakuUtils {
 
     public static boolean isEqual(final Object ob1, final Object ob2) {
         boolean isEqual = false;

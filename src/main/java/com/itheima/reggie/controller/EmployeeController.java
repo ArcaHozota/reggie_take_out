@@ -5,15 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
-import com.itheima.reggie.utils.ObUtils;
+import com.itheima.reggie.utils.HikakuUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 
 /**
  * @author Administrator
@@ -26,8 +25,15 @@ public class EmployeeController {
     @Resource
     private EmployeeService employeeService;
 
+    /**
+     * 員工登錄
+     *
+     * @param request  請求
+     * @param employee 員工信息對象
+     * @return R.success(實體類對象)
+     */
     @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
+    public R<Employee> login(HttpServletRequest request, @RequestBody @NonNull Employee employee) {
         // 將頁面提交的密碼進行MD5加密；
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -37,15 +43,28 @@ public class EmployeeController {
         // 獲取One對象；
         final Employee aEmployee = employeeService.getOne(queryWrapper);
         // 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-        if (aEmployee == null || ObUtils.isNotEqual(password, aEmployee.getPassword())) {
+        if (aEmployee == null || HikakuUtils.isNotEqual(password, aEmployee.getPassword())) {
             return R.error("登錄失敗");
         }
         // 查看用戶狀態，如果已被禁用，則返回賬號已禁用；
-        if (aEmployee.getStatus().equals(0)) {
+        if (HikakuUtils.isEqual(0, aEmployee.getStatus())) {
             return R.error("賬號已禁用");
         }
         // 登錄成功，將員工ID存入Session並返回登錄成功；
         request.getSession().setAttribute("employee", aEmployee.getId());
         return R.success(aEmployee);
+    }
+
+    /**
+     * 員工退出登錄
+     *
+     * @param request 請求
+     * @return R.success(" 退出登錄的信息 ")
+     */
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request) {
+        // 清除Session中保存的當前登錄員工的ID；
+        request.getSession().removeAttribute("employee");
+        return R.success("成功退出登錄");
     }
 }
