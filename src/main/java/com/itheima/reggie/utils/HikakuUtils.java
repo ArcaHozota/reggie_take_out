@@ -1,7 +1,10 @@
 package com.itheima.reggie.utils;
 
 /**
+ * 通用判斷工具類
+ *
  * @author Administrator
+ * @date 2022-11-07
  */
 public class HikakuUtils {
 

@@ -2,6 +2,7 @@ package com.itheima.reggie.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
@@ -44,11 +45,11 @@ public class EmployeeController {
         final Employee aEmployee = employeeService.getOne(queryWrapper);
         // 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
         if (aEmployee == null || HikakuUtils.isNotEqual(password, aEmployee.getPassword())) {
-            return R.error("登錄失敗");
+            return R.error(Constants.LOGIN_FAILED);
         }
         // 查看用戶狀態，如果已被禁用，則返回賬號已禁用；
         if (HikakuUtils.isEqual(0, aEmployee.getStatus())) {
-            return R.error("賬號已禁用");
+            return R.error(Constants.FORBIDDEN);
         }
         // 登錄成功，將員工ID存入Session並返回登錄成功；
         request.getSession().setAttribute("employee", aEmployee.getId());
