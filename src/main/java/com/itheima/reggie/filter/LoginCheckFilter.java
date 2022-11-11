@@ -41,7 +41,7 @@ public class LoginCheckFilter implements Filter {
         // 定義無需過濾的路徑集合；
         final String[] urls = new String[]{"/employee/login", "/employee/logout", "/front/**", "/backend/**"};
         // 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
-        if (check(requestURI, urls)) {
+        if (this.check(requestURI, urls)) {
             log.info("本次請求{}不需要處理", requestURI);
             filterChain.doFilter(request, response);
             return;
@@ -56,7 +56,7 @@ public class LoginCheckFilter implements Filter {
         response.getWriter().write(JSON.toJSONString(R.error(Constants.NOT_LOGIN)));
     }
 
-    private static boolean check(String requestURI, @NonNull String... urls) {
+    private boolean check(String requestURI, @NonNull String... urls) {
         for (String url : urls) {
             boolean match = PATH_MATCHER.match(url, requestURI);
             if (match) {
