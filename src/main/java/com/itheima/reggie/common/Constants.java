@@ -32,4 +32,9 @@ public class Constants {
      * 初始密碼
      */
     public static final String PRIMARY_CODE = "111111";
+
+    /**
+     * 出現異常
+     */
+    public static final String ERROR = "ERROR_OCCURRED";
 }
