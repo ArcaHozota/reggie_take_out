@@ -27,4 +27,9 @@ public class Constants {
      * 賬號被禁用
      */
     public static final String FORBIDDEN = "ACCOUNT_PROHIBITED";
+
+    /**
+     * 初始密碼
+     */
+    public static final String PRIMARY_CODE = "111111";
 }

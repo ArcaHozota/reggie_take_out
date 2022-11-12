@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.Locale;
 
 /**
  * @author Administrator
@@ -52,7 +54,7 @@ public class EmployeeController {
             return R.error(Constants.FORBIDDEN);
         }
         // 登錄成功，將員工ID存入Session並返回登錄成功；
-        request.getSession().setAttribute("employee", aEmployee.getId());
+        request.getSession().setAttribute(employee.getClass().getSimpleName().toLowerCase(Locale.ROOT), aEmployee.getId());
         return R.success(aEmployee);
     }
 
@@ -65,7 +67,29 @@ public class EmployeeController {
     @PostMapping("/logout")
     public R<String> logout(@NonNull HttpServletRequest request) {
         // 清除Session中保存的當前登錄員工的ID；
-        request.getSession().removeAttribute("employee");
+        request.getSession().removeAttribute(Employee.class.getSimpleName().toLowerCase(Locale.ROOT));
         return R.success("成功退出登錄");
+    }
+
+    /**
+     * 保存新增員工
+     *
+     * @param employee 請求
+     * @return R.success(退出登錄的信息)
+     */
+    @PostMapping
+    public R<String> save(HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+        log.info("員工信息：{}", employee.toString());
+        // 設置初始密碼，需進行MD5加密；
+        employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()));
+        // 設置創建時間和更新時間；
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+        // 設置創建人；
+        Long employeeId = (Long) request.getSession().getAttribute(employee.getClass().getSimpleName().toLowerCase(Locale.ROOT));
+        employee.setCreateUser(employeeId);
+        employee.setUpdateUser(employeeId);
+        employeeService.save(employee);
+        return R.success("成功新增員工");
     }
 }

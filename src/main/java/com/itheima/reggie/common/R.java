@@ -1,6 +1,8 @@
 package com.itheima.reggie.common;
 
+
 import lombok.Data;
+import org.springframework.lang.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,17 +35,17 @@ public class R<T> {
     /**
      * 動態數據
      */
-    private Map map = new HashMap();
+    private Map<String, Object> map = new HashMap<>();
 
-    public static <T> R<T> success(T object) {
+    public static <T> R<T> success(@NonNull T object) {
         R<T> r = new R<T>();
         r.data = object;
         r.code = 1;
         return r;
     }
 
-    public static <T> R<T> error(String msg) {
-        R r = new R();
+    public static <T> R<T> error(@NonNull String msg) {
+        R<T> r = new R<>();
         r.msg = msg;
         r.code = 0;
         return r;
