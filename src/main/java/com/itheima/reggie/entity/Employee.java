@@ -23,7 +23,7 @@ public class Employee implements Serializable {
 
     private String password;
 
-    @TableField(value = "phone")
+    @TableField(value = "phone_number")
     private String phoneNo;
 
     @TableField(value = "sex")

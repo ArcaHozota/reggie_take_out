@@ -13,75 +13,32 @@
 <body>
 <div class="addBrand-container" id="member-add-app">
     <div class="container">
-        <el-form
-                ref="ruleForm"
-                :model="ruleForm"
-                :rules="rules"
-                :inline="false"
-                label-width="180px"
-                class="demo-ruleForm"
-        >
+        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" :inline="false" label-width="180px"
+                 class="demo-ruleForm">
             <el-form-item label="賬號:" prop="username">
-                <el-input v-model="ruleForm.username" placeholder="請輸入賬號名稱:" maxlength="20"/>
+                <el-input v-model="ruleForm.username" placeholder="請輸入賬號名稱:" maxlength="20"></el-input>
             </el-form-item>
-            <el-form-item
-                    label="員工姓名:"
-                    prop="name"
-            >
-                <el-input
-                        v-model="ruleForm.name"
-                        placeholder="請輸入員工姓名"
-                        maxlength="20"
-                />
+            <el-form-item label="員工姓名:" prop="name">
+                <el-input v-model="ruleForm.name" placeholder="請輸入員工姓名" maxlength="20"></el-input>
             </el-form-item>
-
-            <el-form-item
-                    label="手機號碼:"
-                    prop="phoneNo"
-            >
-                <el-input
-                        v-model="ruleForm.phoneNo"
-                        placeholder="請輸入手機號碼:"
-                        maxlength="20"
-                />
+            <el-form-item label="手機號碼:" prop="phoneNo">
+                <el-input v-model="ruleForm.phoneNo" placeholder="請輸入手機號碼:" maxlength="20"></el-input>
             </el-form-item>
-            <el-form-item
-                    label="性別:"
-                    prop="gender"
-            >
+            <el-form-item label="性別:" prop="gender">
                 <el-radio-group v-model="ruleForm.gender">
                     <el-radio label="男"></el-radio>
                     <el-radio label="女"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item
-                    label="身份證號:"
-                    prop="idNumber"
-            >
-                <el-input
-                        v-model="ruleForm.idNumber"
-                        placeholder="請輸入身份證號:"
-                        maxlength="20"
-                />
+            <el-form-item label="身份證號:" prop="idNumber">
+                <el-input v-model="ruleForm.idNumber" placeholder="請輸入身份證號:" maxlength="20"></el-input>
             </el-form-item>
             <div class="subBox address">
                 <el-form-item>
-                    <el-button @click="goBack()">
-                        取消
-                    </el-button>
-                    <el-button
-                            type="primary"
-                            @click="submitForm('ruleForm', false)"
-                    >
-                        儲存
-                    </el-button>
-                    <el-button
-                            v-if="actionType == 'add'"
-                            type="primary"
-                            class="continue"
-                            @click="submitForm('ruleForm', true)"
-                    >
-                        儲存並繼續添加
+                    <el-button @click="goBack()">取消</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm', false)">儲存</el-button>
+                    <el-button v-if="actionType == 'add'" type="primary" class="continue"
+                               @click="submitForm('ruleForm', true)">儲存並繼續添加
                     </el-button>
                 </el-form-item>
             </div>
@@ -117,9 +74,9 @@
         computed: {
             rules() {
                 return {
-                    //账号
+                    // 賬號
                     username: [{required: true, 'validator': checkUserName, trigger: 'blur'}],
-                    //姓名
+                    // 姓名
                     name: [{required: true, 'validator': checkName, 'trigger': 'blur'}],
                     'phoneNo': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
                     'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}]
@@ -145,7 +102,7 @@
                         this.ruleForm.gender = res.data.gender === '0' ? '女' : '男'
                         // this.ruleForm.password = ''
                     } else {
-                        this.$message.error(res.msg || '操作失败')
+                        this.$message.error(res.msg || '操作失敗')
                     }
                 })
             },
@@ -159,7 +116,7 @@
                             }
                             addEmployee(params).then(res => {
                                 if (res.code === 1) {
-                                    this.$message.success('员工添加成功！')
+                                    this.$message.success('員工信息添加成功！')
                                     if (!st) {
                                         this.goBack()
                                     } else {
@@ -174,10 +131,10 @@
                                         }
                                     }
                                 } else {
-                                    this.$message.error(res.msg || '操作失败')
+                                    this.$message.error(res.msg || '操作失敗')
                                 }
                             }).catch(err => {
-                                this.$message.error('请求出错了：' + err)
+                                this.$message.error('請求出錯了：' + err)
                             })
                         } else {
                             const params = {
@@ -186,13 +143,13 @@
                             }
                             editEmployee(params).then(res => {
                                 if (res.code === 1) {
-                                    this.$message.success('员工信息修改成功！')
+                                    this.$message.success('員工信息修改成功！')
                                     this.goBack()
                                 } else {
-                                    this.$message.error(res.msg || '操作失败')
+                                    this.$message.error(res.msg || '操作失敗')
                                 }
                             }).catch(err => {
-                                this.$message.error('请求出错了：' + err)
+                                this.$message.error('請求出錯了：' + err)
                             })
                         }
                     } else {
