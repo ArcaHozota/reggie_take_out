@@ -90,6 +90,6 @@ public class EmployeeController {
         employee.setCreateUser(employeeId);
         employee.setUpdateUser(employeeId);
         employeeService.save(employee);
-        return R.success("成功新增員工");
+        return R.success("成功增加員工信息");
     }
 }
