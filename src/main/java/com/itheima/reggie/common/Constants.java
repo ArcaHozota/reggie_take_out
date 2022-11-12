@@ -37,4 +37,9 @@ public class Constants {
      * 出現異常
      */
     public static final String ERROR = "ERROR_OCCURRED";
+
+    /**
+     * 重複的主鍵值
+     */
+    public static final String DUPLICATED_KEY = "Duplicate entry";
 }
