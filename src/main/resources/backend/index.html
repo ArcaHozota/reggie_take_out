@@ -101,14 +101,14 @@
         </div>
     </div>
 </div>
-<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<!-- 開發環境版本，包含了有幫助的命令行警告 -->
 <script src="plugins/vue/vue.js"></script>
-<!-- 引入组件库 -->
+<!-- 引入組件庫 -->
 <script src="plugins/element-ui/index.js"></script>
 <!-- 引入axios -->
 <script src="plugins/axios/axios.min.js"></script>
 <script src="js/request.js"></script>
-<script src="./api/login.js"></script>
+<script src="api/login.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -118,10 +118,6 @@
                 menuActived: '2',
                 userInfo: {},
                 menuList: [
-                    // {
-                    //   id: '1',
-                    //   name: '门店管理',
-                    //   children: [
                     {
                         id: '2',
                         name: '員工管理',
@@ -130,7 +126,7 @@
                     },
                     {
                         id: '3',
-                        name: '分类管理',
+                        name: '分類管理',
                         url: 'page/category/list.html',
                         icon: 'icon-category'
                     },
@@ -148,12 +144,10 @@
                     },
                     {
                         id: '6',
-                        name: '订单明细',
+                        name: '訂單明細',
                         url: 'page/order/list.html',
                         icon: 'icon-order'
                     }
-                    //   ],
-                    // },
                 ],
                 iframeUrl: 'page/member/list.html',
                 headTitle: '員工管理',
