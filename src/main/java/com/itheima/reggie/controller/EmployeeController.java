@@ -54,7 +54,7 @@ public class EmployeeController {
             return R.error(Constants.FORBIDDEN);
         }
         // 登錄成功，將員工ID存入Session並返回登錄成功；
-        request.getSession().setAttribute(employee.getClass().getSimpleName().toLowerCase(Locale.ROOT), aEmployee.getId());
+        request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
         return R.success(aEmployee);
     }
 
@@ -67,7 +67,7 @@ public class EmployeeController {
     @PostMapping("/logout")
     public R<String> logout(@NonNull HttpServletRequest request) {
         // 清除Session中保存的當前登錄員工的ID；
-        request.getSession().removeAttribute(Employee.class.getSimpleName().toLowerCase(Locale.ROOT));
+        request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
         return R.success("成功退出登錄");
     }
 
@@ -86,7 +86,7 @@ public class EmployeeController {
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
         // 設置創建人；
-        Long employeeId = (Long) request.getSession().getAttribute(employee.getClass().getSimpleName().toLowerCase(Locale.ROOT));
+        Long employeeId = (Long) request.getSession().getAttribute(Constants.getEntityName(employee));
         employee.setCreateUser(employeeId);
         employee.setUpdateUser(employeeId);
         employeeService.save(employee);

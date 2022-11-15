@@ -45,8 +45,8 @@ public class LoginCheckFilter implements Filter {
             log.info("本次請求{}不需要處理", requestURI);
             filterChain.doFilter(request, response);
             return;
-        } else if (HikakuUtils.isNotEqual(null, request.getSession()
-                .getAttribute(Employee.class.getSimpleName().toLowerCase(Locale.ROOT)))) {
+        } else if (HikakuUtils.isNotEqual(null, request
+                .getSession().getAttribute(Constants.getEntityName(new Employee())))) {
             log.info("用戶已登錄，用戶ID為：{}", request.getSession().getAttribute("employee"));
             filterChain.doFilter(request, response);
             return;
