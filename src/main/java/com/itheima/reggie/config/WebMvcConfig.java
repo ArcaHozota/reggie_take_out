@@ -19,18 +19,6 @@ import java.util.List;
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     /**
-     * 設置靜態資源映射
-     *
-     * @param registry 注冊説明
-     */
-    @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        log.info("靜態資源映射開始...");
-        registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
-        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
-    }
-
-    /**
      * 擴展SpringMVC框架的消息轉換器
      *
      * @param converters 轉換器
@@ -44,5 +32,17 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         messageConverter.setObjectMapper(new JacksonObjectMapper());
         // 將上述消息轉換器追加到SpringMVC框架的轉換器容器中；
         converters.add(0, messageConverter);
+    }
+
+    /**
+     * 設置靜態資源映射
+     *
+     * @param registry 注冊説明
+     */
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        log.info("靜態資源映射開始...");
+        registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
+        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
     }
 }
