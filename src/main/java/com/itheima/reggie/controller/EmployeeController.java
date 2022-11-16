@@ -2,12 +2,14 @@ package com.itheima.reggie.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
 import com.itheima.reggie.utils.HikakuUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 /**
  * @author Administrator
@@ -91,5 +92,28 @@ public class EmployeeController {
         employee.setUpdateUser(employeeId);
         employeeService.save(employee);
         return R.success("成功增加員工信息");
+    }
+
+    /**
+     * 員工信息分頁查詢
+     *
+     * @param page     頁碼
+     * @param pageSize 頁面大小
+     * @param name     檢索文
+     * @return R.success(分頁信息)
+     */
+    @GetMapping("/page")
+    public R<Page<Employee>> page(int page, int pageSize, String name) {
+        // 聲明分頁構造器；
+        Page<Employee> pageInfo = new Page<>(page, pageSize);
+        // 聲明條件構造器；
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+        // 添加過濾條件；
+        queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+        // 添加排序條件；
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+        // 執行查詢；
+        employeeService.page(pageInfo, queryWrapper);
+        return R.success(pageInfo);
     }
 }
