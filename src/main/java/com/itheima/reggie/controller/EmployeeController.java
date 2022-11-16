@@ -79,7 +79,7 @@ public class EmployeeController {
      *
      * @param request  請求
      * @param employee 實體類對象
-     * @return R.success(退出登錄的信息)
+     * @return R.success(成功增加員工的信息)
      */
     @PostMapping
     public R<String> save(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
@@ -118,5 +118,21 @@ public class EmployeeController {
         // 執行查詢；
         employeeService.page(pageInfo, queryWrapper);
         return R.success(pageInfo);
+    }
+
+    /**
+     * 根據ID修改員工信息
+     *
+     * @param request  請求
+     * @param employee 實體類對象
+     * @return R.success(成功修改員工的信息)
+     */
+    @PutMapping
+    public R<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+        Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(employee));
+        employee.setUpdateUser(empId);
+        employee.setUpdateTime(LocalDateTime.now());
+        employeeService.updateById(employee);
+        return R.success("員工信息修改成功！");
     }
 }
