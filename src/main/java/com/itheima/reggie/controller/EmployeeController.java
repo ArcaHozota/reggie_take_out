@@ -7,7 +7,7 @@ import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
-import com.itheima.reggie.utils.HikakuUtils;
+import com.itheima.reggie.utils.ComparisonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.lang.NonNull;
@@ -49,11 +49,11 @@ public class EmployeeController {
         // 獲取One對象；
         final Employee aEmployee = employeeService.getOne(queryWrapper);
         // 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-        if (aEmployee == null || HikakuUtils.isNotEqual(password, aEmployee.getPassword())) {
+        if (aEmployee == null || ComparisonUtils.isNotEqual(password, aEmployee.getPassword())) {
             return R.error(Constants.LOGIN_FAILED);
         }
         // 查看用戶狀態，如果已被禁用，則返回賬號已禁用；
-        if (HikakuUtils.isEqual(0, aEmployee.getStatus())) {
+        if (ComparisonUtils.isEqual(0, aEmployee.getStatus())) {
             return R.error(Constants.FORBIDDEN);
         }
         // 登錄成功，將員工ID存入Session並返回登錄成功；

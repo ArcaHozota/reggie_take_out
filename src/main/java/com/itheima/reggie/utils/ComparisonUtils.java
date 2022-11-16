@@ -6,7 +6,7 @@ package com.itheima.reggie.utils;
  * @author Administrator
  * @date 2022-11-07
  */
-public class HikakuUtils {
+public class ComparisonUtils {
 
     public static boolean isEqual(final Object ob1, final Object ob2) {
         boolean isEqual = false;

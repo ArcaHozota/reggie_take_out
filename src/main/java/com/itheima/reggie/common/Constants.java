@@ -1,6 +1,8 @@
 package com.itheima.reggie.common;
 
 
+import org.springframework.lang.NonNull;
+
 /**
  * 項目常量定義類
  *
@@ -49,7 +51,7 @@ public final class Constants {
      * @param obj
      * @return class_name
      */
-    public static String getEntityName(Object obj) {
+    public static String getEntityName(@NonNull Object obj) {
         return obj.getClass().getSimpleName().toLowerCase();
     }
 

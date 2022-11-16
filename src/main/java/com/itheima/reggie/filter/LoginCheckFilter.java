@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
-import com.itheima.reggie.utils.HikakuUtils;
+import com.itheima.reggie.utils.ComparisonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.util.AntPathMatcher;
@@ -45,7 +45,7 @@ public class LoginCheckFilter implements Filter {
             log.info("本次請求{}不需要處理", requestURI);
             filterChain.doFilter(request, response);
             return;
-        } else if (HikakuUtils.isNotEqual(null, request
+        } else if (ComparisonUtils.isNotEqual(null, request
                 .getSession().getAttribute(Constants.getEntityName(new Employee())))) {
             log.info("用戶已登錄，用戶ID為：{}", request.getSession().getAttribute("employee"));
             filterChain.doFilter(request, response);
