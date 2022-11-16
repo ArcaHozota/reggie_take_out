@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 /**
+ * 員工管理控制器
+ *
  * @author Administrator
  */
 @Slf4j
@@ -37,7 +39,7 @@ public class EmployeeController {
      * @return R.success(實體類對象)
      */
     @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+    public R<Employee> login(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
         // 將頁面提交的密碼進行MD5加密；
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -75,11 +77,12 @@ public class EmployeeController {
     /**
      * 保存新增員工
      *
-     * @param employee 請求
+     * @param request  請求
+     * @param employee 實體類對象
      * @return R.success(退出登錄的信息)
      */
     @PostMapping
-    public R<String> save(HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+    public R<String> save(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
         log.info("員工信息：{}", employee.toString());
         // 設置初始密碼，需進行MD5加密；
         employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()));
