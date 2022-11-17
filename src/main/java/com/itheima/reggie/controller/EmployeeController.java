@@ -146,6 +146,7 @@ public class EmployeeController {
     public R<Employee> getById(@PathVariable Long id) {
         log.info("根據ID查詢員工信息...");
         Employee employee = employeeService.getById(id);
+        // 如果沒有相對應的結果，則返回錯誤信息；
         if (employee == null) {
             return R.error(Constants.NO_CONSEQUENCE);
         }
