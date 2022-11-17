@@ -42,7 +42,7 @@ public class EmployeeController {
     public R<Employee> login(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
         // 將頁面提交的密碼進行MD5加密；
         String password = employee.getPassword();
-        password = DigestUtils.md5DigestAsHex(password.getBytes());
+        password = DigestUtils.md5DigestAsHex(password.getBytes()).toUpperCase();
         // 根據頁面提交的用戶名查詢數據庫；
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Employee::getUsername, employee.getUsername());
@@ -85,7 +85,7 @@ public class EmployeeController {
     public R<String> save(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
         log.info("員工信息：{}", employee.toString());
         // 設置初始密碼，需進行MD5加密；
-        employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()));
+        employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
         // 設置創建時間和更新時間；
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
@@ -134,5 +134,21 @@ public class EmployeeController {
         employee.setUpdateTime(LocalDateTime.now());
         employeeService.updateById(employee);
         return R.success("員工信息修改成功！");
+    }
+
+    /**
+     * 根據ID查詢員工信息
+     *
+     * @param id 員工ID
+     * @return R.success(查詢到的員工的信息)
+     */
+    @GetMapping("/{id}")
+    public R<Employee> getById(@PathVariable Long id) {
+        log.info("根據ID查詢員工信息...");
+        Employee employee = employeeService.getById(id);
+        if (employee == null) {
+            return R.error(Constants.NO_CONSEQUENCE);
+        }
+        return R.success(employee);
     }
 }

@@ -46,6 +46,11 @@ public final class Constants {
     public static final String DUPLICATED_KEY = "Duplicate entry";
 
     /**
+     * 沒有相對應的結果
+     */
+    public static final String NO_CONSEQUENCE = "NO_SUCH_CONSEQUENCES";
+
+    /**
      * 獲取Entity類名
      *
      * @param obj
