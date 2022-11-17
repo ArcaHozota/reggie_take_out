@@ -2,6 +2,7 @@ package com.itheima.reggie.filter;
 
 
 import com.alibaba.fastjson.JSON;
+import com.itheima.reggie.common.BaseContext;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Employee;
@@ -47,7 +48,10 @@ public class LoginCheckFilter implements Filter {
             return;
         } else if (ComparisonUtils.isNotEqual(null, request
                 .getSession().getAttribute(Constants.getEntityName(new Employee())))) {
-            log.info("用戶已登錄，用戶ID為：{}", request.getSession().getAttribute("employee"));
+            Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
+            log.info("用戶已登錄，用戶ID為：{}", empId);
+            // 將當前ID儲存於内存綫程中；
+            BaseContext.setCurrentId(empId);
             filterChain.doFilter(request, response);
             return;
         }
