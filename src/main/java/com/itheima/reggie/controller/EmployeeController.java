@@ -86,13 +86,6 @@ public class EmployeeController {
         log.info("員工信息：{}", employee.toString());
         // 設置初始密碼，需進行MD5加密；
         employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
-        /*// 設置創建時間和更新時間；
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        // 設置創建人；
-        Long employeeId = (Long) request.getSession().getAttribute(Constants.getEntityName(employee));
-        employee.setCreateUser(employeeId);
-        employee.setUpdateUser(employeeId);*/
         employeeService.save(employee);
         return R.success("成功增加員工信息");
     }
