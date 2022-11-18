@@ -56,4 +56,17 @@ public class CategoryController {
         categoryService.save(category);
         return R.success("新增分類成功");
     }
+
+    /**
+     * 刪除分類
+     *
+     * @param id 分類ID
+     * @return R.success(分類刪除成功的信息);
+     */
+    @DeleteMapping
+    public R<String> delete(Long id) {
+        log.info("刪除ID={}的分類", id);
+        categoryService.removeById(id);
+        return R.success("分類信息刪除成功");
+    }
 }
