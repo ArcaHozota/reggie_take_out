@@ -71,7 +71,7 @@
             return {
                 input: '',
                 counts: 0,
-                page: 1,
+                pageNum: 1,
                 pageSize: 10,
                 tableData: [],
                 id: '',
@@ -88,7 +88,7 @@
         methods: {
             async init() {
                 const params = {
-                    page: this.page,
+                    pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     name: this.input ? this.input : undefined
                 }
@@ -102,7 +102,7 @@
                 })
             },
             handleQuery() {
-                this.page = 1;
+                this.pageNum = 1;
                 this.init();
             },
             // 添加員工信息
@@ -146,7 +146,7 @@
                 this.init()
             },
             handleCurrentChange(val) {
-                this.page = val
+                this.pageNum = val
                 this.init()
             }
         }
