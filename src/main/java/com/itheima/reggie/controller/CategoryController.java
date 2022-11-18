@@ -23,6 +23,13 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
+    /**
+     * 分頁信息顯示
+     *
+     * @param pageNum  頁碼
+     * @param pageSize 頁面大小
+     * @return R.success(分頁信息)
+     */
     @GetMapping("/page")
     public R<Page<Category>> page(Integer pageNum, Integer pageSize) {
         // 聲明分頁構造器；
