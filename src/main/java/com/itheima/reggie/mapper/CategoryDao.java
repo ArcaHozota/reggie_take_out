@@ -1,12 +1,13 @@
 package com.itheima.reggie.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itheima.reggie.entity.Employee;
+import com.itheima.reggie.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author Administrator
+ * @date 2022-11-19
  */
 @Mapper
-public interface EmployeeDao extends BaseMapper<Employee> {
+public interface CategoryDao extends BaseMapper<Category> {
 }

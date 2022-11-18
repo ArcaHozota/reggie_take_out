@@ -41,14 +41,14 @@ public class LoginCheckFilter implements Filter {
         String requestURI = request.getRequestURI();
         // 定義無需過濾的路徑集合；
         final String[] urls = new String[]{"/employee/login", "/employee/logout", "/front/**", "/backend/**"};
+        // 獲取用戶ID；
+        Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
         // 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
         if (this.check(requestURI, urls)) {
             log.info("本次請求{}不需要處理", requestURI);
             filterChain.doFilter(request, response);
             return;
-        } else if (ComparisonUtils.isNotEqual(null, request
-                .getSession().getAttribute(Constants.getEntityName(new Employee())))) {
-            Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
+        } else if (ComparisonUtils.isNotEqual(null, empId)) {
             log.info("用戶已登錄，用戶ID為：{}", empId);
             // 將當前ID儲存於内存綫程中；
             BaseContext.setCurrentId(empId);

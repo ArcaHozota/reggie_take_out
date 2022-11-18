@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
+ * 員工管理實體類
+ *
  * @author Administrator
  */
 @Data
