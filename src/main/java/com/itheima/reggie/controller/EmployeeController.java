@@ -93,15 +93,15 @@ public class EmployeeController {
     /**
      * 員工信息分頁查詢
      *
-     * @param pageNum  頁碼
+     * @param page  頁碼
      * @param pageSize 頁面大小
      * @param name     檢索文
      * @return R.success(分頁信息)
      */
     @GetMapping("/page")
-    public R<Page<Employee>> page(Integer pageNum, Integer pageSize, String name) {
+    public R<Page<Employee>> page(Integer page, Integer pageSize, String name) {
         // 聲明分頁構造器；
-        Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
+        Page<Employee> pageInfo = new Page<>(page, pageSize);
         // 聲明條件構造器；
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
         // 添加過濾條件；
