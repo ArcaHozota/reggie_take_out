@@ -24,7 +24,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/page")
-    public R<Page<Category>> page(int pageNum, int pageSize) {
+    public R<Page<Category>> page(Integer pageNum, Integer pageSize) {
         // 聲明分頁構造器；
         Page<Category> pageInfo = new Page<>(pageNum, pageSize);
         // 聲明條件構造器；

@@ -99,7 +99,7 @@ public class EmployeeController {
      * @return R.success(分頁信息)
      */
     @GetMapping("/page")
-    public R<Page<Employee>> page(int pageNum, int pageSize, String name) {
+    public R<Page<Employee>> page(Integer pageNum, Integer pageSize, String name) {
         // 聲明分頁構造器；
         Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
         // 聲明條件構造器；

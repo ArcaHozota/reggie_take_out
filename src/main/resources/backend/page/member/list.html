@@ -98,7 +98,7 @@
                         this.counts = res.data.total
                     }
                 }).catch(err => {
-                    this.$message.error('請求出錯了：' + err)
+                    this.$message.error('請求出錯：' + err)
                 })
             },
             handleQuery() {
@@ -137,7 +137,7 @@
                             this.handleQuery()
                         }
                     }).catch(err => {
-                        this.$message.error('請求出錯了：' + err)
+                        this.$message.error('請求出錯：' + err)
                     })
                 })
             },
