@@ -2,6 +2,7 @@ package com.itheima.reggie.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.R;
@@ -93,7 +94,7 @@ public class EmployeeController {
     /**
      * 員工信息分頁查詢
      *
-     * @param page  頁碼
+     * @param page     頁碼
      * @param pageSize 頁面大小
      * @param name     檢索文
      * @return R.success(分頁信息)
@@ -103,7 +104,7 @@ public class EmployeeController {
         // 聲明分頁構造器；
         Page<Employee> pageInfo = new Page<>(page, pageSize);
         // 聲明條件構造器；
-        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
         // 添加過濾條件；
         queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
         // 添加排序條件；

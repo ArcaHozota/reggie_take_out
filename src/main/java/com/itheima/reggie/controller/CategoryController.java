@@ -1,6 +1,7 @@
 package com.itheima.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Category;
@@ -35,7 +36,7 @@ public class CategoryController {
         // 聲明分頁構造器；
         Page<Category> pageInfo = new Page<>(pageNum, pageSize);
         // 聲明條件構造器；
-        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
         // 添加排序條件，根據sort進行排序；
         queryWrapper.orderByAsc(Category::getSort);
         // 執行查詢；
