@@ -22,8 +22,14 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @ResponseBody
 public class GlobalExceptionHandler {
 
+    /**
+     * SQL整合性異常處理方法
+     *
+     * @param exception SQL整合性異常
+     * @return 錯誤信息
+     */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public R<String> exceptionHandler001(@NonNull SQLIntegrityConstraintViolationException exception) {
+    public R<String> exceptionHandler01(@NonNull SQLIntegrityConstraintViolationException exception) {
         log.error(exception.getMessage());
         if (exception.getMessage().contains(Constants.DUPLICATED_KEY)) {
             String[] split = exception.getMessage().split(" ");
@@ -31,5 +37,17 @@ public class GlobalExceptionHandler {
             return R.error(msg);
         }
         return R.error(Constants.ERROR);
+    }
+
+    /**
+     * 通用業務異常處理方法
+     *
+     * @param exception 通用業務異常
+     * @return 錯誤信息
+     */
+    @ExceptionHandler(CustomException.class)
+    public R<String> exceptionHandler02(@NonNull CustomException exception) {
+        log.error(exception.getMessage());
+        return R.error(exception.getMessage());
     }
 }
