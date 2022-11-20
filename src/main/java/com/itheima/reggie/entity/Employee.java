@@ -2,6 +2,7 @@ package com.itheima.reggie.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
     private Long id;
 
     private String username;

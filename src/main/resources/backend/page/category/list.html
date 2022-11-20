@@ -88,7 +88,7 @@
                 classData: {
                     'title': '添加菜品分類',
                     'dialogVisible': false,
-                    'categoryId': '',
+                    'id': '',
                     'name': '',
                     sort: ''
                 }
@@ -145,12 +145,12 @@
             },
             //刪除
             deleteHandle(id) {
-                this.$confirm('此操作將永久刪除該文件, 是否繼續?', '提示', {
+                this.$confirm('此操作將永久刪除該數據, 是否繼續?', '提示', {
                     'confirmButtonText': '確定',
                     'cancelButtonText': '取消',
                     'type': 'warning'
                 }).then(() => {
-                    deleCategory(id).then(res => {
+                    deleteCategory(id).then(res => {
                         if (res.code === 1) {
                             this.$message.success('刪除成功！')
                             this.handleQuery()
@@ -190,7 +190,6 @@
                         } else {
                             this.$message.error('排序只能輸入數字類型')
                         }
-
                     } else {
                         this.$message.error('請輸入分類名稱或排序')
                     }

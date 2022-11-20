@@ -16,7 +16,7 @@ const queryCategoryById = (id) => {
 }
 
 // 删除当前列的接口
-const deleCategory = (ids) => {
+const deleteCategory = (ids) => {
     return $axios({
         url: '/category',
         method: 'delete',

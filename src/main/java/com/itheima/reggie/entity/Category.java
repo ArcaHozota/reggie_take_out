@@ -2,8 +2,6 @@ package com.itheima.reggie.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,6 +19,7 @@ public class Category implements Serializable {
     /**
      * ID
      */
+    @TableId
     private Long id;
 
     /**
