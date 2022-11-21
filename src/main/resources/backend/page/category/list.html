@@ -36,8 +36,7 @@
             <el-table-column prop="sort" label="排序"></el-table-column>
             <el-table-column label="操作" width="160" align="center">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" class="blueBug" @click="editHandle(scope.row)">修改
-                    </el-button>
+                    <el-button type="text" size="small" class="blueBug" @click="editHandle(scope.row)">修改</el-button>
                     <el-button type="text" size="small" class="delBut non" @click="deleteHandle(scope.row.id)">刪除</el-button>
                 </template>
             </el-table-column>
@@ -142,7 +141,7 @@
             },
             //刪除
             deleteHandle(id) {
-                this.$confirm('刪除該條數據, 是否繼續?', '提示', {
+                this.$confirm('將刪除該條數據, 是否繼續?', '提示', {
                     'confirmButtonText': '確定',
                     'cancelButtonText': '取消',
                     'type': 'warning'
