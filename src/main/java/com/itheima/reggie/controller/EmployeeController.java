@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,7 +109,8 @@ public class EmployeeController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public R<Page<Employee>> page(Integer pageNum, Integer pageSize, String name) {
+	public R<Page<Employee>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
+			@Param("name") String name) {
 		// 聲明分頁構造器；
 		Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；

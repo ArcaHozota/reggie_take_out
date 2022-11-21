@@ -40,7 +40,7 @@ public class CategoryController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public R<Page<Category>> page(Integer pageNum, Integer pageSize) {
+	public R<Page<Category>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
 		// 聲明分頁構造器；
 		Page<Category> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
