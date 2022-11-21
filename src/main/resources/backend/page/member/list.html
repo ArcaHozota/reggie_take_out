@@ -19,13 +19,10 @@
 <div class="dashboard-container" id="member-app">
     <div class="container">
         <div class="tableBar">
-            <el-input v-model="input" placeholder="請輸入員工姓名" style="width: 250px" clearable
-                      @keyup.enter.native="handleQuery">
+            <el-input v-model="input" placeholder="請輸入員工姓名" style="width: 250px" clearable @keyup.enter.native="handleQuery">
                 <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer" @click="handleQuery"></i>
             </el-input>
-            <el-button type="primary" @click="addMemberHandle('add')">
-                + 添加員工
-            </el-button>
+            <el-button type="primary" @click="addMemberHandle('add')">+ 添加員工</el-button>
         </div>
         <el-table :data="tableData" stripe class="tableBox">
             <el-table-column prop="name" label="員工姓名"></el-table-column>
@@ -39,26 +36,24 @@
             <el-table-column label="操作" width="160" align="center">
                 <template slot-scope="scope">
                     <el-button type="text" size="small" class="blueBug"
-                               @click="addMemberHandle(scope.row.id)" :class="{notAdmin:user !== 'admin'}">編輯
-                    </el-button>
+                               @click="addMemberHandle(scope.row.id)" :class="{notAdmin:user !== 'admin'}">編輯</el-button>
                     <el-button type="text" size="small" class="delBut non"
                                @click="statusHandle(scope.row)" v-if="user === 'admin'">
-                        {{scope.row.status == '1' ? '禁用' : '啓用'}}
-                    </el-button>
+                        {{scope.row.status == '1' ? '禁用' : '啓用'}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <el-pagination
                 class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper" :total="counts" :current-page.sync="page"
+                layout="total, sizes, prev, pager, next, jumper" :total="counts" :current-page.sync="pageNum"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange">
         </el-pagination>
     </div>
 </div>
-<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<!-- 開發框架版本，包含了有幫助的命令行警告 -->
 <script src="../../plugins/vue/vue.js"></script>
-<!-- 引入组件库 -->
+<!-- 引入組件庫 -->
 <script src="../../plugins/element-ui/index.js"></script>
 <!-- 引入axios -->
 <script src="../../plugins/axios/axios.min.js"></script>
@@ -71,7 +66,7 @@
             return {
                 input: '',
                 counts: 0,
-                page: 1,
+                pageNum: 1,
                 pageSize: 10,
                 tableData: [],
                 id: '',
@@ -88,7 +83,7 @@
         methods: {
             async init() {
                 const params = {
-                    page: this.page,
+                	pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     name: this.input ? this.input : undefined
                 }
@@ -102,7 +97,7 @@
                 })
             },
             handleQuery() {
-                this.page = 1;
+                this.pageNum = 1;
                 this.init();
             },
             // 添加員工信息
@@ -146,7 +141,7 @@
                 this.init()
             },
             handleCurrentChange(val) {
-                this.page = val
+                this.pageNum = val
                 this.init()
             }
         }

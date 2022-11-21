@@ -25,7 +25,7 @@
             <el-table-column prop="name" label="分類名稱"></el-table-column>
             <el-table-column prop="type" label="分類類型">
                 <template slot-scope="scope">
-                    <span>{{scope.row.type == '1' ? '菜品分類': '套餐分類'}}</span>
+                    <span>{{scope.row.type == '1' ? '菜品分類':'套餐分類'}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="updateTime" label="操作時間">
@@ -36,12 +36,9 @@
             <el-table-column prop="sort" label="排序"></el-table-column>
             <el-table-column label="操作" width="160" align="center">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" class="blueBug" @click="editHandle(scope.row)">
-                        修改
+                    <el-button type="text" size="small" class="blueBug" @click="editHandle(scope.row)">修改
                     </el-button>
-                    <el-button type="text" size="small" class="delBut non" @click="deleteHandle(scope.row.id)">
-                        刪除
-                    </el-button>
+                    <el-button type="text" size="small" class="delBut non" @click="deleteHandle(scope.row.id)">刪除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -81,7 +78,7 @@
             return {
                 action: '',
                 counts: 0,
-                page: 1,
+                pageNum: 1,
                 pageSize: 10,
                 tableData: [],
                 type: '',
@@ -102,7 +99,7 @@
         },
         methods: {
             async init() {
-                await getCategoryPage({'page': this.page, 'pageSize': this.pageSize}).then(res => {
+                await getCategoryPage({'pageNum': this.pageNum, 'pageSize': this.pageSize}).then(res => {
                     if (String(res.code) === '1') {
                         this.tableData = res.data.records
                         this.counts = Number(res.data.total)
@@ -114,7 +111,7 @@
                 })
             },
             handleQuery() {
-                this.page = 1;
+                this.pageNum = 1;
                 this.init();
             },
             //添加
@@ -158,7 +155,7 @@
                             this.$message.error(res.msg || '操作失敗')
                         }
                     }).catch(err => {
-                        this.$message.error('請求出錯：' + err)
+                        this.$message.error('請求錯誤：' + err)
                     })
                 })
             },
@@ -223,7 +220,7 @@
                 this.init()
             },
             handleCurrentChange(val) {
-                this.page = val
+                this.pageNum = val
                 this.init()
             }
         }
