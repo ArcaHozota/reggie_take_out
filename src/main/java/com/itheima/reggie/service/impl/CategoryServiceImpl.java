@@ -43,7 +43,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, Category> impl
         final int count_1 = dishService.count(dishQueryWrapper);
         // 查詢當前分類是否已經關聯了菜品，如果已經關聯抛出一個異常；
         if (count_1 > 0) {
-            throw new CustomException("當前分類下關聯了菜品，不能刪除");
+            throw new CustomException("當前分類下關聯了菜品，無法刪除");
         }
         LambdaQueryWrapper<Setmeal> setMealQueryWrapper = Wrappers.lambdaQuery(new Setmeal());
         // 添加查詢條件，根據ID進行查詢；
