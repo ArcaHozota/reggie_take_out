@@ -27,14 +27,14 @@ public class CategoryController {
     /**
      * 分頁信息顯示
      *
-     * @param pageNum  頁碼
+     * @param page  頁碼
      * @param pageSize 頁面大小
      * @return R.success(分頁信息)
      */
     @GetMapping("/page")
-    public R<Page<Category>> page(Integer pageNum, Integer pageSize) {
+    public R<Page<Category>> page(Integer page, Integer pageSize) {
         // 聲明分頁構造器；
-        Page<Category> pageInfo = new Page<>(pageNum, pageSize);
+        Page<Category> pageInfo = new Page<>(page, pageSize);
         // 聲明條件構造器；
         LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
         // 添加排序條件，根據sort進行排序；
