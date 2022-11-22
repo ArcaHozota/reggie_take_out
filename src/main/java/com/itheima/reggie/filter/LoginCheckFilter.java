@@ -45,7 +45,8 @@ public class LoginCheckFilter implements Filter {
 		// 獲取請求的URI路徑；
 		String requestURI = request.getRequestURI();
 		// 定義無需過濾的路徑集合；
-		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**" };
+		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**",
+				"/common/**" };
 		// 獲取用戶ID；
 		Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；

@@ -69,14 +69,14 @@ public class CategoryController {
 	/**
 	 * 刪除分類
 	 *
-	 * @param ids 分類ID
+	 * @param id 分類ID
 	 * @return R.success(分類刪除成功的信息);
 	 */
 	@DeleteMapping
-	public R<String> delete(Long ids) {
-		log.info("刪除ID={}的分類", ids);
+	public R<String> delete(Long id) {
+		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
-		categoryService.remove(ids);
+		categoryService.remove(id);
 		return R.success("分類信息刪除成功");
 	}
 
