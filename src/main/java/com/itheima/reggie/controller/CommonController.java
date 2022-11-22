@@ -44,7 +44,7 @@ public class CommonController {
 		// 合成文件名；
 		fileName = UUID.randomUUID().toString() + suffix;
 		// 判斷根目錄文件夾是否存在；
-		File dir = new File(basePath);
+		final File dir = new File(basePath);
 		if (!dir.exists()) {
 			// 不存在則創建該文件夾；
 			dir.mkdirs();
