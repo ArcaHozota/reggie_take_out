@@ -43,7 +43,7 @@ public class CategoryController {
 	@GetMapping("/page")
 	public R<Page<Category>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
 		// 聲明分頁構造器；
-		Page<Category> pageInfo = new Page<>(pageNum, pageSize);
+		final Page<Category> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
 		LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加排序條件，根據sort進行排序；

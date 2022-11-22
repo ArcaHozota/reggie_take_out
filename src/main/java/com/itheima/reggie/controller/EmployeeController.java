@@ -112,7 +112,7 @@ public class EmployeeController {
 	public R<Page<Employee>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
 			@Param("name") String name) {
 		// 聲明分頁構造器；
-		Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
+		final Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
 		LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		// 添加過濾條件；
@@ -133,7 +133,7 @@ public class EmployeeController {
 	 */
 	@PutMapping
 	public R<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
-		Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(employee));
+		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(employee));
 		employee.setUpdateUser(empId);
 		employee.setUpdateTime(LocalDateTime.now());
 		employeeService.updateById(employee);
@@ -149,7 +149,7 @@ public class EmployeeController {
 	@GetMapping("/{id}")
 	public R<Employee> getById(@PathVariable Long id) {
 		log.info("根據ID查詢員工信息...");
-		Employee employee = employeeService.getById(id);
+		final Employee employee = employeeService.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {
 			return R.error(Constants.NO_CONSEQUENCE);
