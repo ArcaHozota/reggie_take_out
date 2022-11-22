@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,5 +78,19 @@ public class CategoryController {
 		// 實施刪除；
 		categoryService.remove(ids);
 		return R.success("分類信息刪除成功");
+	}
+
+	/**
+	 * 更新分類
+	 *
+	 * @param category 實體類對象
+	 * @return R.success(分類更新成功的信息);
+	 */
+	@PutMapping
+	public R<String> update(@RequestBody Category category) {
+		log.info("修改分類信息：{}", category);
+		// 執行修改操作；
+		categoryService.updateById(category);
+		return R.success("分類信息修改成功");
 	}
 }
