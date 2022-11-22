@@ -169,7 +169,7 @@
                             addCategory({'name': classData.name, 'type': this.type, sort: classData.sort}).then(res => {
                                 console.log(res)
                                 if (res.code === 1) {
-                                    this.$message.success('分類添加成功！')
+                                    this.$message.success(res.msg)
                                     if (!st) {
                                         this.classData.dialogVisible = false
                                     } else {
@@ -198,7 +198,7 @@
                             sort: this.classData.sort
                         }).then(res => {
                             if (res.code === 1) {
-                                this.$message.success('分類修改成功！')
+                                this.$message.success(res.msg)
                                 this.classData.dialogVisible = false
                                 this.handleQuery()
                             } else {
