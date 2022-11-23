@@ -39,7 +39,7 @@ public class CommonController {
 	 * @param file
 	 * @return R.success(上傳的文件名)
 	 */
-	@PostMapping
+	@PostMapping("/upload")
 	public R<String> upload(MultipartFile file) {
 		log.info("Input:{}" + file.toString());
 		// 獲取文件的原始名稱；
