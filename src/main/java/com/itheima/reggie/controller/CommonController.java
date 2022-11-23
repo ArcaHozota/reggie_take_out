@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommonController {
 
 	@Value("${reggie.path}")
-	private static String basePath;
+	private String basePath;
 
 	/**
 	 * 文件上傳
