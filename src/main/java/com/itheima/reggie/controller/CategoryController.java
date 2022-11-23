@@ -1,5 +1,7 @@
 package com.itheima.reggie.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.annotations.Param;
@@ -45,7 +47,7 @@ public class CategoryController {
 		// 聲明分頁構造器；
 		final Page<Category> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
-		LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
+		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加排序條件，根據sort進行排序；
 		queryWrapper.orderByAsc(Category::getSort);
 		// 執行查詢；
@@ -92,5 +94,24 @@ public class CategoryController {
 		// 執行修改操作；
 		categoryService.updateById(category);
 		return R.success("分類信息修改成功");
+	}
+
+	/**
+	 * 根據條件查詢分類數據
+	 * 
+	 * @param category 實體類對象
+	 * @return R.success(分類結果的集合)
+	 */
+	@GetMapping("/list")
+	public R<List<Category>> queryList(Category category) {
+		// 聲明條件構造器；
+		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
+		// 添加條件；
+		queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+		// 添加排序條件；
+		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+		// 查詢分類結果集；
+		final List<Category> list = categoryService.list(queryWrapper);
+		return R.success(list);
 	}
 }

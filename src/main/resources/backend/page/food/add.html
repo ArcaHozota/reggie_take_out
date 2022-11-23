@@ -1,260 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- 引入样式 -->
-  <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
-  <link rel="stylesheet" href="../../styles/common.css" />
-  <link rel="stylesheet" href="../../styles/page.css" />
-  <style>
-    .selectInput {
-      position: relative;
-      width: 100%;
-      min-width: 100px;
-    }
-    .selectInput .flavorSelect {
-      position: absolute;
-      width: 100%;
-      padding: 0 10px;
-      border-radius: 3px;
-      border: solid 1px #FF903D;
-      line-height: 30px;
-      text-align: center;
-      background: #fff;
-      top: 50px;
-      z-index: 99;
-    }
-    .selectInput .flavorSelect .items {
-      cursor: pointer;
-      display: inline-block;
-      width: 100%;
-      line-height: 35px;
-      border-bottom: solid 1px #f4f4f4;
-      color: #666;
-    }
-    .selectInput .flavorSelect .none {
-      font-size: 14px;
-    }
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- 引入樣式 -->
+<link rel="stylesheet" href="../../plugins/element-ui/index.css" />
+<link rel="stylesheet" href="../../styles/common.css" />
+<link rel="stylesheet" href="../../styles/page.css" />
+<style>
+.selectInput {
+	position: relative;
+	width: 100%;
+	min-width: 100px;
+}
 
-    #food-add-app .uploadImg .el-form-item__label::before{
-          content: '*';
-          color: #F56C6C;
-          margin-right: 4px;
-      }
+.selectInput .flavorSelect {
+	position: absolute;
+	width: 100%;
+	padding: 0 10px;
+	border-radius: 3px;
+	border: solid 1px #FF903D;
+	line-height: 30px;
+	text-align: center;
+	background: #fff;
+	top: 50px;
+	z-index: 99;
+}
 
-  </style>
+.selectInput .flavorSelect .items {
+	cursor: pointer;
+	display: inline-block;
+	width: 100%;
+	line-height: 35px;
+	border-bottom: solid 1px #f4f4f4;
+	color: #666;
+}
+
+.selectInput .flavorSelect .none {
+	font-size: 14px;
+}
+
+#food-add-app .uploadImg .el-form-item__label::before {
+	content: '*';
+	color: #F56C6C;
+	margin-right: 4px;
+}
+</style>
 </head>
 <body>
-   <div class="addBrand-container" id="food-add-app">
-    <div class="container">
-      <el-form
-        ref="ruleForm"
-        :model="ruleForm"
-        :rules="rules"
-        :inline="true"
-        label-width="180px"
-        class="demo-ruleForm"
-      >
-        <div>
-          <el-form-item
-            label="菜品名称:"
-            prop="name"
-          >
-            <el-input
-              v-model="ruleForm.name"
-              placeholder="请填写菜品名称"
-              maxlength="20"
-            />
-          </el-form-item>
-          <el-form-item
-            label="菜品分类:"
-            prop="categoryId"
-          >
-            <el-select
-              v-model="ruleForm.categoryId"
-              placeholder="请选择菜品分类"
-            >
-              <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id" />
-            </el-select>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item
-            label="菜品价格:"
-            prop="price"
-          >
-            <el-input
-              v-model="ruleForm.price"
-              placeholder="请设置菜品价格"
-            />
-          </el-form-item>
-        </div>
-        <el-form-item label="口味做法配置:">
-          <el-form-item>
-            <div class="flavorBox">
-              <span
-                v-if="dishFlavors.length == 0"
-                class="addBut"
-                @click="addFlavore"
-              > + 添加口味</span>
-              <div
-                v-if="dishFlavors.length != 0"
-                class="flavor"
-              >
-                <div class="title">
-                  <span>口味名（3个字内）</span><span>口味标签（输入标签回车添加）</span>
-                </div>
-                <div class="cont">
-                  <div
-                    v-for="(item, index) in dishFlavors"
-                    :key="index"
-                    class="items"
-                  >
-                    <div class="itTit">
-                      <!-- <SelectInput
-                        :dish-flavors-data="dishFlavorsData"
-                        :index="index"
-                        :value="item.name"
-                        @select="selectHandle"
-                      /> -->
-                      <div class="selectInput">
-                        <div>
-                           <el-input
-                              v-model="item.name"
-                              type="text"
-                              style="width: 100%"
-                              placeholder="请输入口味"
-                              @focus="selectFlavor(true,index)"
-                              @blur="outSelect(false,index)"
-                              @input="inputHandle(index)"
-                            />
-                        </div>
-                        <div v-show="item.showOption" class="flavorSelect">
-                          <span
-                            v-for="(it, ind) in dishFlavorsData"
-                            :key="ind"
-                            class="items"
-                            @click="checkOption(it,ind,index)"
-                          >{{ it.name }}</span>
-                          <span
-                            v-if="dishFlavorsData == []"
-                            class="none"
-                          >无数据</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="labItems"
-                      style="display: flex"
-                    >
-                      <span
-                        v-for="(it, ind) in item.value"
-                        :key="ind"
-                      >{{ it }} <i @click="delFlavorLabel(index, ind)">X</i></span>
-                      <div
-                        class="inputBox"
-                        :style="inputStyle"
-                        contenteditable="true"
-                        @focus="flavorPosition(index)"
-                        @keydown.enter="(val)=>keyDownHandle(val,index)"
-                      ></div>
-                    </div>
-                    <span
-                      class="delFlavor delBut non"
-                      @click="delFlavor(index)"
-                    >删除</span>
-                  </div>
-                </div>
-                <div
-                  class="addBut"
-                  @click="addFlavore"
-                >
-                  添加口味
-                </div>
-              </div>
-            </div>
-          </el-form-item>
-        </el-form-item>
-        <div>
-        </div>
-        <div>
-          <el-form-item
-            label="菜品图片:"
-            prop="region"
-            class="uploadImg"
-          >
-            <el-upload
-              class="avatar-uploader"
-              action="/common/upload"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :on-change="onChange"
-              ref="upload"
-            >
-              <img
-                v-if="imageUrl"
-                :src="imageUrl"
-                class="avatar"
-              ></img>
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              ></i>
-            </el-upload>
-          </el-form-item>
-        </div>
-        <div class="address">
-          <el-form-item
-            label="菜品描述:"
-            prop="region"
-          >
-            <el-input
-              v-model="ruleForm.description"
-              type="textarea"
-              :rows="3"
-              placeholder="菜品描述，最长200字"
-              maxlength="200"
-            />
-          </el-form-item>
-        </div>
-        <div class="subBox address">
-          <el-form-item>
-            <el-button @click="goBack()">
-              取消
-            </el-button>
-            <el-button
-              type="primary"
-              @click="submitForm('ruleForm')"
-            >
-              保存
-            </el-button>
-            <el-button
-              v-if="actionType == 'add'"
-              type="primary"
-              class="continue"
-              @click="submitForm('ruleForm','goAnd')"
-            >
-              保存并继续添加菜品
-            </el-button>
-          </el-form-item>
-        </div>
-      </el-form>
-    </div>
-  </div>
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="../../plugins/vue/vue.js"></script>
-    <!-- 引入组件库 -->
-    <script src="../../plugins/element-ui/index.js"></script>
-    <!-- 引入axios -->
-    <script src="../../plugins/axios/axios.min.js"></script>
-    <script src="../../js/request.js"></script>
-    <script src="../../js/validate.js"></script>
-    <script src="../../js/index.js"></script>
-    <script src="../../api/food.js"></script>
-    <script>
+	<div class="addBrand-container" id="food-add-app">
+		<div class="container">
+			<el-form ref="ruleForm" :model="ruleForm" :rules="rules"
+				:inline="true" label-width="180px" class="demo-ruleForm">
+			<div>
+				<el-form-item label="菜品名稱:" prop="name">
+					<el-input v-model="ruleForm.name" placeholder="請填寫菜品名稱" maxlength="20"/>
+				</el-form-item>
+				<el-form-item label="菜品分類:" prop="categoryId">
+					<el-select v-model="ruleForm.categoryId" placeholder="請選擇菜品分類">
+						<el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id"/>
+					</el-select>
+				</el-form-item>
+			</div>
+			<div>
+				<el-form-item label="菜品價格:" prop="price">
+					<el-input v-model="ruleForm.price" placeholder="請設置菜品價格"/>
+				</el-form-item>
+			</div>
+			<el-form-item label="口味做法配置:">
+				<el-form-item>
+					<div class="flavorBox">
+						<span v-if="dishFlavors.length == 0" class="addBut"
+							@click="addFlavore">+ 添加口味</span>
+						<div v-if="dishFlavors.length != 0" class="flavor">
+							<div class="title">
+								<span>口味名（3个字内）</span><span>口味標簽（輸入標簽回車添加）</span>
+							</div>
+							<div class="cont">
+								<div v-for="(item, index) in dishFlavors" :key="index"
+									class="items">
+									<div class="itTit">
+										<div class="selectInput">
+											<div>
+												<el-input v-model="item.name" type="text" style="width: 100%"
+													placeholder="請輸入口味" @focus="selectFlavor(true,index)"
+													@blur="outSelect(false,index)" @input="inputHandle(index)"/>
+											</div>
+											<div v-show="item.showOption" class="flavorSelect">
+												<span v-for="(it, ind) in dishFlavorsData" :key="ind"
+													class="items" @click="checkOption(it,ind,index)">{{it.name}}</span>
+												<span v-if="dishFlavorsData == []" class="none">無數據</span>
+											</div>
+										</div>
+									</div>
+									<div class="labItems" style="display: flex">
+										<span v-for="(it, ind) in item.value" :key="ind">{{it}}<i
+											@click="delFlavorLabel(index, ind)">X</i></span>
+										<div class="inputBox" :style="inputStyle" contenteditable="true"
+											@focus="flavorPosition(index)"
+											@keydown.enter="(val)=>keyDownHandle(val,index)"></div>
+									</div>
+									<span class="delFlavor delBut non" @click="delFlavor(index)">刪除</span>
+								</div>
+							</div>
+							<div class="addBut" @click="addFlavore">添加口味</div>
+						</div>
+					</div>
+				</el-form-item>
+			</el-form-item>
+			<div></div>
+			<div>
+				<el-form-item label="菜品圖片:" prop="region" class="uploadImg">
+					<el-upload class="avatar-uploader" action="/common/upload"
+						:show-file-list="false" :on-success="handleAvatarSuccess" :on-change="onChange" ref="upload">
+						<img v-if="imageUrl" :src="imageUrl" class="avatar"></img>
+						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+					</el-upload>
+				</el-form-item>
+			</div>
+			<div class="address">
+				<el-form-item label="菜品描述:" prop="region">
+					<el-input v-model="ruleForm.description" type="textarea" :rows="3" placeholder="菜品描述，最長200字" maxlength="200"/>
+				</el-form-item>
+			</div>
+			<div class="subBox address">
+				<el-form-item>
+					<el-button @click="goBack()">取消</el-button>
+					<el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+					<el-button v-if="actionType == 'add'" type="primary" class="continue" 
+						@click="submitForm('ruleForm','goAnd')">保存並繼續添加菜品</el-button>
+				</el-form-item>
+			</div>
+			</el-form>
+		</div>
+	</div>
+	<!-- 開發環境版本，包含了有幫助的命令行警告 -->
+	<script src="../../plugins/vue/vue.js"></script>
+	<!-- 引入組件庫 -->
+	<script src="../../plugins/element-ui/index.js"></script>
+	<!-- 引入axios -->
+	<script src="../../plugins/axios/axios.min.js"></script>
+	<script src="../../js/request.js"></script>
+	<script src="../../js/validate.js"></script>
+	<script src="../../js/index.js"></script>
+	<script src="../../api/food.js"></script>
+	<script>
       new Vue({
         el: '#food-add-app',
         data() {
@@ -520,12 +412,12 @@
               const suffix = file.name.split('.')[1]
               const size = file.size / 1024 / 1024 < 2
               if(['png','jpeg','jpg'].indexOf(suffix) < 0){
-                this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+                this.$message.error('圖片只支持 png、jpg和jpeg格式！')
                 this.$refs.upload.clearFiles()
                 return false
               }
               if(!size){
-                this.$message.error('上传文件大小不能超过 2MB!')
+                this.$message.error('上傳的文件大小不能超過2MB!')
                 return false
               }
               return file

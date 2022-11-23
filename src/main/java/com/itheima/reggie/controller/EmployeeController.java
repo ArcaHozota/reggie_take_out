@@ -54,7 +54,7 @@ public class EmployeeController {
 		String password = employee.getPassword();
 		password = DigestUtils.md5DigestAsHex(password.getBytes()).toUpperCase();
 		// 根據頁面提交的用戶名查詢數據庫；
-		LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		queryWrapper.eq(Employee::getUsername, employee.getUsername());
 		// 獲取One對象；
 		final Employee aEmployee = employeeService.getOne(queryWrapper);
@@ -114,7 +114,7 @@ public class EmployeeController {
 		// 聲明分頁構造器；
 		final Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
-		LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
+		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		// 添加過濾條件；
 		queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
 		// 添加排序條件；
