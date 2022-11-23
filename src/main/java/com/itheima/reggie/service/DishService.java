@@ -9,8 +9,10 @@ import com.itheima.reggie.entity.Dish;
  */
 public interface DishService extends IService<Dish> {
 
-	/**
-	 * 新增菜品，同時插入菜品所對應的口味數據
-	 */
-	public void saveWithFlavour(DishDto dishDto);
+    /**
+     * 新增菜品，同時插入菜品所對應的口味數據
+     *
+     * @param dishDto
+     */
+    public void saveWithFlavour(DishDto dishDto);
 }
