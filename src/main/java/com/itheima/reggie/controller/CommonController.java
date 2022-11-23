@@ -1,10 +1,15 @@
 package com.itheima.reggie.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +41,7 @@ public class CommonController {
 	 */
 	@PostMapping
 	public R<String> upload(MultipartFile file) {
-		log.info(file.toString());
+		log.info("Input:{}" + file.toString());
 		// 獲取文件的原始名稱；
 		String fileName = file.getOriginalFilename();
 		// 獲取後綴；
@@ -56,6 +61,28 @@ public class CommonController {
 			e.printStackTrace();
 		}
 		return R.success(fileName);
+	}
+
+	@GetMapping("/download")
+	public void download(String name, HttpServletResponse response) {
+		// 輸入流，通過輸入流讀取文件内容；
+		try {
+			FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+			// 輸出流，通過輸出流將文件寫回瀏覽器並展示圖片；
+			ServletOutputStream outputStream = response.getOutputStream();
+			response.setContentType("image/jpg");
+			byte[] bytes = new byte[1024];
+			int length = 0;
+			while ((length = fileInputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, length);
+				outputStream.flush();
+			}
+			// 關閉輸入輸出流；
+			outputStream.close();
+			fileInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

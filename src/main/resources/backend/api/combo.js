@@ -37,7 +37,7 @@ const addSetmeal = (params) => {
 // 查询详情接口
 const querySetmealById = (id) => {
     return $axios({
-        url: `/setmeal/${id}`,
+        url: '/setmeal/${id}',
         method: 'get'
     })
 }
@@ -45,7 +45,7 @@ const querySetmealById = (id) => {
 // 批量起售禁售
 const setmealStatusByStatus = (params) => {
     return $axios({
-        url: `/setmeal/status/${params.status}`,
+        url: '/setmeal/status/${params.status}',
         method: 'post',
         params: {ids: params.ids}
     })
