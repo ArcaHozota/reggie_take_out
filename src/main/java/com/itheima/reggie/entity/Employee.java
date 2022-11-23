@@ -1,12 +1,13 @@
 package com.itheima.reggie.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.Data;
 
 /**
  * 員工管理實體類
@@ -16,37 +17,73 @@ import java.time.LocalDateTime;
 @Data
 public class Employee implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @TableId
-    private Long id;
+	/**
+	 * ID
+	 */
+	@TableId
+	private Long id;
 
-    private String username;
+	/**
+	 * 賬號名
+	 */
+	private String username;
 
-    private String name;
+	/**
+	 * 姓名
+	 */
+	private String name;
 
-    private String password;
+	/**
+	 * 密碼
+	 */
+	private String password;
 
-    @TableField(value = "phone_number")
-    private String phoneNo;
+	/**
+	 * 手機號
+	 */
+	@TableField(value = "phone_number")
+	private String phoneNo;
 
-    @TableField(value = "sex")
-    private String gender;
+	/**
+	 * 性別
+	 */
+	@TableField(value = "sex")
+	private String gender;
 
-    private String idNumber;
+	/**
+	 * 身份證號
+	 */
+	private String idNumber;
 
-    private Integer status;
+	/**
+	 * 賬號狀態：0:禁用，1:正常
+	 */
+	private Integer status;
 
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+	/**
+	 * 創建時間
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+	/**
+	 * 更新時間
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+	/**
+	 * 創建人
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+	/**
+	 * 修改者
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
 
 }
