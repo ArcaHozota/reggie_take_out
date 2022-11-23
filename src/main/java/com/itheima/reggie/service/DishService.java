@@ -12,7 +12,7 @@ public interface DishService extends IService<Dish> {
     /**
      * 新增菜品，同時插入菜品所對應的口味數據
      *
-     * @param dishDto
+     * @param dishDto 菜品及口味數據傳輸類
      */
-    public void saveWithFlavour(DishDto dishDto);
+    void saveWithFlavour(DishDto dishDto);
 }
