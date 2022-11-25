@@ -8,7 +8,9 @@ import javax.annotation.Resource;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,13 +95,41 @@ public class DishController {
 			final Long categoryId = item.getCategoryId();
 			// 根據ID查詢分類對象；
 			final Category category = categoryService.getById(categoryId);
-			// 獲取分類名稱；
-			final String categoryName = category.getName();
-			// 存儲於DTO對象中並返回；
-			dishDto.setCategoryName(categoryName);
+			if (ComparisonUtils.isNotEqual(category, null)) {
+				// 獲取分類名稱；
+				final String categoryName = category.getName();
+				// 存儲於DTO對象中並返回；
+				dishDto.setCategoryName(categoryName);
+			}
 			return dishDto;
 		}).collect(Collectors.toList());
 		dishDtoPage.setRecords(list);
 		return R.success(dishDtoPage);
+	}
+
+	/**
+	 * 根據ID顯示菜品信息
+	 * 
+	 * @param id 菜品ID
+	 * @return R.success(菜品信息)
+	 */
+	@GetMapping("/{id}")
+	public R<DishDto> getDishInfo(@PathVariable("id") Long id) {
+		// 根據ID查詢菜品信息以及對應的口味信息；
+		final DishDto dishDto = dishService.getByIdWithFlavour(id);
+		return R.success(dishDto);
+	}
+
+	/**
+	 * 修改菜品信息
+	 * 
+	 * @param dishDto
+	 * @return R.success(菜品更新成功的信息)
+	 */
+	@PutMapping
+	public R<String> update(@RequestBody DishDto dishDto) {
+		log.info(dishDto.toString());
+		dishService.updateWithFlavour(dishDto);
+		return R.success("菜品信息修改成功");
 	}
 }
