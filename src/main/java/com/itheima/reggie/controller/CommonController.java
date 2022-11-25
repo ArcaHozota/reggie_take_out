@@ -37,7 +37,7 @@ public class CommonController {
 	/**
 	 * 文件上傳
 	 *
-	 * @param file
+	 * @param file 文件
 	 * @return R.success(上傳的文件名)
 	 */
 	@PostMapping("/upload")
