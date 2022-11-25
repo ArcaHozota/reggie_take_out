@@ -63,8 +63,7 @@
             </el-table-column>
         </el-table>
         <el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
-					:total="counts" @size-change="handleSizeChange" :current-page.sync="pageNum"
-                    @current-change="handleCurrentChange">
+					:total="counts" @size-change="handleSizeChange" :current-page.sync="pageNum" @current-change="handleCurrentChange">
         </el-pagination>
     </div>
 </div>
