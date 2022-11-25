@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- 引入樣式-->
-    <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
-    <link rel="stylesheet" href="../../styles/common.css"/>
-    <link rel="stylesheet" href="../../styles/page.css"/>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- 引入樣式-->
+<link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
+<link rel="stylesheet" href="../../styles/common.css"/>
+<link rel="stylesheet" href="../../styles/page.css"/>
 </head>
 <body>
 <div class="dashboard-container" id="food-app">
@@ -62,10 +62,9 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
-                       layout="total, sizes, prev, pager, next, jumper"
-                       :total="counts" @size-change="handleSizeChange" :current-page.sync="pageNum"
-                       @current-change="handleCurrentChange">
+        <el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+					:total="counts" @size-change="handleSizeChange" :current-page.sync="pageNum"
+                    @current-change="handleCurrentChange">
         </el-pagination>
     </div>
 </div>
