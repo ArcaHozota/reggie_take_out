@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.service.CategoryService;
+import com.itheima.reggie.utils.ComparisonUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -107,7 +108,7 @@ public class CategoryController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加條件；
-		queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+		queryWrapper.eq(ComparisonUtils.isNotEqual(category.getType(), null), Category::getType, category.getType());
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
 		// 查詢分類結果集；

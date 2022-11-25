@@ -27,48 +27,44 @@
 				</div>
 			</div>
 			<el-table :data="tableData" stripe class="tableBox"
-				@selection-change="handleSelectionChange"> <el-table-column
-				type="selection" width="25"></el-table-column> <el-table-column
-				prop="name" label="菜品名称"></el-table-column> <el-table-column
-				prop="image" label="圖片" align="center">
-			<template slot-scope="{ row }">
-				<el-image
-					style="width: auto; height: 40px; border:none;cursor: pointer;"
-					:src="getImage(row.image)"
-					:preview-src-list="[ `/common/download?name=${row.image}` ]">
-				<div slot="error" class="image-slot">
-					<img src="./../../images/noImg.png"
-						style="width: auto; height: 40px; border: none;">
-				</div>
-				</el-image>
-			</template>
-			</el-table-column> <el-table-column prop="categoryName" label="菜品分类"></el-table-column>
-			<el-table-column label="售价">
-			<template slot-scope="scope">
-				<span style="margin-right: 10px;">￥{{ scope.row.price/100 }}</span>
-			</template>
-			</el-table-column> <el-table-column label="售卖状态">
-			<template slot-scope="scope">
-				<span style="margin-right: 10px;">{{ scope.row.status == '0'
-					? '停售' : '启售' }}</span>
-			</template>
-			</el-table-column> <el-table-column prop="updateTime" label="最后操作时间">
-			</el-table-column> <el-table-column label="操作" width="160" align="center">
-			<template slot-scope="scope">
-				<el-button type="text" size="small" class="blueBug"
-					@click="addFoodtype(scope.row.id)"> 修改 </el-button>
-				<el-button type="text" size="small" class="blueBug"
-					@click="statusHandle(scope.row)"> {{ scope.row.status
-				== '0' ? '启售' : '停售' }} </el-button>
-				<el-button type="text" size="small" class="delBut non"
-					@click="deleteHandle('单删', scope.row.id)"> 删除 </el-button>
-			</template>
-			</el-table-column> </el-table>
-			<el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]"
-				:page-size="pageSize"
-				layout="total, sizes, prev, pager, next, jumper" :total="counts"
-				@size-change="handleSizeChange" :current-page.sync="pageNum"
-				@current-change="handleCurrentChange"></el-pagination>
+				@selection-change="handleSelectionChange"> 
+				<el-table-column type="selection" width="25"/>
+				<el-table-column prop="name" label="菜品名稱"/>
+				<el-table-column prop="image" label="圖片" align="center">
+					<template slot-scope="{ row }">
+						<el-image style="width: auto; height: 40px; border:none;cursor: pointer;" :src="getImage(row.image)"
+							:preview-src-list="[ `/common/download?name=${row.image}` ]">
+							<div slot="error" class="image-slot">
+								<img src="./../../images/noImg.png" style="width: auto; height: 40px; border: none;">
+							</div>
+						</el-image>
+					</template>
+				</el-table-column>
+				<el-table-column prop="categoryName" label="菜品分類"/>
+				<el-table-column label="售價">
+					<template slot-scope="scope">
+						<span style="margin-right: 10px;">¥{{scope.row.price/100}}</span>
+					</template>
+				</el-table-column>
+				<el-table-column label="在售狀態">
+					<template slot-scope="scope">
+						<span style="margin-right: 10px;">{{scope.row.status == '0' ? '停售' : '發售'}}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="updateTime" label="最後操作時間"/>
+				<el-table-column label="操作" width="160" align="center">
+					<template slot-scope="scope">
+						<el-button type="text" size="small" class="blueBug" @click="addFoodtype(scope.row.id)">修改</el-button>
+						<el-button type="text" size="small" class="blueBug" @click="statusHandle(scope.row)">
+								{{scope.row.status == '0' ? '發售' : '停售'}}</el-button>
+						<el-button type="text" size="small" class="delBut non" @click="deleteHandle('單個刪除', scope.row.id)">刪除</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
+			<el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+				:total="counts" @size-change="handleSizeChange" :current-page.sync="pageNum"
+				@current-change="handleCurrentChange">
+			</el-pagination>
 		</div>
 	</div>
 	<!-- 開發環境版本，包含了有幫助的命令行警告 -->
@@ -161,7 +157,6 @@
               })
             })
           },
-
           //状态更改
           statusHandle (row) {
             let params = {}
@@ -195,7 +190,6 @@
               })
             })
           },
-
           // 全部操作
           handleSelectionChange (val){
             let checkArr = []

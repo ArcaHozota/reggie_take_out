@@ -75,7 +75,7 @@ public class CommonController {
 		try {
 			final FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
 			// 輸出流，通過輸出流將文件寫回瀏覽器並展示圖片；
-			ServletOutputStream outputStream = response.getOutputStream();
+			final ServletOutputStream outputStream = response.getOutputStream();
 			response.setContentType("image/jpg");
 			final byte[] bytes = new byte[1024];
 			int length = 0;
