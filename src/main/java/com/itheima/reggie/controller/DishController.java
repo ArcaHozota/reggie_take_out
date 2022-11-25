@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class DishController {
 	 * @return R.success(成功新增菜品的信息)
 	 */
 	@PostMapping
-	public R<String> save(@RequestBody DishDto dishDto) {
+	public R<String> save(@RequestBody @NonNull DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
 		dishService.saveWithFlavour(dishDto);
 		return R.success("新增菜品成功");
@@ -116,8 +117,7 @@ public class DishController {
 	@GetMapping("/{id}")
 	public R<DishDto> getDishInfo(@PathVariable("id") Long id) {
 		// 根據ID查詢菜品信息以及對應的口味信息；
-		final DishDto dishDto = dishService.getByIdWithFlavour(id);
-		return R.success(dishDto);
+		return R.success(dishService.getByIdWithFlavour(id));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class DishController {
 	 * @return R.success(菜品更新成功的信息)
 	 */
 	@PutMapping
-	public R<String> update(@RequestBody DishDto dishDto) {
+	public R<String> update(@RequestBody @NonNull DishDto dishDto) {
 		log.info(dishDto.toString());
 		dishService.updateWithFlavour(dishDto);
 		return R.success("菜品信息修改成功");

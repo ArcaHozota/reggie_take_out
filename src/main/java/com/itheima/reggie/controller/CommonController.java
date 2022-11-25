@@ -9,6 +9,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class CommonController {
 	 * @return R.success(上傳的文件名)
 	 */
 	@PostMapping("/upload")
-	public R<String> upload(MultipartFile file) {
+	public R<String> upload(@NonNull MultipartFile file) {
 		log.info("Input:{}" + file.toString());
 		// 獲取文件的原始名稱；
 		String fileName = file.getOriginalFilename();
