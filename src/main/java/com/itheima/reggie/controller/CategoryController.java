@@ -112,7 +112,7 @@ public class CategoryController {
 		queryWrapper.eq(ComparisonUtils.isNotEqual(category.getType(), null), Category::getType, category.getType());
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
-		// 查詢分類結果集；
+		// 查詢分類結果集並返回；
 		final List<Category> list = categoryService.list(queryWrapper);
 		return R.success(list);
 	}
