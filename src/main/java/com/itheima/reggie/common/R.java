@@ -37,19 +37,34 @@ public class R<T> {
      */
     private Map<String, Object> map = new HashMap<>();
 
-    public static <T> R<T> success(@NonNull T object) {
+    /**
+     * 處理成功
+     *
+     * @param object 對象
+     * @param <T>    汎型
+     * @return 返回的對象
+     */
+    public static <T> R<T> success(T object) {
         R<T> r = new R<T>();
         r.data = object;
         r.code = 1;
         return r;
     }
 
-    public static <T> R<T> error(@NonNull String msg) {
+    /**
+     * 請求失敗
+     *
+     * @param msg 請求失敗的信息
+     * @param <T> 汎型
+     * @return 失敗的信息
+     */
+    public static <T> R<T> error(String msg) {
         R<T> r = new R<>();
         r.msg = msg;
         r.code = 0;
         return r;
     }
+
 
     public R<T> add(String key, Object value) {
         this.map.put(key, value);
