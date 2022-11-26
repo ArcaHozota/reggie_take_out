@@ -12,7 +12,8 @@
         // 是否需要设置 token
         // const isToken = (config.headers || {}).isToken === false
         // if (getToken() && !isToken) {
-        //   config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+        // config.headers['Authorization'] = 'Bearer ' + getToken() //
+		// 让每个请求携带自定义token 请根据实际情况自行修改
         // }
         // get请求映射params参数
         if (config.method === 'get' && config.params) {
@@ -41,9 +42,9 @@
         console.log(error)
         Promise.reject(error)
     })
-    // 响应拦截器
+    // 響應攔截器
     service.interceptors.response.use(res => {
-            if (res.data.code === 0 && res.data.msg === 'NOT_LOGIN') {// 返回登录页面
+            if (res.data.code === 0 && res.data.msg === 'NOT_LOGIN') {// 返回登錄頁面
                 console.log('---/backend/page/login/login.html---')
                 localStorage.removeItem('userInfo')
                 window.top.location.href = '/backend/page/login/login.html'
@@ -55,11 +56,11 @@
             console.log('err' + error)
             let {message} = error;
             if (message == "Network Error") {
-                message = "后端接口连接异常";
+                message = "後端接口連接異常";
             } else if (message.includes("timeout")) {
-                message = "系统接口请求超时";
+                message = "系統接口請求超時";
             } else if (message.includes("Request failed with status code")) {
-                message = "系统接口" + message.substr(message.length - 3) + "异常";
+                message = "系統接口" + message.substr(message.length - 3) + "異常";
             }
             window.ELEMENT.Message({
                 message: message,

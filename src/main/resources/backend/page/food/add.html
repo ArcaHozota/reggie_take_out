@@ -238,7 +238,7 @@
                 // this.imageUrl = res.data.data.image
                 this.imageUrl = `/common/download?name=${res.data.image}`
               } else {
-                this.$message.error(res.msg || '操作失败')
+                this.$message.error(res.msg || '操作失敗')
               }
             })
           },
@@ -396,9 +396,8 @@
               }
             })
           },
-
           handleAvatarSuccess (response, file, fileList) {
-            // 拼接down接口预览
+            // 拼接down接口預覽
             if(response.code === 0 && response.msg === '未登录'){
               window.top.location.href = '/backend/page/login/login.html'
             }else{
@@ -406,7 +405,6 @@
               this.ruleForm.image = response.data
             }
           },
-
           onChange (file) {
             if(file){
               const suffix = file.name.split('.')[1]
