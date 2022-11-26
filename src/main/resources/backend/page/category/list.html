@@ -144,11 +144,11 @@
                 this.$confirm('即將刪除該條數據, 是否繼續?', '提示', {
                     'confirmButtonText': '確定',
                     'cancelButtonText': '取消',
-                    'type': 'warning'
+                    // 'type': 'warning'
                 }).then(() => {
                     deleteCategory(id).then(res => {
                         if (res.code === 1) {
-                            this.$message.success(res.msg)
+                            this.$message.success(res.msg || '刪除成功')
                             this.handleQuery()
                         } else {
                             this.$message.error(res.msg || '操作失敗')
@@ -158,7 +158,7 @@
                     })
                 })
             },
-            //数据提交
+            //數據提交
             submitForm(st) {
                 const classData = this.classData
                 const valid = (classData.name === 0 || classData.name) && (classData.sort === 0 || classData.sort)
@@ -169,7 +169,7 @@
                             addCategory({'name': classData.name, 'type': this.type, sort: classData.sort}).then(res => {
                                 console.log(res)
                                 if (res.code === 1) {
-                                    this.$message.success(res.msg)
+                                    this.$message.success(res.msg || '操作成功')
                                     if (!st) {
                                         this.classData.dialogVisible = false
                                     } else {

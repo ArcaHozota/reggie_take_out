@@ -51,8 +51,7 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public R<Employee> login(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
-		String password = employee.getPassword();
-		password = DigestUtils.md5DigestAsHex(password.getBytes()).toUpperCase();
+		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戶名查詢數據庫；
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		queryWrapper.eq(Employee::getUsername, employee.getUsername());
@@ -133,9 +132,6 @@ public class EmployeeController {
 	 */
 	@PutMapping
 	public R<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
-		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(employee));
-		employee.setUpdateUser(empId);
-		employee.setUpdateTime(LocalDateTime.now());
 		employeeService.updateById(employee);
 		return R.success("員工信息修改成功！");
 	}
