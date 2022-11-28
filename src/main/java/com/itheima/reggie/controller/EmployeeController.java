@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,12 +84,11 @@ public class EmployeeController {
 	/**
 	 * 保存新增員工
 	 *
-	 * @param request  請求
 	 * @param employee 實體類對象
 	 * @return R.success(成功增加員工的信息)
 	 */
 	@PostMapping
-	public RestDto<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+	public RestDto<String> save(@RequestBody Employee employee) {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
@@ -125,12 +123,11 @@ public class EmployeeController {
 	/**
 	 * 根據ID修改員工信息
 	 *
-	 * @param request  請求
 	 * @param employee 實體類對象
 	 * @return R.success(成功修改員工的信息)
 	 */
 	@PutMapping
-	public RestDto<String> update(HttpServletRequest request, @RequestBody Employee employee) {
+	public RestDto<String> update(@RequestBody Employee employee) {
 		employeeService.updateById(employee);
 		return RestDto.success(CustomMessage.SRP008);
 	}

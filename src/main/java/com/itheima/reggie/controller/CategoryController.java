@@ -99,7 +99,7 @@ public class CategoryController {
 	 * @return R.success(分類結果的集合)
 	 */
 	@GetMapping("/list")
-	public RestDto<List<Category>> queryList(Category category) {
+	public RestDto<List<Category>> queryList(@RequestBody Category category) {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加條件；
