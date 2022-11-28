@@ -13,12 +13,12 @@ public class ResponseDto<T> {
 	/**
 	 * 處理成功的信息
 	 */
-	private static final String SUCCESS = "SUCCESS";
+	private static final String SUCCEEDED = "SUCCESS";
 
 	/**
 	 * 處理失敗的信息
 	 */
-	private static final String FAILURE = "FAILED";
+	private static final String FAILED = "FAILURE";
 
 	/**
 	 * 封裝當前請求的處理結果；
@@ -43,7 +43,7 @@ public class ResponseDto<T> {
 	 * @return ResponseDto
 	 */
 	public static <Type> ResponseDto<Type> succeeded(Type data) {
-		return new ResponseDto<>(SUCCESS, null, data);
+		return new ResponseDto<>(SUCCEEDED, null, data);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class ResponseDto<T> {
 	 * @return ResponseDto
 	 */
 	public static <Type> ResponseDto<Type> success() {
-		return new ResponseDto<>(SUCCESS, null, null);
+		return new ResponseDto<>(SUCCEEDED, null, null);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class ResponseDto<T> {
 	 * @return ResponseDto
 	 */
 	public static <Type> ResponseDto<Type> failed(String message) {
-		return new ResponseDto<Type>(FAILURE, message, null);
+		return new ResponseDto<Type>(FAILED, message, null);
 	}
 
 	/**
