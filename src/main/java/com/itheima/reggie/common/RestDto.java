@@ -11,7 +11,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-public class ResponseDto<T> {
+public class RestDto<T> {
 
 	/**
 	 * 處理成功的信息
@@ -50,8 +50,8 @@ public class ResponseDto<T> {
 	 * @param <T>    汎型
 	 * @return 返回的對象
 	 */
-	public static <T> ResponseDto<T> success(T object) {
-		ResponseDto<T> r = new ResponseDto<T>();
+	public static <T> RestDto<T> success(T object) {
+		RestDto<T> r = new RestDto<T>();
 		r.data = object;
 		r.code = SUCCESS;
 		return r;
@@ -64,8 +64,8 @@ public class ResponseDto<T> {
 	 * @param <T> 汎型
 	 * @return 失敗的信息
 	 */
-	public static <T> ResponseDto<T> error(String msg) {
-		ResponseDto<T> r = new ResponseDto<>();
+	public static <T> RestDto<T> error(String msg) {
+		RestDto<T> r = new RestDto<>();
 		r.msg = msg;
 		r.code = ERROR;
 		return r;
@@ -78,7 +78,7 @@ public class ResponseDto<T> {
 	 * @param value 値
 	 * @return this 本數據汎型
 	 */
-	public ResponseDto<T> add(String key, Object value) {
+	public RestDto<T> add(String key, Object value) {
 		this.map.put(key, value);
 		return this;
 	}
@@ -86,7 +86,7 @@ public class ResponseDto<T> {
 	/**
 	 * 無參數構造器
 	 */
-	public ResponseDto(){
+	public RestDto(){
 		super();
 	}
 
@@ -97,7 +97,7 @@ public class ResponseDto<T> {
 	 * @param msg 請求成功與否的信息
 	 * @param data    返回的數據
 	 */
-	public ResponseDto(String code, String msg, T data) {
+	public RestDto(String code, String msg, T data) {
 		super();
 		this.code = code;
 		this.msg = msg;

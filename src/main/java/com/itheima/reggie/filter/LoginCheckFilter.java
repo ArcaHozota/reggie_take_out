@@ -11,13 +11,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.itheima.reggie.common.ResponseDto;
 import org.springframework.lang.NonNull;
 import org.springframework.util.AntPathMatcher;
 
 import com.alibaba.fastjson.JSON;
 import com.itheima.reggie.common.BaseContext;
 import com.itheima.reggie.common.Constants;
+import com.itheima.reggie.common.RestDto;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.utils.ComparisonUtils;
 
@@ -63,7 +63,7 @@ public class LoginCheckFilter implements Filter {
 		}
 		// 如果未登錄，則返回未登錄結果；
 		log.info("訪問失敗：{}", Constants.NOT_LOGIN);
-		response.getWriter().write(JSON.toJSONString(ResponseDto.error(Constants.NOT_LOGIN)));
+		response.getWriter().write(JSON.toJSONString(RestDto.error(Constants.NOT_LOGIN)));
 	}
 
 	private boolean check(String requestURI, @NonNull String... urls) {

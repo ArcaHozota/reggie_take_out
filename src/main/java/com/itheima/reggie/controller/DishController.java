@@ -5,8 +5,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import com.itheima.reggie.common.CustomMessage;
-import com.itheima.reggie.common.ResponseDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;
@@ -21,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itheima.reggie.common.CustomMessage;
+import com.itheima.reggie.common.RestDto;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Dish;
@@ -57,10 +57,10 @@ public class DishController {
 	 * @return R.success(成功新增菜品的信息)
 	 */
 	@PostMapping
-	public ResponseDto<String> save(@RequestBody @NonNull DishDto dishDto) {
+	public RestDto<String> save(@RequestBody @NonNull DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
 		dishService.saveWithFlavour(dishDto);
-		return ResponseDto.success(CustomMessage.SRP004);
+		return RestDto.success(CustomMessage.SRP004);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class DishController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public ResponseDto<Page<DishDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
+	public RestDto<Page<DishDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
 			@Param("name") String name) {
 		// 聲明分頁構造器對象；
 		final Page<Dish> pageInfo = new Page<>(pageNum, pageSize);
@@ -106,7 +106,7 @@ public class DishController {
 			return dishDto;
 		}).collect(Collectors.toList());
 		dishDtoPage.setRecords(list);
-		return ResponseDto.success(dishDtoPage);
+		return RestDto.success(dishDtoPage);
 	}
 
 	/**
@@ -116,9 +116,9 @@ public class DishController {
 	 * @return R.success(菜品信息)
 	 */
 	@GetMapping("/{id}")
-	public ResponseDto<DishDto> getDishInfo(@PathVariable("id") Long id) {
+	public RestDto<DishDto> getDishInfo(@PathVariable("id") Long id) {
 		// 根據ID查詢菜品信息以及對應的口味信息；
-		return ResponseDto.success(dishService.getByIdWithFlavour(id));
+		return RestDto.success(dishService.getByIdWithFlavour(id));
 	}
 
 	/**
@@ -128,9 +128,9 @@ public class DishController {
 	 * @return R.success(菜品更新成功的信息)
 	 */
 	@PutMapping
-	public ResponseDto<String> update(@RequestBody @NonNull DishDto dishDto) {
+	public RestDto<String> update(@RequestBody @NonNull DishDto dishDto) {
 		log.info(dishDto.toString());
 		dishService.updateWithFlavour(dishDto);
-		return ResponseDto.success(CustomMessage.SRP005);
+		return RestDto.success(CustomMessage.SRP005);
 	}
 }

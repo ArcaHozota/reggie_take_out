@@ -3,7 +3,6 @@ package com.itheima.reggie.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.itheima.reggie.common.ResponseDto;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
@@ -21,6 +20,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.CustomMessage;
+import com.itheima.reggie.common.RestDto;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
 import com.itheima.reggie.utils.ComparisonUtils;
@@ -48,7 +48,7 @@ public class EmployeeController {
 	 * @return R.success(實體類對象)
 	 */
 	@PostMapping("/login")
-	public ResponseDto<Employee> login(@NonNull HttpServletRequest request, @NonNull @RequestBody Employee employee) {
+	public RestDto<Employee> login(@NonNull HttpServletRequest request, @NonNull @RequestBody Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戶名查詢數據庫；
@@ -58,15 +58,15 @@ public class EmployeeController {
 		final Employee aEmployee = employeeService.getOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || ComparisonUtils.isNotEqual(password, aEmployee.getPassword())) {
-			return ResponseDto.error(Constants.LOGIN_FAILED);
+			return RestDto.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戶狀態，如果已被禁用，則返回賬號已禁用；
 		if (ComparisonUtils.isEqual(0, aEmployee.getStatus())) {
-			return ResponseDto.error(Constants.FORBIDDEN);
+			return RestDto.error(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
 		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
-		return ResponseDto.success(aEmployee);
+		return RestDto.success(aEmployee);
 	}
 
 	/**
@@ -76,10 +76,10 @@ public class EmployeeController {
 	 * @return R.success(退出登錄的信息)
 	 */
 	@PostMapping("/logout")
-	public ResponseDto<String> logout(@NonNull HttpServletRequest request) {
+	public RestDto<String> logout(@NonNull HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
 		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
-		return ResponseDto.success(CustomMessage.SRP007);
+		return RestDto.success(CustomMessage.SRP007);
 	}
 
 	/**
@@ -90,12 +90,12 @@ public class EmployeeController {
 	 * @return R.success(成功增加員工的信息)
 	 */
 	@PostMapping
-	public ResponseDto<String> save(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+	public RestDto<String> save(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
 		employeeService.save(employee);
-		return ResponseDto.success(CustomMessage.SRP006);
+		return RestDto.success(CustomMessage.SRP006);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class EmployeeController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public ResponseDto<Page<Employee>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
+	public RestDto<Page<Employee>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
 			@Param("name") String name) {
 		// 聲明分頁構造器；
 		final Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
@@ -119,7 +119,7 @@ public class EmployeeController {
 		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		// 執行查詢；
 		employeeService.page(pageInfo, queryWrapper);
-		return ResponseDto.success(pageInfo);
+		return RestDto.success(pageInfo);
 	}
 
 	/**
@@ -130,9 +130,9 @@ public class EmployeeController {
 	 * @return R.success(成功修改員工的信息)
 	 */
 	@PutMapping
-	public ResponseDto<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+	public RestDto<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
 		employeeService.updateById(employee);
-		return ResponseDto.success(CustomMessage.SRP008);
+		return RestDto.success(CustomMessage.SRP008);
 	}
 
 	/**
@@ -142,13 +142,13 @@ public class EmployeeController {
 	 * @return R.success(查詢到的員工的信息)
 	 */
 	@GetMapping("/{id}")
-	public ResponseDto<Employee> getById(@PathVariable Long id) {
+	public RestDto<Employee> getById(@PathVariable Long id) {
 		log.info("根據ID查詢員工信息...");
 		final Employee employee = employeeService.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {
-			return ResponseDto.error(Constants.NO_CONSEQUENCE);
+			return RestDto.error(Constants.NO_CONSEQUENCE);
 		}
-		return ResponseDto.success(employee);
+		return RestDto.success(employee);
 	}
 }
