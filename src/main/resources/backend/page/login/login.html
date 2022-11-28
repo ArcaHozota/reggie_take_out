@@ -96,7 +96,7 @@
                     if (valid) {
                         this.loading = true
                         let responseJSON = await loginApi(this.loginForm)
-                        if (String(responseJSON.code) === '1') {
+                        if (responseJSON.code === 'SUCCESS') {
                             localStorage.setItem('userInfo', JSON.stringify(responseJSON.data))
                             window.location.href = '/backend/index.html'
                         } else {

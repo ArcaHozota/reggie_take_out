@@ -88,7 +88,7 @@
                     name: this.input ? this.input : undefined
                 }
                 await getMemberList(params).then(res => {
-                    if (String(res.code) === '1') {
+                    if (res.code === 'SUCCESS') {
                         this.tableData = res.data.records || []
                         this.counts = res.data.total
                     }
@@ -127,7 +127,7 @@
                 }).then(() => {
                     enableOrDisableEmployee({'id': this.id, 'status': !this.status ? 1 : 0}).then(res => {
                         console.log('enableOrDisableEmployee', res)
-                        if (String(res.code) === '1') {
+                        if (res.code === 'SUCCESS') {
                             this.$message.success('賬號狀態更改成功！')
                             this.handleQuery()
                         }
