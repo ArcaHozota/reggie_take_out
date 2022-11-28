@@ -29,14 +29,14 @@ public class GlobalExceptionHandler {
 	 * @return 錯誤信息
 	 */
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-	public R<String> exceptionHandler01(@NonNull SQLIntegrityConstraintViolationException exception) {
+	public ResponseDto<String> exceptionHandler01(@NonNull SQLIntegrityConstraintViolationException exception) {
 		log.error(exception.getMessage());
 		if (exception.getMessage().contains(Constants.DUPLICATED_KEY)) {
 			final String[] split = exception.getMessage().split(" ");
 			final String msg = split[2] + "已存在";
-			return R.error(msg);
+			return ResponseDto.error(msg);
 		}
-		return R.error(Constants.ERROR);
+		return ResponseDto.error(Constants.ERROR);
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class GlobalExceptionHandler {
 	 * @return 錯誤信息
 	 */
 	@ExceptionHandler(CustomException.class)
-	public R<String> exceptionHandler02(@NonNull CustomException exception) {
+	public ResponseDto<String> exceptionHandler02(@NonNull CustomException exception) {
 		log.error(exception.getMessage());
-		return R.error(exception.getMessage());
+		return ResponseDto.error(exception.getMessage());
 	}
 }
