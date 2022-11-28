@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.itheima.reggie.common.CustomMessage;
+import com.itheima.reggie.common.ResponseDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.utils.ComparisonUtils;
@@ -46,7 +46,7 @@ public class CategoryController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public R<Page<Category>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
+	public ResponseDto<Page<Category>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
 		// 聲明分頁構造器；
 		final Page<Category> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
@@ -55,7 +55,7 @@ public class CategoryController {
 		queryWrapper.orderByAsc(Category::getSort);
 		// 執行查詢；
 		categoryService.page(pageInfo, queryWrapper);
-		return R.success(pageInfo);
+		return ResponseDto.success(pageInfo);
 	}
 
 	/**
@@ -65,10 +65,10 @@ public class CategoryController {
 	 * @return R.success(分類新增成功的信息);
 	 */
 	@PostMapping
-	public R<String> save(@RequestBody Category category) {
+	public ResponseDto<String> save(@RequestBody Category category) {
 		log.info("category:{}", category);
 		categoryService.save(category);
-		return R.success(CustomMessage.SRP001);
+		return ResponseDto.success(CustomMessage.SRP001);
 	}
 
 	/**
@@ -78,11 +78,11 @@ public class CategoryController {
 	 * @return R.success(分類刪除成功的信息);
 	 */
 	@DeleteMapping
-	public R<String> delete(Long id) {
+	public ResponseDto<String> delete(Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		categoryService.remove(id);
-		return R.success(CustomMessage.SRP003);
+		return ResponseDto.success(CustomMessage.SRP003);
 	}
 
 	/**
@@ -92,11 +92,11 @@ public class CategoryController {
 	 * @return R.success(分類更新成功的信息);
 	 */
 	@PutMapping
-	public R<String> update(@RequestBody Category category) {
+	public ResponseDto<String> update(@RequestBody Category category) {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
 		categoryService.updateById(category);
-		return R.success(CustomMessage.SRP002);
+		return ResponseDto.success(CustomMessage.SRP002);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class CategoryController {
 	 * @return R.success(分類結果的集合)
 	 */
 	@GetMapping("/list")
-	public R<List<Category>> queryList(@NonNull Category category) {
+	public ResponseDto<List<Category>> queryList(@NonNull Category category) {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加條件；
@@ -115,6 +115,6 @@ public class CategoryController {
 		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
 		// 查詢分類結果集並返回；
 		final List<Category> list = categoryService.list(queryWrapper);
-		return R.success(list);
+		return ResponseDto.success(list);
 	}
 }
