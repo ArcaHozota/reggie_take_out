@@ -1,9 +1,12 @@
 package com.itheima.reggie.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.Data;
 
 /**
- * 統一AJAX請求返回結果類；
+ * 通用返回結果類
  *
  * @author Administrator
  */
@@ -13,71 +16,91 @@ public class ResponseDto<T> {
 	/**
 	 * 處理成功的信息
 	 */
-	private static final String SUCCEEDED = "SUCCESS";
+	private static final String SUCCESS = "SUCCESS";
 
 	/**
 	 * 處理失敗的信息
 	 */
-	private static final String FAILED = "FAILURE";
+	private static final String ERROR = "ERROR";
 
 	/**
-	 * 封裝當前請求的處理結果；
+	 * 編碼： 成功：1 失敗：0或其它字符
 	 */
-	private String result;
+	private String code;
 
 	/**
-	 * 請求成功與否的信息；
+	 * 錯誤信息
 	 */
-	private String message;
+	private String msg;
 
 	/**
-	 * 返回的數據；
+	 * 數據
 	 */
 	private T data;
 
 	/**
-	 * 請求成功時使用的工具方法；
-	 *
-	 * @param <Type> 數據類型
-	 * @param data   返回的數據；
-	 * @return ResponseDto
+	 * 動態數據
 	 */
-	public static <Type> ResponseDto<Type> succeeded(Type data) {
-		return new ResponseDto<>(SUCCEEDED, null, data);
+	private Map<String, Object> map = new HashMap<>();
+
+	/**
+	 * 處理成功
+	 *
+	 * @param object 對象
+	 * @param <T>    汎型
+	 * @return 返回的對象
+	 */
+	public static <T> ResponseDto<T> success(T object) {
+		ResponseDto<T> r = new ResponseDto<T>();
+		r.data = object;
+		r.code = SUCCESS;
+		return r;
 	}
 
 	/**
-	 * 請求成功且不需要返回數據時使用的工具方法；
+	 * 請求失敗
 	 *
-	 * @param <Type> 數據類型
-	 * @return ResponseDto
+	 * @param msg 請求失敗的信息
+	 * @param <T> 汎型
+	 * @return 失敗的信息
 	 */
-	public static <Type> ResponseDto<Type> success() {
-		return new ResponseDto<>(SUCCEEDED, null, null);
+	public static <T> ResponseDto<T> error(String msg) {
+		ResponseDto<T> r = new ResponseDto<>();
+		r.msg = msg;
+		r.code = ERROR;
+		return r;
 	}
 
 	/**
-	 * 請求失敗時使用的工具方法；
-	 *
-	 * @param <Type>  數據類型
-	 * @param message 失敗的處理信息；
-	 * @return ResponseDto
+	 * 增加數據
+	 * 
+	 * @param key   鍵
+	 * @param value 値
+	 * @return this 本數據汎型
 	 */
-	public static <Type> ResponseDto<Type> failed(String message) {
-		return new ResponseDto<Type>(FAILED, message, null);
+	public ResponseDto<T> add(String key, Object value) {
+		this.map.put(key, value);
+		return this;
+	}
+
+	/**
+	 * 無參數構造器
+	 */
+	public ResponseDto(){
+		super();
 	}
 
 	/**
 	 * 全參數構造器
-	 * 
-	 * @param result  當前請求的處理結果
-	 * @param message 請求成功與否的信息
+	 *
+	 * @param code  當前請求的處理結果
+	 * @param msg 請求成功與否的信息
 	 * @param data    返回的數據
 	 */
-	public ResponseDto(String result, String message, T data) {
+	public ResponseDto(String code, String msg, T data) {
 		super();
-		this.result = result;
-		this.message = message;
+		this.code = code;
+		this.msg = msg;
 		this.data = data;
 	}
 }
