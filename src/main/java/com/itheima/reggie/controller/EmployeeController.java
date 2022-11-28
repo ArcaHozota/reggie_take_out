@@ -3,7 +3,6 @@ package com.itheima.reggie.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.itheima.reggie.common.CustomMessage;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
@@ -20,7 +19,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.Constants;
+import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.common.R;
+import com.itheima.reggie.common.ResponseDto;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
 import com.itheima.reggie.utils.ComparisonUtils;
@@ -47,8 +48,9 @@ public class EmployeeController {
 	 * @param employee 員工信息對象
 	 * @return R.success(實體類對象)
 	 */
+	@NonNull
 	@PostMapping("/login")
-	public R<Employee> login(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+	public ResponseDto<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戶名查詢數據庫；
@@ -58,15 +60,15 @@ public class EmployeeController {
 		final Employee aEmployee = employeeService.getOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || ComparisonUtils.isNotEqual(password, aEmployee.getPassword())) {
-			return R.error(Constants.LOGIN_FAILED);
+			return ResponseDto.failed(Constants.LOGIN_FAILED);
 		}
 		// 查看用戶狀態，如果已被禁用，則返回賬號已禁用；
 		if (ComparisonUtils.isEqual(0, aEmployee.getStatus())) {
-			return R.error(Constants.FORBIDDEN);
+			return ResponseDto.failed(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
 		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
-		return R.success(aEmployee);
+		return ResponseDto.succeeded(aEmployee);
 	}
 
 	/**

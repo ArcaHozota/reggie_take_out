@@ -27,14 +27,12 @@
                     <img src="../../images/login/logo.png" style="width:139px;height:42px;" alt=""/>
                 </div>
                 <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号"
-                              maxlength="20"
-                              prefix-icon="iconfont icon-user"></el-input>
+                    <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="賬號"
+                              maxlength="20" prefix-icon="iconfont icon-user"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" type="password" placeholder="密码"
-                              prefix-icon="iconfont icon-lock" maxlength="20"
-                              @keyup.enter.native="handleLogin"></el-input>
+                    <el-input v-model="loginForm.password" type="password" placeholder="密碼"
+                              prefix-icon="iconfont icon-lock" maxlength="20" @keyup.enter.native="handleLogin"></el-input>
                 </el-form-item>
                 <el-form-item style="width:100%;">
                     <el-button :loading="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
@@ -98,11 +96,11 @@
                     if (valid) {
                         this.loading = true
                         let res = await loginApi(this.loginForm)
-                        if (String(res.code) === '1') {
+                        if (String(res) === 'SUCCESS') {
                             localStorage.setItem('userInfo', JSON.stringify(res.data))
                             window.location.href = '/backend/index.html'
                         } else {
-                            this.$message.error(res.msg)
+                            this.$message.error(res.message)
                             this.loading = false
                         }
                     }
