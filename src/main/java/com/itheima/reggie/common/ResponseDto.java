@@ -42,7 +42,7 @@ public class ResponseDto<T> {
 	 * @param data   返回的數據；
 	 * @return ResponseDto
 	 */
-	public static <Type> ResponseDto<Type> successWithData(Type data) {
+	public static <Type> ResponseDto<Type> succeeded(Type data) {
 		return new ResponseDto<>(SUCCESS, null, data);
 	}
 
@@ -59,7 +59,7 @@ public class ResponseDto<T> {
 	/**
 	 * 請求失敗時使用的工具方法；
 	 *
-	 * @param <Type> 數據類型
+	 * @param <Type>  數據類型
 	 * @param message 失敗的處理信息；
 	 * @return ResponseDto
 	 */
@@ -70,9 +70,9 @@ public class ResponseDto<T> {
 	/**
 	 * 全參數構造器
 	 * 
-	 * @param result 當前請求的處理結果
+	 * @param result  當前請求的處理結果
 	 * @param message 請求成功與否的信息
-	 * @param data 返回的數據
+	 * @param data    返回的數據
 	 */
 	public ResponseDto(String result, String message, T data) {
 		super();
