@@ -3,6 +3,7 @@ package com.itheima.reggie.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.itheima.reggie.common.CustomMessage;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
@@ -78,7 +79,7 @@ public class EmployeeController {
 	public R<String> logout(@NonNull HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
 		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
-		return R.success("成功退出登錄");
+		return R.success(CustomMessage.SRP007);
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class EmployeeController {
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
 		employeeService.save(employee);
-		return R.success("成功增加員工信息");
+		return R.success(CustomMessage.SRP006);
 	}
 
 	/**
@@ -131,7 +132,7 @@ public class EmployeeController {
 	@PutMapping
 	public R<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
 		employeeService.updateById(employee);
-		return R.success("員工信息修改成功！");
+		return R.success(CustomMessage.SRP008);
 	}
 
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.itheima.reggie.common.CustomMessage;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -67,7 +68,7 @@ public class CategoryController {
 	public R<String> save(@RequestBody Category category) {
 		log.info("category:{}", category);
 		categoryService.save(category);
-		return R.success("新增分類成功");
+		return R.success(CustomMessage.SRP001);
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class CategoryController {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		categoryService.remove(id);
-		return R.success("分類信息刪除成功");
+		return R.success(CustomMessage.SRP003);
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class CategoryController {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
 		categoryService.updateById(category);
-		return R.success("分類信息修改成功");
+		return R.success(CustomMessage.SRP002);
 	}
 
 	/**

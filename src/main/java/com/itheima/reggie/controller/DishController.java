@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import com.itheima.reggie.common.CustomMessage;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;
@@ -59,7 +60,7 @@ public class DishController {
 	public R<String> save(@RequestBody @NonNull DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
 		dishService.saveWithFlavour(dishDto);
-		return R.success("新增菜品成功");
+		return R.success(CustomMessage.SRP004);
 	}
 
 	/**
@@ -130,6 +131,6 @@ public class DishController {
 	public R<String> update(@RequestBody @NonNull DishDto dishDto) {
 		log.info(dishDto.toString());
 		dishService.updateWithFlavour(dishDto);
-		return R.success("菜品信息修改成功");
+		return R.success(CustomMessage.SRP005);
 	}
 }
