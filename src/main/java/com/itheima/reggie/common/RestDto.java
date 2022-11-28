@@ -89,18 +89,4 @@ public class RestDto<T> {
 	public RestDto(){
 		super();
 	}
-
-	/**
-	 * 全參數構造器
-	 *
-	 * @param code  當前請求的處理結果
-	 * @param msg 請求成功與否的信息
-	 * @param data    返回的數據
-	 */
-	public RestDto(String code, String msg, T data) {
-		super();
-		this.code = code;
-		this.msg = msg;
-		this.data = data;
-	}
 }
