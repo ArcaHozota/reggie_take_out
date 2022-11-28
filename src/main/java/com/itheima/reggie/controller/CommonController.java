@@ -41,7 +41,7 @@ public class CommonController {
 	 * @return R.success(上傳的文件名)
 	 */
 	@PostMapping("/upload")
-	public RestDto<String> upload(@NonNull MultipartFile file) {
+	public RestDto<String> upload(MultipartFile file) {
 		log.info("Input:{}" + file.toString());
 		// 獲取文件的原始名稱；
 		String fileName = file.getOriginalFilename();

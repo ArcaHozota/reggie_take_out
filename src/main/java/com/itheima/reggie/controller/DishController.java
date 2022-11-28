@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +56,7 @@ public class DishController {
 	 * @return R.success(成功新增菜品的信息)
 	 */
 	@PostMapping
-	public RestDto<String> save(@RequestBody @NonNull DishDto dishDto) {
+	public RestDto<String> save(@RequestBody DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
 		dishService.saveWithFlavour(dishDto);
 		return RestDto.success(CustomMessage.SRP004);
@@ -128,7 +127,7 @@ public class DishController {
 	 * @return R.success(菜品更新成功的信息)
 	 */
 	@PutMapping
-	public RestDto<String> update(@RequestBody @NonNull DishDto dishDto) {
+	public RestDto<String> update(@RequestBody DishDto dishDto) {
 		log.info(dishDto.toString());
 		dishService.updateWithFlavour(dishDto);
 		return RestDto.success(CustomMessage.SRP005);
