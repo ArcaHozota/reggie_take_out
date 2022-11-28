@@ -147,7 +147,7 @@
                 }).then(() => {
                     deleteDish(type === '批量' ? this.checkList.join(',') : id).then(res => {
                         if (res.code === 1) {
-                            this.$message.success('刪除成功！')
+                            this.$message.success(res.data.toString())
                             this.handleQuery()
                         } else {
                             this.$message.error(res.msg || '操作失敗')
@@ -180,7 +180,7 @@
                     // 起售停售---批量起售停售接口
                     dishStatusByStatus(this.dishState).then(res => {
                         if (res.code === 1) {
-                            this.$message.success('菜品狀態更改成功！')
+                            this.$message.success('菜品狀態更改成功')
                             this.handleQuery()
                         } else {
                             this.$message.error(res.msg || '操作失敗')
