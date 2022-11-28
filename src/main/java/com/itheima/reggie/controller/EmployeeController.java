@@ -48,7 +48,7 @@ public class EmployeeController {
 	 * @return R.success(實體類對象)
 	 */
 	@PostMapping("/login")
-	public RestDto<Employee> login(@NonNull HttpServletRequest request, @NonNull @RequestBody Employee employee) {
+	public RestDto<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戶名查詢數據庫；
@@ -76,7 +76,7 @@ public class EmployeeController {
 	 * @return R.success(退出登錄的信息)
 	 */
 	@PostMapping("/logout")
-	public RestDto<String> logout(@NonNull HttpServletRequest request) {
+	public RestDto<String> logout(HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
 		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
 		return RestDto.success(CustomMessage.SRP007);
@@ -90,7 +90,7 @@ public class EmployeeController {
 	 * @return R.success(成功增加員工的信息)
 	 */
 	@PostMapping
-	public RestDto<String> save(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+	public RestDto<String> save(HttpServletRequest request, @RequestBody Employee employee) {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
@@ -130,7 +130,7 @@ public class EmployeeController {
 	 * @return R.success(成功修改員工的信息)
 	 */
 	@PutMapping
-	public RestDto<String> update(@NonNull HttpServletRequest request, @RequestBody @NonNull Employee employee) {
+	public RestDto<String> update(HttpServletRequest request, @RequestBody Employee employee) {
 		employeeService.updateById(employee);
 		return RestDto.success(CustomMessage.SRP008);
 	}

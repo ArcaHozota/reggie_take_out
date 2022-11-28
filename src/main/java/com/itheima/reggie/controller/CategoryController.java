@@ -5,14 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -78,7 +71,7 @@ public class CategoryController {
 	 * @return R.success(分類刪除成功的信息);
 	 */
 	@DeleteMapping
-	public RestDto<String> delete(Long id) {
+	public RestDto<String> delete(@RequestParam("id") Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		categoryService.remove(id);
@@ -106,7 +99,7 @@ public class CategoryController {
 	 * @return R.success(分類結果的集合)
 	 */
 	@GetMapping("/list")
-	public RestDto<List<Category>> queryList(@NonNull Category category) {
+	public RestDto<List<Category>> queryList(Category category) {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加條件；
