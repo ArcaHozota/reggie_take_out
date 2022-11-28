@@ -99,7 +99,7 @@
         methods: {
             async init() {
                 await getCategoryPage({'pageNum': this.pageNum, 'pageSize': this.pageSize}).then(res => {
-                    if (String(res.code) === '1') {
+                    if (res.code === 'SUCCESS') {
                         this.tableData = res.data.records
                         this.counts = Number(res.data.total)
                     } else {
@@ -147,7 +147,7 @@
                     'type': 'warning'
                 }).then(() => {
                     deleteCategory(id).then(res => {
-                        if (res.code === 1) {
+                        if (res.code === 'SUCCESS') {
                             this.$message.success(res.data.toString())
                             this.handleQuery()
                         } else {
@@ -168,7 +168,7 @@
                         if (reg.test(classData.sort)) {
                             addCategory({'name': classData.name, 'type': this.type, sort: classData.sort}).then(res => {
                                 console.log(res)
-                                if (res.code === 1) {
+                                if (res.code === 'SUCCESS') {
                                     this.$message.success(res.data.toString())
                                     if (!st) {
                                         this.classData.dialogVisible = false
@@ -197,7 +197,7 @@
                             'name': this.classData.name,
                             sort: this.classData.sort
                         }).then(res => {
-                            if (res.code === 1) {
+                            if (res.code === 'SUCCESS') {
                                 this.$message.success(res.data.toString())
                                 this.classData.dialogVisible = false
                                 this.handleQuery()
