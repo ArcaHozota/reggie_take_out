@@ -16,7 +16,7 @@
       <div class="tableBar">
         <el-input
           v-model="input"
-          placeholder="请输入套餐名称"
+          placeholder="請輸入套餐名稱"
           style="width: 250px"
           clearable
           @keyup.enter.native="handleQuery"
@@ -29,8 +29,8 @@
           ></i>
         </el-input>
         <div class="tableLab">
-          <span class="span-btn delBut non" @click="deleteHandle('批量')">批量删除</span>
-          <span class="span-btn blueBug non" @click="statusHandle('1')">批量启售</span>
+          <span class="span-btn delBut non" @click="deleteHandle('批量')">批量刪除</span>
+          <span class="span-btn blueBug non" @click="statusHandle('1')">批量發售</span>
           <span
             style="border:none;"
             class="span-btn delBut non"
@@ -56,11 +56,11 @@
         ></el-table-column>
         <el-table-column
           prop="name"
-          label="套餐名称"
+          label="套餐名稱"
         ></el-table-column>
-        <el-table-column prop="image" label="图片"  align="center">
+        <el-table-column prop="image" label="圖片"  align="center">
           <template slot-scope="{ row }">
-            <el-image style="width: auto; height: 40px; border:none;cursor: pointer;" :src="getImage(row.image)" :preview-src-list="[ `/common/download?name=${row.image}` ]" >
+            <el-image style="width: auto; height: 40px; border:none;cursor: pointer;" :src="getImage(row.image)" :preview-src-list="[`/common/download?name=${row.image}`]" >
               <div slot="error" class="image-slot">
                 <img src="./../../images/noImg.png"  style="width: auto; height: 40px; border:none;" >
               </div> 
@@ -69,19 +69,19 @@
         </el-table-column>
         <el-table-column
           prop="categoryName"
-          label="套餐分类"
+          label="套餐分類"
         ></el-table-column>
         <el-table-column
           prop="price"
-          label="套餐价"
+          label="套餐價格"
         >
           <template slot-scope="scope">
             <span>￥{{ scope.row.price/100 }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="售卖状态">
+        <el-table-column label="在售狀態">
           <template slot-scope="scope">
-            <span>{{ scope.row.status == '0' ? '停售' : '启售' }}</span>
+            <span>{{ scope.row.status == '0' ? '停售' : '在售' }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -109,7 +109,7 @@
               class="blueBug"
               @click="statusHandle(scope.row)"
             >
-              {{ scope.row.status == '0' ? '启售' : '停售' }}
+              {{ scope.row.status == '0' ? '發售' : '停售' }}
             </el-button>
             <el-button
               type="text"
@@ -170,7 +170,7 @@
               name: this.input ? this.input : undefined
             }
             await getSetmealPage(params).then(res => {
-              if (String(res.code) === '1') {
+              if (res.code === 'SUCCESS') {
                 this.tableData = res.data.records || []
                 this.counts = res.data.total
               }

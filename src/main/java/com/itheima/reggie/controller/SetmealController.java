@@ -57,6 +57,14 @@ public class SetmealController {
     }
 
     /**
+     * 刪除套餐
+     */
+    @DeleteMapping
+    public RestDto<String> delete(){
+        return null;
+    }
+
+    /**
      * 分頁信息顯示
      *
      * @param pageNum  頁碼
