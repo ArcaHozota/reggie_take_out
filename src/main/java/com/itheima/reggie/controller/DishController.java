@@ -74,7 +74,7 @@ public class DishController {
                                              @Param("name") String name) {
         // 聲明分頁構造器對象；
         final Page<Dish> pageInfo = new Page<>(pageNum, pageSize);
-        final Page<DishDto> dishDtoPage = new Page<>();
+        final Page<DishDto> dtoPage = new Page<>();
         // 創建條件構造器；
         final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
         // 添加過濾條件；
@@ -84,7 +84,7 @@ public class DishController {
         // 執行分頁查詢；
         dishService.page(pageInfo, queryWrapper);
         // 對象拷貝；
-        BeanUtils.copyProperties(pageInfo, dishDtoPage, "records");
+        BeanUtils.copyProperties(pageInfo, dtoPage, "records");
         // 獲取分頁數據；
         final List<Dish> records = pageInfo.getRecords();
         final List<DishDto> list = records.stream().map((item) -> {
@@ -104,8 +104,8 @@ public class DishController {
             }
             return dishDto;
         }).collect(Collectors.toList());
-        dishDtoPage.setRecords(list);
-        return RestDto.success(dishDtoPage);
+        dtoPage.setRecords(list);
+        return RestDto.success(dtoPage);
     }
 
     /**
