@@ -8,6 +8,7 @@ import com.itheima.reggie.mapper.SetmealDao;
 import com.itheima.reggie.service.SetmealDishService;
 import com.itheima.reggie.service.SetmealService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
      * @param setmealDto 數據傳輸類
      */
     @Override
+    @Transactional
     public void saveWithDish(SetmealDto setmealDto) {
         // 保存套餐的基本信息；
         this.save(setmealDto);
