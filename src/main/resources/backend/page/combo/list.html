@@ -64,7 +64,7 @@
         </el-table>
         <el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
                        layout="total, sizes, prev, pager, next, jumper" :total="counts"
-                       @size-change="handleSizeChange" :current-page.sync="page" @current-change="handleCurrentChange">
+                       @size-change="handleSizeChange" :current-page.sync="pageNum" @current-change="handleCurrentChange">
         </el-pagination>
     </div>
 </div>
@@ -83,7 +83,7 @@
             return {
                 input: '',
                 counts: 0,
-                page: 1,
+                pageNum: 1,
                 pageSize: 10,
                 tableData: [],
                 dishState: '',
@@ -99,7 +99,7 @@
         methods: {
             async init() {
                 const params = {
-                    page: this.page,
+                    pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     name: this.input ? this.input : undefined
                 }
@@ -116,7 +116,7 @@
                 return `/common/download?name=${image}`
             },
             handleQuery() {
-                this.page = 1;
+                this.pageNum = 1;
                 this.init();
             },
             // 添加
@@ -135,7 +135,6 @@
                     }, true)
                 }
             },
-
             // 删除
             deleteHandle(type, id) {
                 if (type === '批量' && id === null) {
@@ -159,12 +158,11 @@
                     })
                 })
             },
-
             //状态更改
             statusHandle(row) {
                 let params = {}
                 if (typeof row === 'string') {
-                    if (this.checkList.length == 0) {
+                    if (this.checkList.length === 0) {
                         this.$message.error('批量操作，请先勾选操作菜品！')
                         return false
                     }
@@ -192,7 +190,6 @@
                     })
                 })
             },
-
             // 全部操作
             handleSelectionChange(val) {
                 let checkArr = []
@@ -206,7 +203,7 @@
                 this.init()
             },
             handleCurrentChange(val) {
-                this.page = val
+                this.pageNum = val
                 this.init()
             }
         }
