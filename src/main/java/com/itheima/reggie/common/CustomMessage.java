@@ -47,4 +47,9 @@ public final class CustomMessage {
      * 員工信息修改成功
      */
     public static final String SRP008 = "員工信息修改成功";
+
+    /**
+     * 套餐信息修改成功
+     */
+    public static final String SRP010 = "套餐信息修改成功";
 }
