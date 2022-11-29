@@ -40,96 +40,116 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/dish")
 public class DishController {
 
-	@Resource
-	private DishService dishService;
+    @Resource
+    private DishService dishService;
 
-	@Resource
-	private CategoryService categoryService;
+    @Resource
+    private CategoryService categoryService;
 
-	@Resource
-	private DishFlavorService dishFlavorService;
+    @Resource
+    private DishFlavorService dishFlavorService;
 
-	/**
-	 * 新增菜品
-	 *
-	 * @param dishDto 數據傳輸類對象
-	 * @return R.success(成功新增菜品的信息)
-	 */
-	@PostMapping
-	public RestDto<String> save(@RequestBody DishDto dishDto) {
-		log.info("新增菜品：{}" + dishDto.toString());
-		dishService.saveWithFlavour(dishDto);
-		return RestDto.success(CustomMessage.SRP004);
-	}
+    /**
+     * 新增菜品
+     *
+     * @param dishDto 數據傳輸類對象
+     * @return R.success(成功新增菜品的信息)
+     */
+    @PostMapping
+    public RestDto<String> save(@RequestBody DishDto dishDto) {
+        log.info("新增菜品：{}" + dishDto.toString());
+        dishService.saveWithFlavour(dishDto);
+        return RestDto.success(CustomMessage.SRP004);
+    }
 
-	/**
-	 * 菜品信息分頁查詢
-	 *
-	 * @param pageNum  頁碼
-	 * @param pageSize 頁面大小
-	 * @return R.success(分頁信息)
-	 */
-	@GetMapping("/page")
-	public RestDto<Page<DishDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
-			@Param("name") String name) {
-		// 聲明分頁構造器對象；
-		final Page<Dish> pageInfo = new Page<>(pageNum, pageSize);
-		final Page<DishDto> dishDtoPage = new Page<>();
-		// 創建條件構造器；
-		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
-		// 添加過濾條件；
-		queryWrapper.like(ComparisonUtils.isNotEqual(name, null), Dish::getName, name);
-		// 添加排序條件；
-		queryWrapper.orderByDesc(Dish::getUpdateTime);
-		// 執行分頁查詢；
-		dishService.page(pageInfo, queryWrapper);
-		// 對象拷貝；
-		BeanUtils.copyProperties(pageInfo, dishDtoPage, "records");
-		// 獲取分頁數據；
-		final List<Dish> records = pageInfo.getRecords();
-		final List<DishDto> list = records.stream().map((item) -> {
-			// 聲明菜品及口味數據傳輸類對象；
-			final DishDto dishDto = new DishDto();
-			// 拷貝除分類ID以外的屬性；
-			BeanUtils.copyProperties(item, dishDto);
-			// 獲取分類ID；
-			final Long categoryId = item.getCategoryId();
-			// 根據ID查詢分類對象；
-			final Category category = categoryService.getById(categoryId);
-			if (ComparisonUtils.isNotEqual(category, null)) {
-				// 獲取分類名稱；
-				final String categoryName = category.getName();
-				// 存儲於DTO對象中並返回；
-				dishDto.setCategoryName(categoryName);
-			}
-			return dishDto;
-		}).collect(Collectors.toList());
-		dishDtoPage.setRecords(list);
-		return RestDto.success(dishDtoPage);
-	}
+    /**
+     * 菜品信息分頁查詢
+     *
+     * @param pageNum  頁碼
+     * @param pageSize 頁面大小
+     * @return R.success(分頁信息)
+     */
+    @GetMapping("/page")
+    public RestDto<Page<DishDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
+                                             @Param("name") String name) {
+        // 聲明分頁構造器對象；
+        final Page<Dish> pageInfo = new Page<>(pageNum, pageSize);
+        final Page<DishDto> dishDtoPage = new Page<>();
+        // 創建條件構造器；
+        final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+        // 添加過濾條件；
+        queryWrapper.like(ComparisonUtils.isNotEqual(name, null), Dish::getName, name);
+        // 添加排序條件；
+        queryWrapper.orderByDesc(Dish::getUpdateTime);
+        // 執行分頁查詢；
+        dishService.page(pageInfo, queryWrapper);
+        // 對象拷貝；
+        BeanUtils.copyProperties(pageInfo, dishDtoPage, "records");
+        // 獲取分頁數據；
+        final List<Dish> records = pageInfo.getRecords();
+        final List<DishDto> list = records.stream().map((item) -> {
+            // 聲明菜品及口味數據傳輸類對象；
+            final DishDto dishDto = new DishDto();
+            // 拷貝除分類ID以外的屬性；
+            BeanUtils.copyProperties(item, dishDto);
+            // 獲取分類ID；
+            final Long categoryId = item.getCategoryId();
+            // 根據ID查詢分類對象；
+            final Category category = categoryService.getById(categoryId);
+            if (ComparisonUtils.isNotEqual(category, null)) {
+                // 獲取分類名稱；
+                final String categoryName = category.getName();
+                // 存儲於DTO對象中並返回；
+                dishDto.setCategoryName(categoryName);
+            }
+            return dishDto;
+        }).collect(Collectors.toList());
+        dishDtoPage.setRecords(list);
+        return RestDto.success(dishDtoPage);
+    }
 
-	/**
-	 * 根據ID顯示菜品信息
-	 *
-	 * @param id 菜品ID
-	 * @return R.success(菜品信息)
-	 */
-	@GetMapping("/{id}")
-	public RestDto<DishDto> getDishInfo(@PathVariable("id") Long id) {
-		// 根據ID查詢菜品信息以及對應的口味信息；
-		return RestDto.success(dishService.getByIdWithFlavour(id));
-	}
+    /**
+     * 根據ID顯示菜品信息
+     *
+     * @param id 菜品ID
+     * @return R.success(菜品信息)
+     */
+    @GetMapping("/{id}")
+    public RestDto<DishDto> getDishInfo(@PathVariable("id") Long id) {
+        // 根據ID查詢菜品信息以及對應的口味信息；
+        return RestDto.success(dishService.getByIdWithFlavour(id));
+    }
 
-	/**
-	 * 修改菜品信息
-	 *
-	 * @param dishDto 數據傳輸類對象
-	 * @return R.success(菜品更新成功的信息)
-	 */
-	@PutMapping
-	public RestDto<String> update(@RequestBody DishDto dishDto) {
-		log.info(dishDto.toString());
-		dishService.updateWithFlavour(dishDto);
-		return RestDto.success(CustomMessage.SRP005);
-	}
+    /**
+     * 修改菜品信息
+     *
+     * @param dishDto 數據傳輸類對象
+     * @return R.success(菜品更新成功的信息)
+     */
+    @PutMapping
+    public RestDto<String> update(@RequestBody DishDto dishDto) {
+        log.info(dishDto.toString());
+        dishService.updateWithFlavour(dishDto);
+        return RestDto.success(CustomMessage.SRP005);
+    }
+
+    /**
+     * 回顯菜品表單數據
+     *
+     * @param dish 實體類對象
+     * @return R.success(菜品信息)
+     */
+    @GetMapping("/list")
+    public RestDto<List<Dish>> list(@RequestBody Dish dish) {
+        // 創建條件構造器；
+        final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+        // 添加搜索條件；
+        queryWrapper.eq(ComparisonUtils.isNotEqual(null, dish.getCategoryId()), Dish::getCategoryId, dish.getCategoryId());
+        queryWrapper.eq(Dish::getStatus, 1);
+        // 添加排序條件；
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        // 查詢菜品信息並返回；
+        List<Dish> list = dishService.list(queryWrapper);
+        return RestDto.success(list);
+    }
 }
