@@ -87,6 +87,7 @@ public class DishController {
         BeanUtils.copyProperties(pageInfo, dtoPage, "records");
         // 獲取分頁數據；
         final List<Dish> records = pageInfo.getRecords();
+        // 獲取數據傳輸類分頁；
         final List<DishDto> list = records.stream().map((item) -> {
             // 聲明菜品及口味數據傳輸類對象；
             final DishDto dishDto = new DishDto();
@@ -104,6 +105,7 @@ public class DishController {
             }
             return dishDto;
         }).collect(Collectors.toList());
+        // 設置分頁數據於構造器中並返回；
         dtoPage.setRecords(list);
         return RestDto.success(dtoPage);
     }
