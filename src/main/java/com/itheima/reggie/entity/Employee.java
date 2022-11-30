@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 public class Employee implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6540113185665801143L;
 
 	/**
 	 * ID

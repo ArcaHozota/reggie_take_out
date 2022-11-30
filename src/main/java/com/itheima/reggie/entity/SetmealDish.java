@@ -19,7 +19,7 @@ import lombok.Data;
 @Data
 public class SetmealDish implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -641135780975738908L;
 
 	/**
 	 * ID
