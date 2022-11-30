@@ -24,8 +24,12 @@ import com.itheima.reggie.service.DishService;
 @Service
 public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishService {
 
+	/**
+	 * 菜品口味服務類
+	 */
 	private final DishFlavorService dishFlavorService;
 
+	// 構造器模式導入；
 	public DishServiceImpl(DishFlavorService dishFlavorService) {
 		this.dishFlavorService = dishFlavorService;
 	}
@@ -54,7 +58,7 @@ public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishS
 	/**
 	 * 根據ID查詢菜品信息以及對應的口味信息
 	 * 
-	 * @param id
+	 * @param id 菜品ID
 	 * @return dishDto 菜品及口味數據傳輸類
 	 */
 	@Override

@@ -65,7 +65,8 @@ public class SetmealController {
     @DeleteMapping
     public Reggie<String> delete(@RequestParam("ids") List<Long> ids) {
         log.info("套餐ID：{}", ids);
-        return null;
+        setmealService.removeWithDish(ids);
+        return Reggie.success(CustomMessage.SRP011);
     }
 
     /**

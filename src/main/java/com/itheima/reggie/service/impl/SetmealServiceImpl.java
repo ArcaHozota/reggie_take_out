@@ -1,6 +1,10 @@
 package com.itheima.reggie.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.itheima.reggie.common.CustomException;
+import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.dto.SetmealDto;
 import com.itheima.reggie.entity.Setmeal;
 import com.itheima.reggie.entity.SetmealDish;
@@ -21,8 +25,12 @@ import java.util.stream.Collectors;
 @Service
 public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> implements SetmealService {
 
+    /**
+     * 套餐與菜品服務類
+     */
     private final SetmealDishService setmealDishService;
 
+    // 構造器模式導入；
     public SetmealServiceImpl(SetmealDishService setmealDishService) {
         this.setmealDishService = setmealDishService;
     }
@@ -46,5 +54,29 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
         }).collect(Collectors.toList());
         // 保存套餐和菜品的關聯關係；
         setmealDishService.saveBatch(setmealDishes);
+    }
+
+    /**
+     * 刪除套餐同時刪除套餐和菜品的關聯關係
+     *
+     * @param ids 套餐ID的集合
+     */
+    @Override
+    public void removeWithDish(List<Long> ids) {
+        // 查詢套餐狀態以確認是否可以刪除；
+        final LambdaQueryWrapper<Setmeal> queryWrapper = Wrappers.lambdaQuery(new Setmeal());
+        queryWrapper.in(Setmeal::getId, ids);
+        queryWrapper.eq(Setmeal::getStatus, 1);
+        final int count = this.count(queryWrapper);
+        if (count > 0) {
+            // 如果無法刪除，則抛出異常；
+            throw new CustomException(CustomMessage.ERP012);
+        }
+        // 刪除套餐表中的數據；
+        this.removeByIds(ids);
+        // 刪除套餐口味表中的數據；
+        LambdaQueryWrapper<SetmealDish> lambdaQueryWrapper = Wrappers.lambdaQuery(new SetmealDish());
+        lambdaQueryWrapper.in(SetmealDish::getSetmealId, ids);
+        setmealDishService.remove(lambdaQueryWrapper);
     }
 }

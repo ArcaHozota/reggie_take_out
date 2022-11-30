@@ -59,7 +59,13 @@ public final class CustomMessage {
     public static final String SRP010 = "套餐信息添加成功";
 
     /**
-     * 套餐信息修改成功
+     * 套餐信息刪除成功
      */
-    public static final String SRP011 = "套餐信息修改成功";
+    public static final String SRP011 = "套餐信息刪除成功";
+
+    /**
+     * 套餐刪除出錯
+     */
+    public static final String ERP012 = "該套餐正在售賣中，無法刪除";
+
 }
