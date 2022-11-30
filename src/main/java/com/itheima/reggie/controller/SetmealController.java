@@ -50,7 +50,7 @@ public class SetmealController {
      */
     @PostMapping
     public Reggie<String> save(@RequestBody SetmealDto setmealDto) {
-        log.info("套餐信息：{}" + setmealDto);
+        log.info("套餐信息：{}", setmealDto);
         // 儲存套餐；
         setmealService.saveWithDish(setmealDto);
         return Reggie.success(CustomMessage.SRP010);
@@ -58,9 +58,13 @@ public class SetmealController {
 
     /**
      * 刪除套餐
+     *
+     * @param ids 套餐ID的集合
+     * @return R.success(新增成功的信息)
      */
     @DeleteMapping
-    public Reggie<String> delete(){
+    public Reggie<String> delete(@RequestParam("ids") List<Long> ids) {
+        log.info("套餐ID：{}", ids);
         return null;
     }
 
