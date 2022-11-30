@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.CustomMessage;
-import com.itheima.reggie.common.RestDto;
+import com.itheima.reggie.common.Reggie;
 import com.itheima.reggie.dto.SetmealDto;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Setmeal;
@@ -49,18 +49,18 @@ public class SetmealController {
      * @return R.success(新增成功的信息)
      */
     @PostMapping
-    public RestDto<String> save(@RequestBody SetmealDto setmealDto) {
+    public Reggie<String> save(@RequestBody SetmealDto setmealDto) {
         log.info("套餐信息：{}" + setmealDto);
         // 儲存套餐；
         setmealService.saveWithDish(setmealDto);
-        return RestDto.success(CustomMessage.SRP010);
+        return Reggie.success(CustomMessage.SRP010);
     }
 
     /**
      * 刪除套餐
      */
     @DeleteMapping
-    public RestDto<String> delete(){
+    public Reggie<String> delete(){
         return null;
     }
 
@@ -73,7 +73,7 @@ public class SetmealController {
      * @return R.success(分頁信息)
      */
     @GetMapping("/page")
-    public RestDto<Page<SetmealDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("name") String name) {
+    public Reggie<Page<SetmealDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("name") String name) {
         // 聲明分頁構造器；
         final Page<Setmeal> pageInfo = new Page<>(pageNum, pageSize);
         final Page<SetmealDto> dtoPage = new Page<>();
@@ -109,6 +109,6 @@ public class SetmealController {
         }).collect(Collectors.toList());
         // 設置分頁數據於構造器中並返回；
         dtoPage.setRecords(list);
-        return RestDto.success(dtoPage);
+        return Reggie.success(dtoPage);
     }
 }

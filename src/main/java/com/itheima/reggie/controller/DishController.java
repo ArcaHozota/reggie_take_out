@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import com.itheima.reggie.common.Reggie;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.CustomMessage;
-import com.itheima.reggie.common.RestDto;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Dish;
@@ -56,10 +56,10 @@ public class DishController {
      * @return R.success(成功新增菜品的信息)
      */
     @PostMapping
-    public RestDto<String> save(@RequestBody DishDto dishDto) {
+    public Reggie<String> save(@RequestBody DishDto dishDto) {
         log.info("新增菜品：{}" + dishDto.toString());
         dishService.saveWithFlavour(dishDto);
-        return RestDto.success(CustomMessage.SRP004);
+        return Reggie.success(CustomMessage.SRP004);
     }
 
     /**
@@ -70,7 +70,7 @@ public class DishController {
      * @return R.success(分頁信息)
      */
     @GetMapping("/page")
-    public RestDto<Page<DishDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
+    public Reggie<Page<DishDto>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
                                              @Param("name") String name) {
         // 聲明分頁構造器對象；
         final Page<Dish> pageInfo = new Page<>(pageNum, pageSize);
@@ -107,7 +107,7 @@ public class DishController {
         }).collect(Collectors.toList());
         // 設置分頁數據於構造器中並返回；
         dtoPage.setRecords(list);
-        return RestDto.success(dtoPage);
+        return Reggie.success(dtoPage);
     }
 
     /**
@@ -117,9 +117,9 @@ public class DishController {
      * @return R.success(菜品信息)
      */
     @GetMapping("/{id}")
-    public RestDto<DishDto> getDishInfo(@PathVariable("id") Long id) {
+    public Reggie<DishDto> getDishInfo(@PathVariable("id") Long id) {
         // 根據ID查詢菜品信息以及對應的口味信息；
-        return RestDto.success(dishService.getByIdWithFlavour(id));
+        return Reggie.success(dishService.getByIdWithFlavour(id));
     }
 
     /**
@@ -129,10 +129,10 @@ public class DishController {
      * @return R.success(菜品更新成功的信息)
      */
     @PutMapping
-    public RestDto<String> update(@RequestBody DishDto dishDto) {
+    public Reggie<String> update(@RequestBody DishDto dishDto) {
         log.info(dishDto.toString());
         dishService.updateWithFlavour(dishDto);
-        return RestDto.success(CustomMessage.SRP005);
+        return Reggie.success(CustomMessage.SRP005);
     }
 
     /**
@@ -142,7 +142,7 @@ public class DishController {
      * @return R.success(菜品信息)
      */
     @GetMapping("/list")
-    public RestDto<List<Dish>> list(@RequestBody Dish dish) {
+    public Reggie<List<Dish>> list(@RequestBody Dish dish) {
         // 創建條件構造器；
         final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
         // 添加搜索條件；
@@ -152,6 +152,6 @@ public class DishController {
         queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         // 查詢菜品信息並返回；
         List<Dish> list = dishService.list(queryWrapper);
-        return RestDto.success(list);
+        return Reggie.success(list);
     }
 }
