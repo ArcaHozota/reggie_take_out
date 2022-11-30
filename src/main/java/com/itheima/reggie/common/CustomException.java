@@ -8,7 +8,7 @@ package com.itheima.reggie.common;
  */
 public class CustomException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1692201139310590555L;
 
 	public CustomException(String message) {
 		super(message);
