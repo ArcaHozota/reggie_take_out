@@ -49,6 +49,11 @@ public final class CustomMessage {
     public static final String SRP008 = "員工信息修改成功";
 
     /**
+     * 分類刪除出錯
+     */
+    public static final String ERP090 = "當前分類下關聯了菜品或者套餐不能刪除";
+
+    /**
      * 套餐信息添加成功
      */
     public static final String SRP010 = "套餐信息添加成功";
