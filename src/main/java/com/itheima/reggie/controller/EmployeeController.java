@@ -3,7 +3,6 @@ package com.itheima.reggie.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.itheima.reggie.common.Reggie;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.util.DigestUtils;
@@ -20,6 +19,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.CustomMessage;
+import com.itheima.reggie.common.Reggie;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
 import com.itheima.reggie.utils.ComparisonUtils;
@@ -47,7 +47,7 @@ public class EmployeeController {
 	 * @return R.success(實體類對象)
 	 */
 	@PostMapping("/login")
-	public Reggie<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
+	public Reggie<Employee> login(final HttpServletRequest request, @RequestBody final Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戶名查詢數據庫；
@@ -75,7 +75,7 @@ public class EmployeeController {
 	 * @return R.success(退出登錄的信息)
 	 */
 	@PostMapping("/logout")
-	public Reggie<String> logout(HttpServletRequest request) {
+	public Reggie<String> logout(final HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
 		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
 		return Reggie.success(CustomMessage.SRP007);
@@ -88,7 +88,7 @@ public class EmployeeController {
 	 * @return R.success(成功增加員工的信息)
 	 */
 	@PostMapping
-	public Reggie<String> save(@RequestBody Employee employee) {
+	public Reggie<String> save(@RequestBody final Employee employee) {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
@@ -105,8 +105,8 @@ public class EmployeeController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<Employee>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,
-			@Param("name") String name) {
+	public Reggie<Page<Employee>> pagination(@Param("pageNum") final Integer pageNum,
+			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
 		// 聲明分頁構造器；
 		final Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
@@ -127,7 +127,7 @@ public class EmployeeController {
 	 * @return R.success(成功修改員工的信息)
 	 */
 	@PutMapping
-	public Reggie<String> update(@RequestBody Employee employee) {
+	public Reggie<String> update(@RequestBody final Employee employee) {
 		employeeService.updateById(employee);
 		return Reggie.success(CustomMessage.SRP008);
 	}
@@ -139,7 +139,7 @@ public class EmployeeController {
 	 * @return R.success(查詢到的員工的信息)
 	 */
 	@GetMapping("/{id}")
-	public Reggie<Employee> getById(@PathVariable Long id) {
+	public Reggie<Employee> getById(@PathVariable final Long id) {
 		log.info("根據ID查詢員工信息...");
 		final Employee employee = employeeService.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；

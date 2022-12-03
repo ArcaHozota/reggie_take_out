@@ -4,14 +4,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.itheima.reggie.common.Reggie;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.CustomMessage;
+import com.itheima.reggie.common.Reggie;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.utils.ComparisonUtils;
@@ -39,7 +46,8 @@ public class CategoryController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<Category>> pagination(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
+	public Reggie<Page<Category>> pagination(@Param("pageNum") final Integer pageNum,
+			@Param("pageSize") final Integer pageSize) {
 		// 聲明分頁構造器；
 		final Page<Category> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
@@ -58,7 +66,7 @@ public class CategoryController {
 	 * @return R.success(分類新增成功的信息);
 	 */
 	@PostMapping
-	public Reggie<String> save(@RequestBody Category category) {
+	public Reggie<String> save(@RequestBody final Category category) {
 		log.info("category:{}", category);
 		categoryService.save(category);
 		return Reggie.success(CustomMessage.SRP001);
@@ -71,7 +79,7 @@ public class CategoryController {
 	 * @return R.success(分類刪除成功的信息);
 	 */
 	@DeleteMapping
-	public Reggie<String> delete(@RequestParam("id") Long id) {
+	public Reggie<String> delete(@RequestParam("id") final Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		categoryService.remove(id);
@@ -85,7 +93,7 @@ public class CategoryController {
 	 * @return R.success(分類更新成功的信息);
 	 */
 	@PutMapping
-	public Reggie<String> update(@RequestBody Category category) {
+	public Reggie<String> update(@RequestBody final Category category) {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
 		categoryService.updateById(category);
@@ -99,7 +107,7 @@ public class CategoryController {
 	 * @return R.success(分類結果的集合)
 	 */
 	@GetMapping("/list")
-	public Reggie<List<Category>> queryList(@RequestBody Category category) {
+	public Reggie<List<Category>> queryList(@RequestBody final Category category) {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加條件；
