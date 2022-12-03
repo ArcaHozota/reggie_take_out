@@ -12,5 +12,3 @@ function loginoutApi() {
     'method': 'post',
   })
 }
-
-  
