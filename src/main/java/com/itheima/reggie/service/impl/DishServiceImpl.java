@@ -30,7 +30,7 @@ public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishS
 	private final DishFlavorService dishFlavorService;
 
 	// 構造器模式導入；
-	private DishServiceImpl(DishFlavorService dishFlavorService) {
+	private DishServiceImpl(final DishFlavorService dishFlavorService) {
 		this.dishFlavorService = dishFlavorService;
 	}
 
@@ -41,7 +41,7 @@ public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishS
 	 */
 	@Override
 	@Transactional
-	public void saveWithFlavour(DishDto dishDto) {
+	public void saveWithFlavour(final DishDto dishDto) {
 		// 保存菜品的基本信息到菜品表；
 		this.save(dishDto);
 		// 獲取菜品口味的集合；
@@ -62,7 +62,7 @@ public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishS
 	 * @return dishDto 菜品及口味數據傳輸類
 	 */
 	@Override
-	public DishDto getByIdWithFlavour(Long id) {
+	public DishDto getByIdWithFlavour(final Long id) {
 		// 查詢菜品的基本信息；
 		final Dish dish = this.getById(id);
 		// 聲明一個菜品及口味數據傳輸類對象；
@@ -85,7 +85,7 @@ public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishS
 	 */
 	@Override
 	@Transactional
-	public void updateWithFlavour(DishDto dishDto) {
+	public void updateWithFlavour(final DishDto dishDto) {
 		// 更新菜品信息；
 		this.updateById(dishDto);
 		// 清理當前菜品所對應的口味信息；
