@@ -45,7 +45,7 @@ public class LoginCheckFilter implements Filter {
 		final String requestURI = request.getRequestURI();
 		// 定義無需過濾的路徑集合；
 		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**",
-				"/common/**" };
+				"/common/**", "/user/login", "/user/sendMsg" };
 		// 獲取用戶ID；
 		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
@@ -65,6 +65,13 @@ public class LoginCheckFilter implements Filter {
 		response.getWriter().write(JSON.toJSONString(Reggie.error(Constants.NOT_LOGIN)));
 	}
 
+	/**
+	 * 檢查本次請求是否位於無需過濾的路徑集合
+	 * 
+	 * @param requestURI 本次請求路徑
+	 * @param urls       無需過濾的路徑集合
+	 * @return true：滿足，false：不滿足
+	 */
 	private boolean check(final String requestURI, final String... urls) {
 		for (final String url : urls) {
 			final boolean match = PATH_MATCHER.match(url, requestURI);
