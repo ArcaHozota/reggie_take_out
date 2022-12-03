@@ -8,14 +8,14 @@ package com.itheima.reggie.common;
  */
 public class BaseContext {
 
-    private static final ThreadLocal<Long> THREAD_LOCAL = new ThreadLocal<>();
+	private static final ThreadLocal<Long> THREAD_LOCAL = new ThreadLocal<>();
 
-    public static void setCurrentId(Long id) {
-        THREAD_LOCAL.set(id);
-        THREAD_LOCAL.remove();
-    }
+	public static void setCurrentId(final Long id) {
+		THREAD_LOCAL.set(id);
+		THREAD_LOCAL.remove();
+	}
 
-    public static Long getCurrentId() {
-        return THREAD_LOCAL.get();
-    }
+	public static Long getCurrentId() {
+		return THREAD_LOCAL.get();
+	}
 }
