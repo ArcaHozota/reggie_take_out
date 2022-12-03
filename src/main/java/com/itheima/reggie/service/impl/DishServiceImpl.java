@@ -30,7 +30,7 @@ public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishS
 	private final DishFlavorService dishFlavorService;
 
 	// 構造器模式導入；
-	public DishServiceImpl(DishFlavorService dishFlavorService) {
+	private DishServiceImpl(DishFlavorService dishFlavorService) {
 		this.dishFlavorService = dishFlavorService;
 	}
 

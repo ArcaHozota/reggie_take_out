@@ -33,7 +33,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, Category> impl
     private final SetmealService setmealService;
 
     // 構造器模式導入；
-    public CategoryServiceImpl(DishService dishService, SetmealService setmealService) {
+    private CategoryServiceImpl(DishService dishService, SetmealService setmealService) {
         this.dishService = dishService;
         this.setmealService = setmealService;
     }

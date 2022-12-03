@@ -31,7 +31,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
     private final SetmealDishService setmealDishService;
 
     // 構造器模式導入；
-    public SetmealServiceImpl(SetmealDishService setmealDishService) {
+    private SetmealServiceImpl(SetmealDishService setmealDishService) {
         this.setmealDishService = setmealDishService;
     }
 
