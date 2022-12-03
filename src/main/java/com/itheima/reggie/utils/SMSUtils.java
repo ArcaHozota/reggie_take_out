@@ -20,7 +20,7 @@ public class SMSUtils {
 	/**
 	 * 發送SMS訊息
 	 * 
-	 * @param signName     客戶署名
+	 * @param signName     客戸署名
 	 * @param templateCode 模板
 	 * @param phoneNumbers 手機號
 	 * @param param        參數

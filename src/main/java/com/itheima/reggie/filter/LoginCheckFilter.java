@@ -18,6 +18,7 @@ import com.itheima.reggie.common.BaseContext;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.common.Reggie;
 import com.itheima.reggie.entity.Employee;
+import com.itheima.reggie.entity.User;
 import com.itheima.reggie.utils.ComparisonUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,17 +47,24 @@ public class LoginCheckFilter implements Filter {
 		// 定義無需過濾的路徑集合；
 		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**",
 				"/common/**", "/user/login", "/user/sendMsg" };
-		// 獲取用戶ID；
+		// 獲取用戸ID；
 		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
+		final Long UserId = (Long) request.getSession().getAttribute(Constants.getEntityName(new User()));
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
 		if (this.check(requestURI, urls)) {
 			log.info("本次請求{}不需要處理", requestURI);
 			filterChain.doFilter(request, response);
 			return;
 		} else if (ComparisonUtils.isNotEqual(null, empId)) {
-			log.info("用戶已登錄，用戶ID為：{}", empId);
+			log.info("用戸已登錄，用戸ID為：{}", empId);
 			// 將當前ID儲存於内存綫程中；
 			BaseContext.setCurrentId(empId);
+			filterChain.doFilter(request, response);
+			return;
+		} else if (ComparisonUtils.isNotEqual(null, UserId)) {
+			log.info("用戸已登錄，用戸ID為：{}", UserId);
+			// 將當前ID儲存於内存綫程中；
+			BaseContext.setCurrentId(UserId);
 			filterChain.doFilter(request, response);
 			return;
 		}

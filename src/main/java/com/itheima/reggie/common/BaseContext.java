@@ -1,7 +1,7 @@
 package com.itheima.reggie.common;
 
 /**
- * 基於ThreadLocal封裝工具類，用於獲取和保存當前用戶ID；
+ * 基於ThreadLocal封裝工具類，用於獲取和保存當前用戸ID；
  *
  * @author Administrator
  * @date 2022-11-18

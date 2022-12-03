@@ -50,7 +50,7 @@ public class EmployeeController {
 	public Reggie<Employee> login(final HttpServletRequest request, @RequestBody final Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
-		// 根據頁面提交的用戶名查詢數據庫；
+		// 根據頁面提交的用戸名查詢數據庫；
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		queryWrapper.eq(Employee::getUsername, employee.getUsername());
 		// 獲取One對象；
@@ -59,7 +59,7 @@ public class EmployeeController {
 		if (aEmployee == null || ComparisonUtils.isNotEqual(password, aEmployee.getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
-		// 查看用戶狀態，如果已被禁用，則返回賬號已禁用；
+		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
 		if (ComparisonUtils.isEqual(0, aEmployee.getStatus())) {
 			return Reggie.error(Constants.FORBIDDEN);
 		}
