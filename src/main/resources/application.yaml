@@ -4,11 +4,12 @@ spring:
   application:
     name: reggie_take_out
   datasource:
-    druid:
-      driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/reggie
-      username: postgres
-      password: 123456
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/reggie
+    username: postgres
+    password: 123456
+    hikari:
+      maximum-pool-size: 120
   output:
     ansi:
       enabled: ALWAYS
