@@ -43,7 +43,7 @@ public class Employee implements Serializable {
 	/**
 	 * 手機號
 	 */
-	@TableField(value = "phone_number")
+	@TableField(value = "phone_num")
 	private String phoneNo;
 
 	/**
