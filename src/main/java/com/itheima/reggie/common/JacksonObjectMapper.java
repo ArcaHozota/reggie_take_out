@@ -38,12 +38,10 @@ public class JacksonObjectMapper extends ObjectMapper {
 		super();
 		// 收到未知屬性時不報異常；
 		this.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
-
 		// 反序列化時，屬性不存在的兼容處理；
 		this.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
 		// 設置序列化器和反序列化器；
-		SimpleModule simpleModule = new SimpleModule()
+		final SimpleModule simpleModule = new SimpleModule()
 				.addDeserializer(LocalDateTime.class,
 						new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))
 				.addDeserializer(LocalDate.class,

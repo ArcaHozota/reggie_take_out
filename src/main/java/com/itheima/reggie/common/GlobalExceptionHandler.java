@@ -2,7 +2,6 @@ package com.itheima.reggie.common;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,7 +28,7 @@ public class GlobalExceptionHandler {
 	 * @return 錯誤信息
 	 */
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-	public Reggie<String> exceptionHandler01(@NonNull SQLIntegrityConstraintViolationException exception) {
+	public Reggie<String> exceptionHandler01(final SQLIntegrityConstraintViolationException exception) {
 		log.error(exception.getMessage());
 		if (exception.getMessage().contains(Constants.DUPLICATED_KEY)) {
 			final String[] split = exception.getMessage().split(" ");
@@ -46,7 +45,7 @@ public class GlobalExceptionHandler {
 	 * @return 錯誤信息
 	 */
 	@ExceptionHandler(CustomException.class)
-	public Reggie<String> exceptionHandler02(@NonNull CustomException exception) {
+	public Reggie<String> exceptionHandler02(final CustomException exception) {
 		log.error(exception.getMessage());
 		return Reggie.error(exception.getMessage());
 	}
