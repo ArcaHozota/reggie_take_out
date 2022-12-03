@@ -67,7 +67,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
         final LambdaQueryWrapper<Setmeal> queryWrapper = Wrappers.lambdaQuery(new Setmeal());
         queryWrapper.in(Setmeal::getId, ids);
         queryWrapper.eq(Setmeal::getStatus, 1);
-        final int count = this.count(queryWrapper);
+        final long count = this.count(queryWrapper);
         if (count > 0) {
             // 如果無法刪除，則抛出異常；
             throw new CustomException(CustomMessage.ERP012);
