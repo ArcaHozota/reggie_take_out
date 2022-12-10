@@ -108,7 +108,7 @@ public class EmployeeController {
 	public Reggie<Page<Employee>> pagination(@Param("pageNum") final Integer pageNum,
 			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
 		// 聲明分頁構造器；
-		final Page<Employee> pageInfo = new Page<>(pageNum, pageSize);
+		final Page<Employee> pageInfo = Page.of(pageNum, pageSize);
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		// 添加過濾條件；

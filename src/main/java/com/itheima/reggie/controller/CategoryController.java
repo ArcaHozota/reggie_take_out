@@ -48,7 +48,7 @@ public class CategoryController {
 	public Reggie<Page<Category>> pagination(@RequestParam("pageNum") final Integer pageNum,
 			@RequestParam("pageSize") final Integer pageSize) {
 		// 聲明分頁構造器；
-		final Page<Category> pageInfo = new Page<>(pageNum, pageSize);
+		final Page<Category> pageInfo = Page.of(pageNum, pageSize);
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加排序條件，根據sort進行排序；
