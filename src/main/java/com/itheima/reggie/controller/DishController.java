@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -70,8 +70,8 @@ public class DishController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<DishDto>> pagination(@RequestParam("pageNum") final Integer pageNum,
-			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
+	public Reggie<Page<DishDto>> pagination(@Param("pageNum") final Integer pageNum,
+			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
 		// 聲明分頁構造器對象；
 		final Page<Dish> pageInfo = new Page<>(pageNum, pageSize);
 		final Page<DishDto> dtoPage = new Page<>();
