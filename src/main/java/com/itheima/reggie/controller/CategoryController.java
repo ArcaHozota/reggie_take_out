@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,8 +45,8 @@ public class CategoryController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<Category>> pagination(@Param("pageNum") final Integer pageNum,
-			@Param("pageSize") final Integer pageSize) {
+	public Reggie<Page<Category>> pagination(@RequestParam("pageNum") final Integer pageNum,
+			@RequestParam("pageSize") final Integer pageSize) {
 		// 聲明分頁構造器；
 		final Page<Category> pageInfo = new Page<>(pageNum, pageSize);
 		// 聲明條件構造器；
