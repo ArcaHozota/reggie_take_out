@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,8 +86,8 @@ public class SetmealController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<SetmealDto>> pagination(@RequestParam("pageNum") final Integer pageNum,
-			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
+	public Reggie<Page<SetmealDto>> pagination(@Param("pageNum") final Integer pageNum,
+			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
 		// 聲明分頁構造器；
 		final Page<Setmeal> pageInfo = new Page<>(pageNum, pageSize);
 		final Page<SetmealDto> dtoPage = new Page<>();
