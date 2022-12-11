@@ -234,7 +234,7 @@
                     if (String(res.code) === '1') {
                         this.ruleForm = {...res.data}
                         this.ruleForm.price = String(res.data.price / 100)
-                        this.ruleForm.status = res.data.status == '1'
+                        this.ruleForm.status = res.data.status === '1'
                         this.dishFlavors = res.data.flavors && res.data.flavors.map(obj => ({
                             ...obj,
                             value: JSON.parse(obj.value),
@@ -405,7 +405,7 @@
             },
             handleAvatarSuccess(response, file, fileList) {
                 // 拼接down接口預覽
-                if (response.code === 0 && response.msg === '未登录') {
+                if (response.code === 0 && response.msg === 'NOT_LOGIN') {
                     window.top.location.href = '/backend/page/login/login.html'
                 } else {
                     this.imageUrl = `/common/download?name=${response.data}`

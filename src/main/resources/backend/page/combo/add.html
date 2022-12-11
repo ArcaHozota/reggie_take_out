@@ -602,7 +602,7 @@
           },
           handleAvatarSuccess (response, file, fileList) {
             // this.imageUrl = response.data
-            if(response.code === 0 && response.msg === '未登录'){
+            if(response.code === 'ERROR' && response.msg === '未登录'){
               window.top.location.href = '/backend/page/login/login.html'
             }else{
               this.imageUrl = `/common/download?name=${response.data}`
@@ -639,7 +639,7 @@
           // 获取套餐分类
           getDishType () {
             getCategoryList({'type':1}).then(res => {
-              if (res.code === 1) {
+              if (res.code === 'SUCCESS') {
                 this.dishType = res.data
                 this.getDishList(res.data[0].id)
               } else {
@@ -651,8 +651,8 @@
           // 通过套餐ID获取菜品列表分类
           getDishList (id) {
             queryDishList({categoryId: id}).then(res => {
-              if (res.code === 1) {
-                if (res.data.length == 0) {
+              if (res.code === 'SUCCESS') {
+                if (res.data.length === 0) {
                   this.dishAddList = []
                   return
                 }
