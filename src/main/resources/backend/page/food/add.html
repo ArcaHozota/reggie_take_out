@@ -195,17 +195,17 @@
                             // 'message': '请填写菜品价格',
                             validator: (rules, value, callback) => {
                                 if (!value) {
-                                    callback(new Error('请填写菜品价格'))
+                                    callback(new Error('請填寫菜品價格'))
                                 } else {
                                     const reg = /^\d+(\.\d{0,2})?$/
                                     if (reg.test(value)) {
                                         if (value < 10000) {
                                             callback()
                                         } else {
-                                            callback(new Error('菜品价格小于10000'))
+                                            callback(new Error('菜品價格小於10000'))
                                         }
                                     } else {
-                                        callback(new Error('菜品价格格式只能为数字,且最多保留两位小数'))
+                                        callback(new Error('菜品價格格式只能為數字,且最多保留兩位小數'))
                                     }
                                 }
                             },
@@ -231,7 +231,7 @@
             async init() {
                 queryDishById(this.id).then(res => {
                     console.log(res)
-                    if (String(res.code) === '1') {
+                    if (res.code === 'SUCCESS') {
                         this.ruleForm = {...res.data}
                         this.ruleForm.price = String(res.data.price / 100)
                         this.ruleForm.status = res.data.status === '1'
@@ -280,7 +280,7 @@
                     event.stopPropagation()
                 }
 
-                if (val.target.innerText.trim() != '') {
+                if (val.target.innerText.trim() !== '') {
                     this.dishFlavors[index].value.push(val.target.innerText)
                     val.target.innerText = ''
                 }
@@ -289,10 +289,10 @@
             // 获取菜品分类
             getDishList() {
                 getCategoryList({'type': 1}).then(res => {
-                    if (res.code === 1) {
+                    if (res.code === 'SUCCESS') {
                         this.dishList = res.data
                     } else {
-                        this.$message.error(res.msg || '操作失败')
+                        this.$message.error(res.msg || '操作失敗')
                     }
                 })
             },
@@ -301,9 +301,9 @@
             getFlavorListHand() {
                 // flavor flavorData
                 this.dishFlavorsData = [
-                    {'name': '甜味', 'value': ['无糖', '少糖', '半糖', '多糖', '全糖']},
-                    {'name': '温度', 'value': ['热饮', '常温', '去冰', '少冰', '多冰']},
-                    {'name': '忌口', 'value': ['不要葱', '不要蒜', '不要香菜', '不要辣']},
+                    {'name': '甜味', 'value': ['無糖', '少糖', '半糖', '多糖', '全糖']},
+                    {'name': '温度', 'value': ['熱飲', '常温', '去冰', '少冰', '多冰']},
+                    {'name': '忌口', 'value': ['不要從葱', '不要蒜', '不要香菜', '不加辣']},
                     {'name': '辣度', 'value': ['不辣', '微辣', '中辣', '重辣']}
                 ]
             },
@@ -353,13 +353,13 @@
                         params.flavors = this.dishFlavors.map(obj => ({...obj, value: JSON.stringify(obj.value)}))
                         delete params.dishFlavors
                         if (!this.imageUrl) {
-                            this.$message.error('请上传菜品图片')
+                            this.$message.error('請上傳菜品圖片')
                             return
                         }
-                        if (this.actionType == 'add') {
+                        if (this.actionType === 'add') {
                             delete params.id
                             addDish(params).then(res => {
-                                if (res.code === 1) {
+                                if (res.code === 'SUCCESS') {
                                     this.$message.success('菜品添加成功！')
                                     if (!st) {
                                         this.goBack()
@@ -380,22 +380,22 @@
                                         }
                                     }
                                 } else {
-                                    this.$message.error(res.msg || '操作失败')
+                                    this.$message.error(res.msg || '操作失敗')
                                 }
                             }).catch(err => {
-                                this.$message.error('请求出错了：' + err)
+                                this.$message.error('請求出錯：' + err)
                             })
                         } else {
                             delete params.updateTime
                             editDish(params).then(res => {
-                                if (res.code === 1) {
+                                if (res.code === 'SUCCESS') {
                                     this.$message.success('菜品修改成功！')
                                     this.goBack()
                                 } else {
-                                    this.$message.error(res.msg || '操作失败')
+                                    this.$message.error(res.msg || '操作失敗')
                                 }
                             }).catch(err => {
-                                this.$message.error('请求出错了：' + err)
+                                this.$message.error('請求出錯：' + err)
                             })
                         }
                     } else {
