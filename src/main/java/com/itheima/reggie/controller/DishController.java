@@ -117,7 +117,7 @@ public class DishController {
 	 * @return R.success(菜品信息)
 	 */
 	@GetMapping("/{id}")
-	public Reggie<DishDto> getDishInfo(@PathVariable("id") final Long id) {
+	public Reggie<DishDto> getDishInfo(@PathVariable final Long id) {
 		// 根據ID查詢菜品信息以及對應的口味信息；
 		return Reggie.success(this.dishService.getByIdWithFlavour(id));
 	}
