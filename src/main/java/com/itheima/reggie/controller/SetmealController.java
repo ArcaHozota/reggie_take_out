@@ -60,7 +60,7 @@ public class SetmealController {
 	public Reggie<String> save(@RequestBody final SetmealDto setmealDto) {
 		log.info("套餐信息：{}", setmealDto);
 		// 儲存套餐；
-		setmealService.saveWithDish(setmealDto);
+		this.setmealService.saveWithDish(setmealDto);
 		return Reggie.success(CustomMessage.SRP010);
 	}
 
@@ -73,7 +73,7 @@ public class SetmealController {
 	@DeleteMapping
 	public Reggie<String> delete(@RequestParam("ids") final List<Long> ids) {
 		log.info("套餐ID：{}", ids);
-		setmealService.removeWithDish(ids);
+		this.setmealService.removeWithDish(ids);
 		return Reggie.success(CustomMessage.SRP011);
 	}
 
@@ -98,7 +98,7 @@ public class SetmealController {
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
 		// 執行查詢；
-		setmealService.page(pageInfo, queryWrapper);
+		this.setmealService.page(pageInfo, queryWrapper);
 		// 拷貝屬性；
 		BeanUtils.copyProperties(pageInfo, dtoPage, "records");
 		// 獲取分頁數據；
@@ -112,7 +112,7 @@ public class SetmealController {
 			// 獲取分類ID；
 			final Long categoryId = item.getCategoryId();
 			// 根據分類ID獲取分類對象；
-			final Category category = categoryService.getById(categoryId);
+			final Category category = this.categoryService.getById(categoryId);
 			// 分類對象存在；
 			if (ComparisonUtils.isNotEqual(null, category)) {
 				// 獲取分類名稱並設置到數據傳輸類中；

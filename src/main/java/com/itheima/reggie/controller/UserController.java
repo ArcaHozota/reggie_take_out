@@ -33,7 +33,7 @@ public class UserController {
 
 	/**
 	 * 用戸登錄
-	 * 
+	 *
 	 * @param user    用戸實體類
 	 * @param session 本次會話
 	 * @return R.success(登錄成功的信息)
@@ -51,13 +51,13 @@ public class UserController {
 			// 認證成功，放行登錄並驗證是否為新注冊手機號；
 			final LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery(new User());
 			queryWrapper.eq(User::getPhoneNo, phoneNo);
-			User user = userService.getOne(queryWrapper);
+			User user = this.userService.getOne(queryWrapper);
 			// 如果是新用戸則自動完成注冊；
 			if (ComparisonUtils.isEqual(user, null)) {
 				user = new User();
 				user.setPhoneNo(phoneNo);
 				user.setStatus(1);
-				userService.save(user);
+				this.userService.save(user);
 			}
 			return Reggie.success(user);
 		}
@@ -66,7 +66,7 @@ public class UserController {
 
 	/**
 	 * 用戸登錄認證訊息發送
-	 * 
+	 *
 	 * @param user    用戸實體類
 	 * @param session 本次會話
 	 * @return R.success(訊息發送成功的信息)
