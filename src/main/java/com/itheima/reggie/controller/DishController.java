@@ -58,7 +58,7 @@ public class DishController {
 	@PostMapping
 	public Reggie<String> save(@RequestBody final DishDto dishDto) {
 		log.info("新增菜品：{}" + dishDto.toString());
-		dishService.saveWithFlavour(dishDto);
+		this.dishService.saveWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP004);
 	}
 
@@ -82,7 +82,7 @@ public class DishController {
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Dish::getUpdateTime);
 		// 執行分頁查詢；
-		dishService.page(pageInfo, queryWrapper);
+		this.dishService.page(pageInfo, queryWrapper);
 		// 對象拷貝；
 		BeanUtils.copyProperties(pageInfo, dtoPage, "records");
 		// 獲取分頁數據；
@@ -96,7 +96,7 @@ public class DishController {
 			// 獲取分類ID；
 			final Long categoryId = item.getCategoryId();
 			// 根據ID查詢分類對象；
-			final Category category = categoryService.getById(categoryId);
+			final Category category = this.categoryService.getById(categoryId);
 			if (ComparisonUtils.isNotEqual(category, null)) {
 				// 獲取分類名稱；
 				final String categoryName = category.getName();
@@ -119,7 +119,7 @@ public class DishController {
 	@GetMapping("/{id}")
 	public Reggie<DishDto> getDishInfo(@PathVariable("id") final Long id) {
 		// 根據ID查詢菜品信息以及對應的口味信息；
-		return Reggie.success(dishService.getByIdWithFlavour(id));
+		return Reggie.success(this.dishService.getByIdWithFlavour(id));
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class DishController {
 	@PutMapping
 	public Reggie<String> update(@RequestBody final DishDto dishDto) {
 		log.info(dishDto.toString());
-		dishService.updateWithFlavour(dishDto);
+		this.dishService.updateWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP005);
 	}
 
@@ -152,7 +152,7 @@ public class DishController {
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
 		// 查詢菜品信息並返回；
-		final List<Dish> list = dishService.list(queryWrapper);
+		final List<Dish> list = this.dishService.list(queryWrapper);
 		return Reggie.success(list);
 	}
 }

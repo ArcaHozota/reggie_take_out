@@ -49,14 +49,14 @@ public class CommonController {
 		// 合成文件名；
 		fileName = UUID.randomUUID().toString() + suffix;
 		// 判斷根目錄文件夾是否存在；
-		final File dir = new File(basePath);
+		final File dir = new File(this.basePath);
 		if (!dir.exists()) {
 			// 不存在則創建該文件夾；
 			dir.mkdirs();
 		}
 		try {
 			// 將臨時文件轉存到指定位置；
-			file.transferTo(new File(basePath + fileName));
+			file.transferTo(new File(this.basePath + fileName));
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
@@ -73,7 +73,7 @@ public class CommonController {
 	public void download(final String name, final HttpServletResponse response) {
 		// 輸入流，通過輸入流讀取文件内容；
 		try {
-			final FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+			final FileInputStream fileInputStream = new FileInputStream(new File(this.basePath + name));
 			// 輸出流，通過輸出流將文件寫回瀏覽器並展示圖片；
 			final ServletOutputStream outputStream = response.getOutputStream();
 			response.setContentType("image/jpg");
