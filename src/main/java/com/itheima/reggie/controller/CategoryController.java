@@ -54,7 +54,7 @@ public class CategoryController {
 		// 添加排序條件，根據sort進行排序；
 		queryWrapper.orderByAsc(Category::getSort);
 		// 執行查詢；
-		categoryService.page(pageInfo, queryWrapper);
+		this.categoryService.page(pageInfo, queryWrapper);
 		return Reggie.success(pageInfo);
 	}
 
@@ -67,7 +67,7 @@ public class CategoryController {
 	@PostMapping
 	public Reggie<String> save(@RequestBody final Category category) {
 		log.info("category:{}", category);
-		categoryService.save(category);
+		this.categoryService.save(category);
 		return Reggie.success(CustomMessage.SRP001);
 	}
 
@@ -81,7 +81,7 @@ public class CategoryController {
 	public Reggie<String> delete(@RequestParam("id") final Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
-		categoryService.remove(id);
+		this.categoryService.remove(id);
 		return Reggie.success(CustomMessage.SRP003);
 	}
 
@@ -95,13 +95,13 @@ public class CategoryController {
 	public Reggie<String> update(@RequestBody final Category category) {
 		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
-		categoryService.updateById(category);
+		this.categoryService.updateById(category);
 		return Reggie.success(CustomMessage.SRP002);
 	}
 
 	/**
 	 * 根據條件查詢分類數據
-	 * 
+	 *
 	 * @param category 實體類對象
 	 * @return R.success(分類結果的集合)
 	 */
@@ -114,7 +114,7 @@ public class CategoryController {
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
 		// 查詢分類結果集並返回；
-		final List<Category> list = categoryService.list(queryWrapper);
+		final List<Category> list = this.categoryService.list(queryWrapper);
 		return Reggie.success(list);
 	}
 }

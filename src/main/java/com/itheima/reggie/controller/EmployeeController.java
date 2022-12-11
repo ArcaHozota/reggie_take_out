@@ -54,7 +54,7 @@ public class EmployeeController {
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		queryWrapper.eq(Employee::getUsername, employee.getUsername());
 		// 獲取One對象；
-		final Employee aEmployee = employeeService.getOne(queryWrapper);
+		final Employee aEmployee = this.employeeService.getOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || ComparisonUtils.isNotEqual(password, aEmployee.getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
@@ -92,7 +92,7 @@ public class EmployeeController {
 		log.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
-		employeeService.save(employee);
+		this.employeeService.save(employee);
 		return Reggie.success(CustomMessage.SRP006);
 	}
 
@@ -116,7 +116,7 @@ public class EmployeeController {
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		// 執行查詢；
-		employeeService.page(pageInfo, queryWrapper);
+		this.employeeService.page(pageInfo, queryWrapper);
 		return Reggie.success(pageInfo);
 	}
 
@@ -128,7 +128,7 @@ public class EmployeeController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Employee employee) {
-		employeeService.updateById(employee);
+		this.employeeService.updateById(employee);
 		return Reggie.success(CustomMessage.SRP008);
 	}
 
@@ -141,7 +141,7 @@ public class EmployeeController {
 	@GetMapping("/{id}")
 	public Reggie<Employee> getById(@PathVariable final Long id) {
 		log.info("根據ID查詢員工信息...");
-		final Employee employee = employeeService.getById(id);
+		final Employee employee = this.employeeService.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {
 			return Reggie.error(Constants.NO_CONSEQUENCE);
