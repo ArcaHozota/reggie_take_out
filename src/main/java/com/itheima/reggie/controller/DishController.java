@@ -166,7 +166,7 @@ public class DishController {
 	 * @return R.success(修改成功信息)
 	 */
 	@PostMapping("/status/{status}")
-	public Reggie<String> changeStatus(@PathVariable Integer status, @RequestParam("ids") final Long... ids) {
+	public Reggie<String> changeStatus(@PathVariable Integer status, @RequestParam("ids") final Long[] ids) {
 		switch (status) {
 		case 0:
 			status = 1;
@@ -178,7 +178,7 @@ public class DishController {
 			throw new CustomException((CustomMessage.ERP017));
 		}
 		if (ids.length == 1) {
-			final Dish dish = this.dishService.getById(ids);
+			final Dish dish = this.dishService.getById(ids[0]);
 			dish.setStatus(status);
 			this.dishService.update(dish, null);
 		} else {
