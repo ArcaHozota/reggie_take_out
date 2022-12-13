@@ -155,4 +155,9 @@ public class DishController {
 		final List<Dish> list = this.dishService.list(queryWrapper);
 		return Reggie.success(list);
 	}
+
+	@PostMapping("/status/{params.status}")
+	public Reggie<String> changeStatus() {
+		return null;
+	}
 }
