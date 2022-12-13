@@ -105,8 +105,8 @@ public class CategoryController {
 	 * @param category 實體類對象
 	 * @return R.success(分類結果的集合)
 	 */
-	@PostMapping("/list")
-	public Reggie<List<Category>> queryList(@RequestBody final Category category) {
+	@GetMapping("/list")
+	public Reggie<List<Category>> queryList(final Category category) {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
 		// 添加條件；
