@@ -46,7 +46,7 @@ const queryDishById = (id) => {
 const getCategoryList = (params) => {
     return $axios({
         url: '/category/list',
-        method: 'post',
+        method: 'get',
         params
     })
 }
