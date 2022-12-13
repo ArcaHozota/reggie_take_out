@@ -217,7 +217,7 @@
         },
         created() {
             this.getDishList()
-            // 口味临时数据
+            // 臨時口味數據
             this.getFlavorListHand()
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
@@ -249,27 +249,23 @@
                     }
                 })
             },
-            // 按钮 - 添加口味
+            // 按鈕 - 添加口味
             addFlavore() {
                 this.dishFlavors.push({'name': '', 'value': [], showOption: false}) // JSON.parse(JSON.stringify(this.dishFlavorsData))
             },
-
-            // 按钮 - 删除口味
+            // 按鈕 - 刪除口味
             delFlavor(ind) {
                 this.dishFlavors.splice(ind, 1)
             },
-
-            // 按钮 - 删除口味标签
+            // 按钮 - 刪除口味標簽
             delFlavorLabel(index, ind) {
                 this.dishFlavors[index].value.splice(ind, 1)
             },
-
-            //口味位置记录
+            //口味記錄
             flavorPosition(index) {
                 this.index = index
             },
-
-            // 添加口味标签
+            // 添加口味標簽
             keyDownHandle(val, index) {
                 console.log('keyDownHandle----val', val)
                 console.log('keyDownHandle----index', index)
@@ -285,8 +281,7 @@
                     val.target.innerText = ''
                 }
             },
-
-            // 获取菜品分类
+            // 獲取菜品分類
             getDishList() {
                 getCategoryList({'type': 1}).then(res => {
                     if (res.code === 'SUCCESS') {
@@ -297,7 +292,7 @@
                 })
             },
 
-            // 获取口味列表
+            // 獲取口味列表
             getFlavorListHand() {
                 // flavor flavorData
                 this.dishFlavorsData = [
@@ -307,7 +302,7 @@
                     {'name': '辣度', 'value': ['不辣', '微辣', '中辣', '重辣']}
                 ]
             },
-
+			// 設置口味
             selectFlavor(st, index) {
                 console.log('st', st)
                 console.log('index', index)
@@ -428,7 +423,6 @@
                     return file
                 }
             },
-
             goBack() {
                 window.parent.menuHandle({
                     id: '4',
