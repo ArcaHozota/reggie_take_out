@@ -75,7 +75,7 @@ const commonDownload = (params) => {
 // 起售停售---批量起售停售接口
 const dishStatusByStatus = (params) => {
     return $axios({
-        url: `/dish/status/${params.status}`,
+        url: `/dish/status/${dishstatus}`,
         method: 'post',
         params: {ids: params.id}
     })
