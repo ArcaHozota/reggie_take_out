@@ -10,7 +10,7 @@ const getCategoryPage = (params) => {
 //編輯頁面反查詳情接口
 const queryCategoryById = (id) => {
     return $axios({
-        url: '/category/${id}',
+        url: `/category/${id}`,
         method: 'get'
     })
 }
