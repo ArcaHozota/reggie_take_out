@@ -85,7 +85,7 @@
                 pageNum: 1,
                 pageSize: 10,
                 tableData: [],
-                dishstatus: '',
+                dishState: '',
                 checkList: []
             }
         },
@@ -171,14 +171,14 @@
                     params.id = row.id
                     params.status = row.status ? '0' : '1'
                 }
-                this.dishstatus = params
+                this.dishState = params
                 this.$confirm('確認更改該菜品狀態?', '提示', {
                     'confirmButtonText': '確定',
                     'cancelButtonText': '取消',
                     'type': 'warning'
                 }).then(() => {
                     // 起售停售---批量起售停售接口
-                    dishStatusByStatus(this.dishstatus).then(res => {
+                    dishStatusByStatus(this.dishState).then(res => {
                         if (res.code === 'SUCCESS') {
                             this.$message.success(res.data.toString())
                             this.handleQuery()
