@@ -180,7 +180,7 @@ public class DishController {
 		if (ids.length == 1) {
 			final Dish dish = this.dishService.getById(ids[0]);
 			dish.setStatus(status);
-			this.dishService.update(dish, null);
+			this.dishService.updateById(dish);
 		} else {
 			final List<Dish> dList = new ArrayList<>();
 			for (final Long id : ids) {
