@@ -15,6 +15,11 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 @Configuration
 public class MyBatisPlusConfig {
 
+	/**
+	 * 分頁插件屬性設置；
+	 *
+	 * @return
+	 */
 	@Bean
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		final MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
