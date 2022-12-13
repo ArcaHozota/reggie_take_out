@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -164,8 +165,8 @@ public class DishController {
 	 * @param dishState 菜品狀態
 	 * @return R.success(修改成功信息)
 	 */
-	@PostMapping("/status/{dishstatus}")
-	public Reggie<String> changeStatus(@PathVariable final Map<String, Object> dishState) {
+	@PostMapping("/status")
+	public Reggie<String> changeStatus(@RequestParam("dishstatus") final Map<String, Object> dishState) {
 		Integer status = (Integer) dishState.get("status");
 		switch (status) {
 		case 0:
