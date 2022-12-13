@@ -51,7 +51,7 @@ public final class CustomMessage {
 	/**
 	 * 分類刪除出錯
 	 */
-	public static final String ERP090 = "當前分類下關聯了菜品或者套餐不能刪除";
+	public static final String ERP009 = "當前分類下關聯了菜品或者套餐不能刪除";
 
 	/**
 	 * 套餐信息添加成功
@@ -82,5 +82,10 @@ public final class CustomMessage {
 	 * 驗證訊息發送成功
 	 */
 	public static final String SRP015 = "驗證訊息發送成功";
+
+	/**
+	 * 菜品狀態碼識別錯誤
+	 */
+	public static final String ERP017 = "菜品狀態碼識別錯誤，請刷新本頁";
 
 }
