@@ -84,6 +84,11 @@ public final class CustomMessage {
 	public static final String SRP015 = "驗證訊息發送成功";
 
 	/**
+	 * 菜品狀態修改成功
+	 */
+	public static final String SRP016 = "菜品狀態修改成功";
+
+	/**
 	 * 菜品狀態碼識別錯誤
 	 */
 	public static final String ERP017 = "菜品狀態碼識別錯誤，請刷新本頁";
