@@ -1,7 +1,7 @@
 package com.itheima.reggie.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -165,9 +165,8 @@ public class DishController {
 	 * @param dishState 菜品狀態
 	 * @return R.success(修改成功信息)
 	 */
-	@PostMapping("/status")
-	public Reggie<String> changeStatus(@RequestParam("dishstatus") final Map<String, Object> dishState) {
-		Integer status = (Integer) dishState.get("status");
+	@PostMapping("/status/{status}")
+	public Reggie<String> changeStatus(@PathVariable Integer status, @RequestParam("ids") final Long... ids) {
 		switch (status) {
 		case 0:
 			status = 1;
@@ -178,10 +177,19 @@ public class DishController {
 		default:
 			throw new CustomException((CustomMessage.ERP017));
 		}
-		final Long id = (Long) dishState.get("id");
-		final Dish dish = this.dishService.getById(id);
-		dish.setStatus(status);
-		this.dishService.update(dish, null);
+		if (ids.length == 1) {
+			final Dish dish = this.dishService.getById(ids);
+			dish.setStatus(status);
+			this.dishService.update(dish, null);
+		} else {
+			final List<Dish> dList = new ArrayList<>();
+			for (final Long id : ids) {
+				final Dish dish = this.dishService.getById(id);
+				dish.setStatus(status);
+				dList.add(dish);
+			}
+			this.dishService.updateBatchById(dList);
+		}
 		return Reggie.success(CustomMessage.SRP016);
 	}
 }
