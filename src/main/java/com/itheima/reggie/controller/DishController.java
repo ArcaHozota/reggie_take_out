@@ -160,11 +160,11 @@ public class DishController {
 
 	/**
 	 * 修改菜品在售狀態
-	 * 
+	 *
 	 * @param dishState 菜品狀態
 	 * @return R.success(修改成功信息)
 	 */
-	@PostMapping("/status/{params.status}")
+	@PostMapping("/status/{dishstatus}")
 	public Reggie<String> changeStatus(@PathVariable final Map<String, Object> dishState) {
 		Integer status = (Integer) dishState.get("status");
 		switch (status) {
