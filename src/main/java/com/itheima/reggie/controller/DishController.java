@@ -1,6 +1,7 @@
 package com.itheima.reggie.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itheima.reggie.common.CustomException;
 import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.common.Reggie;
 import com.itheima.reggie.dto.DishDto;
@@ -156,8 +158,29 @@ public class DishController {
 		return Reggie.success(list);
 	}
 
+	/**
+	 * 修改菜品在售狀態
+	 * 
+	 * @param dishState 菜品狀態
+	 * @return R.success(修改成功信息)
+	 */
 	@PostMapping("/status/{params.status}")
-	public Reggie<String> changeStatus() {
-		return null;
+	public Reggie<String> changeStatus(@PathVariable final Map<String, Object> dishState) {
+		Integer status = (Integer) dishState.get("status");
+		switch (status) {
+		case 0:
+			status = 1;
+			break;
+		case 1:
+			status = 0;
+			break;
+		default:
+			throw new CustomException((CustomMessage.ERP017));
+		}
+		final Long id = (Long) dishState.get("id");
+		final Dish dish = this.dishService.getById(id);
+		dish.setStatus(status);
+		this.dishService.update(dish, null);
+		return Reggie.success(CustomMessage.SRP016);
 	}
 }
