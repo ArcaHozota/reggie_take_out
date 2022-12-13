@@ -78,7 +78,7 @@ public class CategoryController {
 	 * @return R.success(分類刪除成功的信息);
 	 */
 	@DeleteMapping
-	public Reggie<String> delete(@RequestParam("id") final Long id) {
+	public Reggie<String> delete(@RequestParam("ids") final Long id) {
 		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		this.categoryService.remove(id);
