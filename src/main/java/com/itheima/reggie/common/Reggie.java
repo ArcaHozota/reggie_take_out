@@ -43,10 +43,10 @@ public class Reggie<T> {
 	 * @return 返回的對象
 	 */
 	public static <T> Reggie<T> success(final T object) {
-		final Reggie<T> r = new Reggie<T>();
-		r.data = object;
-		r.code = SUCCESS;
-		return r;
+		final Reggie<T> reggie = new Reggie<T>();
+		reggie.data = object;
+		reggie.code = SUCCESS;
+		return reggie;
 	}
 
 	/**
@@ -57,10 +57,10 @@ public class Reggie<T> {
 	 * @return 失敗的信息
 	 */
 	public static <T> Reggie<T> error(final String msg) {
-		final Reggie<T> r = new Reggie<>();
-		r.msg = msg;
-		r.code = ERROR;
-		return r;
+		final Reggie<T> reggie = new Reggie<>();
+		reggie.msg = msg;
+		reggie.code = ERROR;
+		return reggie;
 	}
 
 	/**
