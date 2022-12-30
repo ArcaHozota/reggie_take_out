@@ -1,16 +1,18 @@
 package com.itheima.reggie.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 通用判斷工具類
  *
  * @author Administrator
  * @date 2022-11-07
  */
-public class ComparisonUtils {
+public class ComparisonUtils extends StringUtils {
 
 	/**
 	 * 兩者相等
-	 * 
+	 *
 	 * @param ob1 值
 	 * @param ob2 值
 	 * @return 判斷結果
@@ -29,7 +31,7 @@ public class ComparisonUtils {
 
 	/**
 	 * 兩者不等
-	 * 
+	 *
 	 * @param ob1 值
 	 * @param ob2 值
 	 * @return 判斷結果
