@@ -3,7 +3,6 @@ package com.itheima.reggie.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -112,7 +111,7 @@ public class EmployeeController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		// 添加過濾條件；
-		queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+		queryWrapper.like(ComparisonUtils.isNotEmpty(name), Employee::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		// 執行查詢；

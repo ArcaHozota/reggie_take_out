@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +74,7 @@ public class UserController {
 	public Reggie<String> sendMsg(@RequestBody final User user, final HttpSession session) {
 		// 獲取手機號；
 		final String phoneNo = user.getPhoneNo();
-		if (StringUtils.isNotEmpty(phoneNo)) {
+		if (ComparisonUtils.isNotEmpty(phoneNo)) {
 			// 生成隨機的6位數驗證碼；
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();
 			// 將生成的驗證碼保存到Session中；
