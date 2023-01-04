@@ -80,7 +80,7 @@ public class DishController {
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加過濾條件；
-		queryWrapper.like(name != null, Dish::getName, name);
+		queryWrapper.like(!name.isBlank(), Dish::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Dish::getUpdateTime);
 		// 執行分頁查詢；
