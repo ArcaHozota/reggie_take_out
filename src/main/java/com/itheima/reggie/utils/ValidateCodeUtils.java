@@ -2,8 +2,6 @@ package com.itheima.reggie.utils;
 
 import java.util.Random;
 
-import com.itheima.reggie.common.CustomException;
-
 /**
  * 驗證碼生成工具類
  */

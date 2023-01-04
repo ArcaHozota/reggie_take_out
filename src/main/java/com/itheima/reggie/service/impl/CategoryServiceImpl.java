@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itheima.reggie.common.CustomException;
-import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Dish;
 import com.itheima.reggie.entity.Setmeal;
@@ -14,6 +12,8 @@ import com.itheima.reggie.mapper.CategoryDao;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.DishService;
 import com.itheima.reggie.service.SetmealService;
+import com.itheima.reggie.utils.CustomException;
+import com.itheima.reggie.utils.CustomMessage;
 
 /**
  * @author Administrator

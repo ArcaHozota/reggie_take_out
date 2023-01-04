@@ -1,4 +1,4 @@
-package com.itheima.reggie.common;
+package com.itheima.reggie.utils;
 
 /**
  * 自定義業務異常
