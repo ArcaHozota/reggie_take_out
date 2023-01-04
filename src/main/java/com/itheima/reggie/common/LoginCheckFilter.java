@@ -16,7 +16,6 @@ import org.springframework.util.AntPathMatcher;
 import com.alibaba.fastjson.JSON;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.entity.User;
-import com.itheima.reggie.utils.ComparisonUtils;
 import com.itheima.reggie.utils.Reggie;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,13 +52,13 @@ public class LoginCheckFilter implements Filter {
 			log.info("本次請求{}不需要處理", requestURI);
 			filterChain.doFilter(request, response);
 			return;
-		} else if (ComparisonUtils.isNotEqual(null, empId)) {
+		} else if (empId != null) {
 			log.info("用戸已登錄，用戸ID為：{}", empId);
 			// 將當前ID儲存於内存綫程中；
 			BaseContext.setCurrentId(empId);
 			filterChain.doFilter(request, response);
 			return;
-		} else if (ComparisonUtils.isNotEqual(null, UserId)) {
+		} else if (UserId != null) {
 			log.info("用戸已登錄，用戸ID為：{}", UserId);
 			// 將當前ID儲存於内存綫程中；
 			BaseContext.setCurrentId(UserId);
@@ -73,7 +72,7 @@ public class LoginCheckFilter implements Filter {
 
 	/**
 	 * 檢查本次請求是否位於無需過濾的路徑集合
-	 * 
+	 *
 	 * @param requestURI 本次請求路徑
 	 * @param urls       無需過濾的路徑集合
 	 * @return true：滿足，false：不滿足
