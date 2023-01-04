@@ -2,28 +2,26 @@ server:
    port: 8081
 spring:
    application:
-      name: reggie_take_out
+      name: reggie-take-out
    datasource:
       driver-class-name: org.postgresql.Driver
       url: jdbc:postgresql://postgresdb01.cdd6uaafebcj.ap-northeast-1.rds.amazonaws.com:5432/reggie
       username: postgres
       password: postgres
       hikari:
-         maximum-pool-size: 150
+         maximum-pool-size: 40
+         max-lifetime: 1500000
    output:
       ansi:
          enabled: ALWAYS
-mybatis-plus:
-   configuration:
-      map-underscore-to-camel-case: true
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-   global-config:
-      db-config:
-         id-type: ASSIGN_ID
-         logic-delete-field: deleted
-         logic-delete-value: 1
-         logic-not-delete-value: 0
-   mapper-locations: classpath:mapper/*.xml
+   jpa:
+      hibernate:
+         ddl-auto: update
+         naming: null
+         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      database: postgresql
+      show-sql: true
+      open-in-view: false
 # 自定義傳入文件根目錄路徑
 reggie:
    path: D:\VC Code\Java_KaiHatsu\file_In\
