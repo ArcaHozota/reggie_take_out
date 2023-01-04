@@ -26,7 +26,6 @@ import com.itheima.reggie.entity.Dish;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
-import com.itheima.reggie.utils.ComparisonUtils;
 import com.itheima.reggie.utils.CustomException;
 import com.itheima.reggie.utils.CustomMessage;
 import com.itheima.reggie.utils.Reggie;
@@ -81,7 +80,7 @@ public class DishController {
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加過濾條件；
-		queryWrapper.like(ComparisonUtils.isNotEqual(name, null), Dish::getName, name);
+		queryWrapper.like(name != null, Dish::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Dish::getUpdateTime);
 		// 執行分頁查詢；
@@ -100,7 +99,7 @@ public class DishController {
 			final Long categoryId = item.getCategoryId();
 			// 根據ID查詢分類對象；
 			final Category category = this.categoryService.getById(categoryId);
-			if (ComparisonUtils.isNotEqual(category, null)) {
+			if (category != null) {
 				// 獲取分類名稱；
 				final String categoryName = category.getName();
 				// 存儲於DTO對象中並返回；
@@ -149,8 +148,7 @@ public class DishController {
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
 		// 添加搜索條件；
-		queryWrapper.eq(ComparisonUtils.isNotEqual(null, dish.getCategoryId()), Dish::getCategoryId,
-				dish.getCategoryId());
+		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
 		queryWrapper.eq(Dish::getStatus, 1);
 		// 添加排序條件；
 		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
