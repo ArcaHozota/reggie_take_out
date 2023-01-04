@@ -19,7 +19,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
-import com.itheima.reggie.utils.ComparisonUtils;
 import com.itheima.reggie.utils.CustomMessage;
 import com.itheima.reggie.utils.Reggie;
 
@@ -55,11 +54,11 @@ public class EmployeeController {
 		// 獲取One對象；
 		final Employee aEmployee = this.employeeService.getOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-		if (aEmployee == null || ComparisonUtils.isNotEqual(password, aEmployee.getPassword())) {
+		if (aEmployee == null || !password.equals(aEmployee.getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
-		if (ComparisonUtils.isEqual(0, aEmployee.getStatus())) {
+		if (aEmployee.getStatus() == 0) {
 			return Reggie.error(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
