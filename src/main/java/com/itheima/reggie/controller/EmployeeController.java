@@ -111,7 +111,7 @@ public class EmployeeController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		// 添加過濾條件；
-		queryWrapper.like(ComparisonUtils.isNotEmpty(name), Employee::getName, name);
+		queryWrapper.like(!name.isBlank(), Employee::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		// 執行查詢；

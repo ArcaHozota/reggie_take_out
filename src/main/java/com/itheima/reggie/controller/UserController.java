@@ -74,7 +74,7 @@ public class UserController {
 	public Reggie<String> sendMsg(@RequestBody final User user, final HttpSession session) {
 		// 獲取手機號；
 		final String phoneNo = user.getPhoneNo();
-		if (ComparisonUtils.isNotEmpty(phoneNo)) {
+		if (!phoneNo.isBlank()) {
 			// 生成隨機的6位數驗證碼；
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();
 			// 將生成的驗證碼保存到Session中；

@@ -1,6 +1,6 @@
 package com.itheima.reggie.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * 通用判斷工具類
