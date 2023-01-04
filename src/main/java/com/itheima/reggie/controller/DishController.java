@@ -22,7 +22,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.CustomException;
 import com.itheima.reggie.common.CustomMessage;
-import com.itheima.reggie.common.Reggie;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Dish;
@@ -30,6 +29,7 @@ import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
 import com.itheima.reggie.utils.ComparisonUtils;
+import com.itheima.reggie.utils.Reggie;
 
 import lombok.extern.slf4j.Slf4j;
 
