@@ -11,6 +11,10 @@ public class Snowflake {
 
 	private final SnowflakeProperties snowflakeProperties;
 
+	private Snowflake(final Long workerId, final Long dataCenterId) {
+		this.snowflakeProperties = new SnowflakeProperties();
+	}
+
 	/**
 	 * 初始化SnowflakeIdWorker Bean
 	 *
@@ -20,4 +24,5 @@ public class Snowflake {
 	public Snowflake snowflake() {
 		return new Snowflake(this.snowflakeProperties.getWorkerId(), this.snowflakeProperties.getDataCenterId());
 	}
+
 }
