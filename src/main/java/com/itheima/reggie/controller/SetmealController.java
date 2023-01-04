@@ -24,7 +24,6 @@ import com.itheima.reggie.entity.Setmeal;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.SetmealDishService;
 import com.itheima.reggie.service.SetmealService;
-import com.itheima.reggie.utils.ComparisonUtils;
 import com.itheima.reggie.utils.CustomMessage;
 import com.itheima.reggie.utils.Reggie;
 
@@ -94,7 +93,7 @@ public class SetmealController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = Wrappers.lambdaQuery(new Setmeal());
 		// 添加查詢條件，根據檢索文進行模糊查詢；
-		queryWrapper.like(ComparisonUtils.isNotEqual(name, null), Setmeal::getName, name);
+		queryWrapper.like(!name.isBlank(), Setmeal::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
 		// 執行查詢；
@@ -114,7 +113,7 @@ public class SetmealController {
 			// 根據分類ID獲取分類對象；
 			final Category category = this.categoryService.getById(categoryId);
 			// 分類對象存在；
-			if (ComparisonUtils.isNotEqual(null, category)) {
+			if (category != null) {
 				// 獲取分類名稱並設置到數據傳輸類中；
 				final String categoryName = category.getName();
 				setmealDto.setCategoryName(categoryName);

@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.itheima.reggie.entity.User;
 import com.itheima.reggie.service.UserService;
-import com.itheima.reggie.utils.ComparisonUtils;
 import com.itheima.reggie.utils.CustomMessage;
 import com.itheima.reggie.utils.Reggie;
 import com.itheima.reggie.utils.SMSUtils;
@@ -46,13 +45,13 @@ public class UserController {
 		// 獲取Session中保存的驗證碼；
 		final Object codeInSession = session.getAttribute(phoneNo);
 		// 進行驗證碼的比對；
-		if (ComparisonUtils.isNotEqual(null, codeInSession) && code.equals(codeInSession)) {
+		if (codeInSession != null && code.equals(codeInSession)) {
 			// 認證成功，放行登錄並驗證是否為新注冊手機號；
 			final LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery(new User());
 			queryWrapper.eq(User::getPhoneNo, phoneNo);
 			User user = this.userService.getOne(queryWrapper);
 			// 如果是新用戸則自動完成注冊；
-			if (ComparisonUtils.isEqual(user, null)) {
+			if (user == null) {
 				user = new User();
 				user.setPhoneNo(phoneNo);
 				user.setStatus(1);
