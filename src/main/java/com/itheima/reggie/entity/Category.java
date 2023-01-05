@@ -3,11 +3,15 @@ package com.itheima.reggie.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +33,8 @@ public class Category implements Serializable {
 	 * ID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "snowflakeId", strategy = "com.itheima.reggie.utils.SnowflakeIdGenerator")
+	@GeneratedValue(generator = "snowflakeId")
 	private Long id;
 
 	/**
@@ -50,31 +55,32 @@ public class Category implements Serializable {
 	/**
 	 * 創建時間
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time", updatable = false)
 	private LocalDateTime createTime;
-
-	/**
-	 * 更新時間
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@Column(name = "create_user", updatable = false)
 	private Long createUser;
+
+	/**
+	 * 更新時間
+	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_time")
+	private LocalDateTime updateTime;
 
 	/**
 	 * 修改者
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@Column(name = "update_user")
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@TableLogic
+	@Column(name = "is_deleted")
 	private Integer isDeleted;
-
 }

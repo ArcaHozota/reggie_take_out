@@ -1,4 +1,4 @@
-package com.itheima.reggie.common;
+package com.itheima.reggie.listener;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itheima.reggie.common.Constants;
 import com.itheima.reggie.utils.CustomException;
 import com.itheima.reggie.utils.Reggie;
 
