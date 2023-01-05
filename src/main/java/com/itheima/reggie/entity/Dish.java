@@ -4,19 +4,28 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 菜品實體類
  *
  * @author Administrator
  */
-@Data
+@Getter
+@Setter
+@Entity
+@Table(name = "dish")
 public class Dish implements Serializable {
 
 	private static final long serialVersionUID = 6089472680388107154L;
@@ -24,7 +33,9 @@ public class Dish implements Serializable {
 	/**
 	 * ID
 	 */
-	@TableId
+	@Id
+	@GenericGenerator(name = "snowflakeId", strategy = "com.itheima.reggie.utils.SnowflakeIdGenerator")
+	@GeneratedValue(generator = "snowflakeId")
 	private Long id;
 
 	/**
@@ -70,30 +81,32 @@ public class Dish implements Serializable {
 	/**
 	 * 創建時間
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time", updatable = false)
 	private LocalDateTime createTime;
-
-	/**
-	 * 更新時間
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private LocalDateTime updateTime;
 
 	/**
 	 * 創建人
 	 */
-	@TableField(fill = FieldFill.INSERT)
+	@Column(name = "create_user", updatable = false)
 	private Long createUser;
+
+	/**
+	 * 更新時間
+	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_time")
+	private LocalDateTime updateTime;
 
 	/**
 	 * 修改者
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@Column(name = "update_user")
 	private Long updateUser;
 
 	/**
 	 * 邏輯刪除字段
 	 */
-	@TableLogic
+	@Column(name = "is_deleted")
 	private Integer isDeleted;
 }
