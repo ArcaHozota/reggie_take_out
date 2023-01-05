@@ -14,7 +14,7 @@ import com.itheima.reggie.config.Snowflake;
 
 import cn.hutool.extra.spring.SpringUtil;
 
-public class GenerateSnowflakeId implements IdentifierGenerator {
+public class SnowflakeIdGenerator implements IdentifierGenerator {
 
 	@Override
 	public void configure(final Type type, final Properties params, final ServiceRegistry serviceRegistry)
