@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.service.CategoryService;
-import com.itheima.reggie.utils.CustomMessage;
 import com.itheima.reggie.utils.Reggie;
 
 import lombok.extern.slf4j.Slf4j;

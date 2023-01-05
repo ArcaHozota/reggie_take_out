@@ -12,8 +12,6 @@ import org.hibernate.type.Type;
 
 import com.itheima.reggie.config.Snowflake;
 
-import cn.hutool.extra.spring.SpringUtil;
-
 public class SnowflakeIdGenerator implements IdentifierGenerator {
 
 	@Override
@@ -24,6 +22,6 @@ public class SnowflakeIdGenerator implements IdentifierGenerator {
 	@Override
 	public Serializable generate(final SharedSessionContractImplementor session, final Object object)
 			throws HibernateException {
-		return SpringUtil.getBean(Snowflake.class).nextId();
+		return SpringUtils.getBean(Snowflake.class).nextId();
 	}
 }

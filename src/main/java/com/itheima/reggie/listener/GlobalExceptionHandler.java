@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itheima.reggie.common.Constants;
-import com.itheima.reggie.utils.CustomException;
+import com.itheima.reggie.common.CustomException;
 import com.itheima.reggie.utils.Reggie;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.itheima.reggie.utils;
+package com.itheima.reggie.common;
 
 /**
  * 自定義返回信息集合類
