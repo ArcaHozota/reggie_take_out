@@ -1,5 +1,6 @@
 package com.itheima.reggie.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
@@ -126,6 +126,6 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 	 */
 	public static String getActiveProfile() {
 		final String[] activeProfiles = getActiveProfiles();
-		return StringUtils.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+		return StringUtils.isAllEmpty(activeProfiles) ? activeProfiles[0] : null;
 	}
 }
