@@ -42,7 +42,11 @@ public class StringUtils extends org.springframework.util.StringUtils {
 		if (!str1.isBlank() || !str2.isBlank()) {
 			isEqual = str1.equals(str2);
 		} else if (str1.isBlank() && str2.isBlank()) {
-			isEqual = (str1.length() == str2.length());
+			if (str1.length() != str2.length()) {
+				return isEqual;
+			} else {
+				isEqual = str1.trim().equals(str2.trim());
+			}
 		}
 		return isEqual;
 	}
