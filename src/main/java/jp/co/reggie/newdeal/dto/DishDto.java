@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.reggie.newdeal.entity.DishFlavor;
-import lombok.Data;
 
 /**
  * 菜品以及口味數據傳輸專用類
  *
  * @author Administrator
  */
-@Data
 public class DishDto implements Serializable {
 
 	private static final long serialVersionUID = 363782191754121480L;
@@ -31,4 +29,54 @@ public class DishDto implements Serializable {
 	 * 複製品
 	 */
 	private Integer copy;
+
+	/**
+	 * getter of categoryName
+	 *
+	 * @return
+	 */
+	public String getCategoryName() {
+		return this.categoryName;
+	}
+
+	/**
+	 * setter for categoryName
+	 *
+	 * @param categoryName
+	 */
+	public void setCategoryName(final String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	/**
+	 * getter of copy
+	 *
+	 * @return
+	 */
+	public Integer getCopy() {
+		return this.copy;
+	}
+
+	/**
+	 * setter for copy
+	 *
+	 * @param copy
+	 */
+	public void setCopy(final Integer copy) {
+		this.copy = copy;
+	}
+
+	/**
+	 * getter of flavors
+	 *
+	 * @return
+	 */
+	public List<DishFlavor> getFlavors() {
+		return this.flavors;
+	}
+
+	@Override
+	public String toString() {
+		return "DishDto [flavors=" + this.flavors + ", categoryName=" + this.categoryName + ", copy=" + this.copy + "]";
+	}
 }

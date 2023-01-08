@@ -1,33 +1,31 @@
 package jp.co.reggie.newdeal.listener;
 
-import java.io.IOException;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 import org.springframework.util.AntPathMatcher;
 
 import com.alibaba.fastjson.JSON;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jp.co.reggie.newdeal.common.BaseContext;
 import jp.co.reggie.newdeal.common.Constants;
 import jp.co.reggie.newdeal.entity.Employee;
 import jp.co.reggie.newdeal.entity.User;
 import jp.co.reggie.newdeal.utils.Reggie;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 登錄檢查過濾器
  *
  * @author Administrator
  */
-@Slf4j
 @WebFilter(filterName = "loginCheckFilter", urlPatterns = "/*")
 public class LoginCheckFilter implements Filter {
 

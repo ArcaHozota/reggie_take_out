@@ -1,5 +1,7 @@
 package jp.co.reggie.newdeal.listener;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.co.reggie.newdeal.common.Constants;
 import jp.co.reggie.newdeal.common.CustomException;
 import jp.co.reggie.newdeal.utils.Reggie;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 全局異常處理類
@@ -19,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author Administrator
  * @date 2022-11-12
  */
-@Slf4j
 @ControllerAdvice(annotations = { RestController.class, Controller.class })
 @ResponseBody
 public class GlobalExceptionHandler {
