@@ -1,9 +1,10 @@
-package com.itheima.reggie.mapper;
+package jp.co.reggie.newdeal.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itheima.reggie.entity.DishFlavor;
+
+import jp.co.reggie.newdeal.entity.DishFlavor;
 
 /**
  * @author Administrator

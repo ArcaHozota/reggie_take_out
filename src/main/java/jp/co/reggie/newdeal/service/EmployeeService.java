@@ -1,7 +1,8 @@
-package com.itheima.reggie.service;
+package jp.co.reggie.newdeal.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itheima.reggie.entity.Employee;
+
+import jp.co.reggie.newdeal.entity.Employee;
 
 /**
  * @author Administrator

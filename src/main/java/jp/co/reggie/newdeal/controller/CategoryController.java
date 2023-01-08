@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itheima.reggie.entity.Category;
-import com.itheima.reggie.service.CategoryService;
-
 import jp.co.reggie.newdeal.common.CustomMessage;
+import jp.co.reggie.newdeal.entity.Category;
+import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 

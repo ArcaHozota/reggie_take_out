@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.itheima.reggie.entity.User;
-import com.itheima.reggie.service.UserService;
 
 import jp.co.reggie.newdeal.common.CustomMessage;
+import jp.co.reggie.newdeal.entity.User;
+import jp.co.reggie.newdeal.service.UserService;
 import jp.co.reggie.newdeal.utils.Reggie;
 import jp.co.reggie.newdeal.utils.SMSUtils;
 import jp.co.reggie.newdeal.utils.ValidateCodeUtils;

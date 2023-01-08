@@ -1,19 +1,20 @@
-package com.itheima.reggie.service.impl;
+package jp.co.reggie.newdeal.service.impl;
 
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itheima.reggie.common.CustomException;
-import com.itheima.reggie.common.CustomMessage;
-import com.itheima.reggie.entity.Category;
-import com.itheima.reggie.entity.Dish;
-import com.itheima.reggie.entity.Setmeal;
-import com.itheima.reggie.mapper.CategoryDao;
-import com.itheima.reggie.service.CategoryService;
-import com.itheima.reggie.service.DishService;
-import com.itheima.reggie.service.SetmealService;
+
+import jp.co.reggie.newdeal.common.CustomException;
+import jp.co.reggie.newdeal.common.CustomMessage;
+import jp.co.reggie.newdeal.entity.Category;
+import jp.co.reggie.newdeal.entity.Dish;
+import jp.co.reggie.newdeal.entity.Setmeal;
+import jp.co.reggie.newdeal.mapper.CategoryDao;
+import jp.co.reggie.newdeal.service.CategoryService;
+import jp.co.reggie.newdeal.service.DishService;
+import jp.co.reggie.newdeal.service.SetmealService;
 
 /**
  * @author Administrator

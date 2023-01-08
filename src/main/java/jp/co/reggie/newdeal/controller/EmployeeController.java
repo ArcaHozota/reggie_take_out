@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.itheima.reggie.entity.Employee;
-import com.itheima.reggie.service.EmployeeService;
 
 import jp.co.reggie.newdeal.common.Constants;
 import jp.co.reggie.newdeal.common.CustomMessage;
+import jp.co.reggie.newdeal.entity.Employee;
+import jp.co.reggie.newdeal.service.EmployeeService;
 import jp.co.reggie.newdeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,8 +1,9 @@
-package com.itheima.reggie.service;
+package jp.co.reggie.newdeal.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itheima.reggie.dto.SetmealDto;
-import com.itheima.reggie.entity.Setmeal;
+
+import jp.co.reggie.newdeal.dto.SetmealDto;
+import jp.co.reggie.newdeal.entity.Setmeal;
 
 import java.util.List;
 

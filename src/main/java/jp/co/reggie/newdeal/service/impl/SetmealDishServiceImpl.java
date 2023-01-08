@@ -1,9 +1,11 @@
-package com.itheima.reggie.service.impl;
+package jp.co.reggie.newdeal.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itheima.reggie.entity.SetmealDish;
-import com.itheima.reggie.mapper.SetmealDishDao;
-import com.itheima.reggie.service.SetmealDishService;
+
+import jp.co.reggie.newdeal.entity.SetmealDish;
+import jp.co.reggie.newdeal.mapper.SetmealDishDao;
+import jp.co.reggie.newdeal.service.SetmealDishService;
+
 import org.springframework.stereotype.Service;
 
 

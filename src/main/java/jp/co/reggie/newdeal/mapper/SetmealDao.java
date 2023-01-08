@@ -1,7 +1,9 @@
-package com.itheima.reggie.mapper;
+package jp.co.reggie.newdeal.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itheima.reggie.entity.Dish;
+
+import jp.co.reggie.newdeal.entity.Setmeal;
+
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022-11-19
  */
 @Mapper
-public interface DishDao extends BaseMapper<Dish> {
+public interface SetmealDao extends BaseMapper<Setmeal> {
 }

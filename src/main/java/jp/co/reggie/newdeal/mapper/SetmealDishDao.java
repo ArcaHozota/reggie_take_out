@@ -1,14 +1,15 @@
-package com.itheima.reggie.mapper;
+package jp.co.reggie.newdeal.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itheima.reggie.entity.User;
+
+import jp.co.reggie.newdeal.entity.SetmealDish;
 
 /**
  * @author Administrator
  * @date 2022-11-29
  */
 @Mapper
-public interface UserDao extends BaseMapper<User> {
+public interface SetmealDishDao extends BaseMapper<SetmealDish> {
 }

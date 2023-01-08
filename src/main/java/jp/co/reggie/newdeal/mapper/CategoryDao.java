@@ -1,7 +1,9 @@
-package com.itheima.reggie.mapper;
+package jp.co.reggie.newdeal.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itheima.reggie.entity.Category;
+
+import jp.co.reggie.newdeal.entity.Category;
+
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,4 +1,4 @@
-package com.itheima.reggie.service.impl;
+package jp.co.reggie.newdeal.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itheima.reggie.dto.DishDto;
-import com.itheima.reggie.entity.Dish;
-import com.itheima.reggie.entity.DishFlavor;
-import com.itheima.reggie.mapper.DishDao;
-import com.itheima.reggie.service.DishFlavorService;
-import com.itheima.reggie.service.DishService;
+
+import jp.co.reggie.newdeal.dto.DishDto;
+import jp.co.reggie.newdeal.entity.Dish;
+import jp.co.reggie.newdeal.entity.DishFlavor;
+import jp.co.reggie.newdeal.mapper.DishDao;
+import jp.co.reggie.newdeal.service.DishFlavorService;
+import jp.co.reggie.newdeal.service.DishService;
 
 /**
  * @author Administrator

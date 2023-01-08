@@ -1,8 +1,9 @@
-package com.itheima.reggie.service;
+package jp.co.reggie.newdeal.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itheima.reggie.dto.DishDto;
-import com.itheima.reggie.entity.Dish;
+
+import jp.co.reggie.newdeal.dto.DishDto;
+import jp.co.reggie.newdeal.entity.Dish;
 
 /**
  * @author Administrator

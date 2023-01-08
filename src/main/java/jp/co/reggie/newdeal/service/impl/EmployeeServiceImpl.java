@@ -1,9 +1,11 @@
-package com.itheima.reggie.service.impl;
+package jp.co.reggie.newdeal.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itheima.reggie.entity.Employee;
-import com.itheima.reggie.mapper.EmployeeDao;
-import com.itheima.reggie.service.EmployeeService;
+
+import jp.co.reggie.newdeal.entity.Employee;
+import jp.co.reggie.newdeal.mapper.EmployeeDao;
+import jp.co.reggie.newdeal.service.EmployeeService;
+
 import org.springframework.stereotype.Service;
 
 
