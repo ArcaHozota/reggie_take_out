@@ -1,5 +1,7 @@
 package jp.co.reggie.newdeal.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.Category;
@@ -45,9 +51,9 @@ public class CategoryController {
 		// 聲明分頁構造器；
 		final Page<Category> pageInfo = Page.of(pageNum, pageSize);
 		// 聲明條件構造器；
-		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
+		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加排序條件，根據sort進行排序；
-		queryWrapper.orderByAsc(Category::getSort);
+		queryWrapper.orderByAsc(Category::sort);
 		// 執行查詢；
 		this.categoryService.page(pageInfo, queryWrapper);
 		return Reggie.success(pageInfo);
