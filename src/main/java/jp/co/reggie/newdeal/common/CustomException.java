@@ -1,4 +1,4 @@
-package com.itheima.reggie.common;
+package jp.co.reggie.newdeal.common;
 
 /**
  * 自定義業務異常

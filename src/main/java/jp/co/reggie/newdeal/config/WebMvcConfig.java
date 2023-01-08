@@ -1,12 +1,13 @@
-package com.itheima.reggie.config;
+package jp.co.reggie.newdeal.config;
 
-import com.itheima.reggie.common.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import jp.co.reggie.newdeal.common.JacksonObjectMapper;
 
 import java.util.List;
 

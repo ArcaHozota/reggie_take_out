@@ -1,4 +1,4 @@
-package com.itheima.reggie.utils;
+package jp.co.reggie.newdeal.utils;
 
 import cn.hutool.extra.spring.SpringUtil;
 

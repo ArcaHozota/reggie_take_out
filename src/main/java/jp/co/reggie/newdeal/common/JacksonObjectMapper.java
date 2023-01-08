@@ -1,4 +1,4 @@
-package com.itheima.reggie.common;
+package jp.co.reggie.newdeal.common;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 

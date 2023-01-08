@@ -1,4 +1,4 @@
-package com.itheima.reggie.controller;
+package jp.co.reggie.newdeal.controller;
 
 import java.util.Map;
 
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.entity.User;
 import com.itheima.reggie.service.UserService;
-import com.itheima.reggie.utils.Reggie;
-import com.itheima.reggie.utils.SMSUtils;
-import com.itheima.reggie.utils.ValidateCodeUtils;
 
+import jp.co.reggie.newdeal.common.CustomMessage;
+import jp.co.reggie.newdeal.utils.Reggie;
+import jp.co.reggie.newdeal.utils.SMSUtils;
+import jp.co.reggie.newdeal.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

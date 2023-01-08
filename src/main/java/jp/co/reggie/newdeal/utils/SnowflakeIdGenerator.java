@@ -1,4 +1,4 @@
-package com.itheima.reggie.utils;
+package jp.co.reggie.newdeal.utils;
 
 import java.io.Serializable;
 import java.util.Properties;
@@ -10,7 +10,7 @@ import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
-import com.itheima.reggie.config.Snowflake;
+import jp.co.reggie.newdeal.config.Snowflake;
 
 public class SnowflakeIdGenerator implements IdentifierGenerator {
 

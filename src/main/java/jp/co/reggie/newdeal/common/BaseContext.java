@@ -1,4 +1,4 @@
-package com.itheima.reggie.common;
+package jp.co.reggie.newdeal.common;
 
 /**
  * 基於ThreadLocal封裝工具類，用於獲取和保存當前用戸ID；

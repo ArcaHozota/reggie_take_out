@@ -1,4 +1,4 @@
-package com.itheima.reggie.controller;
+package jp.co.reggie.newdeal.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.itheima.reggie.utils.Reggie;
-
+import jp.co.reggie.newdeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
 /**

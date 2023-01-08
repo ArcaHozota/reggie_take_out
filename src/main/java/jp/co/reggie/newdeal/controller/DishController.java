@@ -1,4 +1,4 @@
-package com.itheima.reggie.controller;
+package jp.co.reggie.newdeal.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.itheima.reggie.common.CustomException;
-import com.itheima.reggie.common.CustomMessage;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Dish;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
-import com.itheima.reggie.utils.Reggie;
 
+import jp.co.reggie.newdeal.common.CustomException;
+import jp.co.reggie.newdeal.common.CustomMessage;
+import jp.co.reggie.newdeal.utils.Reggie;
 import lombok.extern.slf4j.Slf4j;
 
 /**
