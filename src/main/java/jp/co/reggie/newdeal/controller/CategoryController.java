@@ -4,8 +4,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,18 +17,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import jakarta.annotation.Resource;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.Category;
 import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.utils.Reggie;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 分類管理控制器
  *
  * @author Administrator
  */
-@Slf4j
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
