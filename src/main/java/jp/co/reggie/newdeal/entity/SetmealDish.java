@@ -1,6 +1,7 @@
-package com.itheima.reggie.entity;
+package jp.co.reggie.newdeal.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -11,14 +12,14 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
- * 菜品口味實體類
- *
+ * 套餐與菜品關係實體類
+ * 
  * @author Administrator
  */
 @Data
-public class DishFlavor implements Serializable {
+public class SetmealDish implements Serializable {
 
-	private static final long serialVersionUID = 6752106293794210881L;
+	private static final long serialVersionUID = -641135780975738908L;
 
 	/**
 	 * ID
@@ -27,19 +28,34 @@ public class DishFlavor implements Serializable {
 	private Long id;
 
 	/**
+	 * 套餐ID
+	 */
+	private Long setmealId;
+
+	/**
 	 * 菜品ID
 	 */
 	private Long dishId;
 
 	/**
-	 * 口味名稱
+	 * 菜品名稱(冗餘字段)
 	 */
 	private String name;
 
 	/**
-	 * 口味數據list
+	 * 菜品原價(冗餘字段)
 	 */
-	private String value;
+	private BigDecimal price;
+
+	/**
+	 * 份數
+	 */
+	private Integer copies;
+
+	/**
+	 * 排序
+	 */
+	private Integer sort;
 
 	/**
 	 * 創建時間
@@ -70,5 +86,4 @@ public class DishFlavor implements Serializable {
 	 */
 	@TableLogic
 	private Integer isDeleted;
-
 }

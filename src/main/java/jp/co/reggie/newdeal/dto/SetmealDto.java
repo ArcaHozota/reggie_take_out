@@ -1,10 +1,9 @@
-package com.itheima.reggie.dto;
+package jp.co.reggie.newdeal.dto;
 
 import java.util.List;
 
-import com.itheima.reggie.entity.Setmeal;
-import com.itheima.reggie.entity.SetmealDish;
-
+import jp.co.reggie.newdeal.entity.Setmeal;
+import jp.co.reggie.newdeal.entity.SetmealDish;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

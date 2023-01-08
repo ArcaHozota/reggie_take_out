@@ -1,13 +1,11 @@
-package com.itheima.reggie.dto;
+package jp.co.reggie.newdeal.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itheima.reggie.entity.Dish;
-import com.itheima.reggie.entity.DishFlavor;
-
+import jp.co.reggie.newdeal.entity.DishFlavor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 菜品以及口味數據傳輸專用類
@@ -15,15 +13,14 @@ import lombok.EqualsAndHashCode;
  * @author Administrator
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class DishDto extends Dish {
+public class DishDto implements Serializable {
 
 	private static final long serialVersionUID = 363782191754121480L;
 
 	/**
 	 * 口味集合
 	 */
-	private List<DishFlavor> flavors = new ArrayList<>();
+	private final List<DishFlavor> flavors = new ArrayList<>();
 
 	/**
 	 * 分類名稱

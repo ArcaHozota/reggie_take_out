@@ -1,4 +1,4 @@
-package com.itheima.reggie.entity;
+package jp.co.reggie.newdeal.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

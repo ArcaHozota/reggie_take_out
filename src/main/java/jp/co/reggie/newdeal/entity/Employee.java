@@ -1,64 +1,66 @@
-package com.itheima.reggie.entity;
+package jp.co.reggie.newdeal.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import lombok.Data;
 
 /**
- * 套餐實體類
+ * 員工管理實體類
  *
  * @author Administrator
  */
 @Data
-public class Setmeal implements Serializable {
+public class Employee implements Serializable {
 
-	private static final long serialVersionUID = 4020217756505140488L;
+	private static final long serialVersionUID = -6540113185665801143L;
 
 	/**
 	 * ID
 	 */
+	@TableId
 	private Long id;
 
 	/**
-	 * 分類ID
+	 * 賬號名
 	 */
-	private Long categoryId;
+	private String username;
 
 	/**
-	 * 套餐名稱
+	 * 姓名
 	 */
 	private String name;
 
 	/**
-	 * 套餐價格
+	 * 密碼
 	 */
-	private BigDecimal price;
+	private String password;
 
 	/**
-	 * 套餐在售狀態：0停售, 1在售;
+	 * 手機號
+	 */
+	@TableField(value = "phone_num")
+	private String phoneNo;
+
+	/**
+	 * 性別
+	 */
+	@TableField(value = "sex")
+	private String gender;
+
+	/**
+	 * 身份證號
+	 */
+	private String idNumber;
+
+	/**
+	 * 賬號狀態：0:禁用，1:正常
 	 */
 	private Integer status;
-
-	/**
-	 * 編碼
-	 */
-	private String code;
-
-	/**
-	 * 描述信息
-	 */
-	private String description;
-
-	/**
-	 * 圖片
-	 */
-	private String image;
 
 	/**
 	 * 創建時間
@@ -84,9 +86,4 @@ public class Setmeal implements Serializable {
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Long updateUser;
 
-	/**
-	 * 邏輯刪除字段
-	 */
-	@TableLogic
-	private Integer isDeleted;
 }
