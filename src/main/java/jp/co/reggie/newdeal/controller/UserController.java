@@ -2,9 +2,8 @@ package jp.co.reggie.newdeal.controller;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.User;
 import jp.co.reggie.newdeal.service.UserService;
 import jp.co.reggie.newdeal.utils.Reggie;
 import jp.co.reggie.newdeal.utils.SMSUtils;
 import jp.co.reggie.newdeal.utils.ValidateCodeUtils;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	@Resource
 	private UserService userService;
@@ -78,7 +79,7 @@ public class UserController {
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();
 			// 將生成的驗證碼保存到Session中；
 			session.setAttribute(phoneNo, code);
-			log.info("本次的驗證碼為：{}", code);
+			LOGGER.info("本次的驗證碼為：{}", code);
 			// 調用阿里雲提供的訊息服務API完成送訊；
 			SMSUtils.sendMessage("瑞吉外賣", "00024", phoneNo, code);
 			return Reggie.success(CustomMessage.SRP015);

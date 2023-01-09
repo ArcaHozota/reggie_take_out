@@ -1,9 +1,9 @@
 package jp.co.reggie.newdeal.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jakarta.annotation.Resource;
@@ -31,6 +30,8 @@ import jp.co.reggie.newdeal.utils.Reggie;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
 	@Resource
 	private CategoryService categoryService;
@@ -64,7 +65,7 @@ public class CategoryController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final Category category) {
-		log.info("category:{}", category);
+		LOGGER.info("category:{}", category);
 		this.categoryService.save(category);
 		return Reggie.success(CustomMessage.SRP001);
 	}
@@ -77,7 +78,7 @@ public class CategoryController {
 	 */
 	@DeleteMapping
 	public Reggie<String> delete(@RequestParam("ids") final Long id) {
-		log.info("刪除ID={}的分類", id);
+		LOGGER.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		this.categoryService.remove(id);
 		return Reggie.success(CustomMessage.SRP003);
@@ -91,7 +92,7 @@ public class CategoryController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Category category) {
-		log.info("修改分類信息：{}", category);
+		LOGGER.info("修改分類信息：{}", category);
 		// 執行修改操作；
 		this.categoryService.updateById(category);
 		return Reggie.success(CustomMessage.SRP002);
@@ -106,11 +107,11 @@ public class CategoryController {
 	@GetMapping("/list")
 	public Reggie<List<Category>> queryList(final Category category) {
 		// 聲明條件構造器；
-		final LambdaQueryWrapper<Category> queryWrapper = Wrappers.lambdaQuery(new Category());
+		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加條件；
-		queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+		queryWrapper.eq(category.type() != null, Category::type, category.type());
 		// 添加排序條件；
-		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+		queryWrapper.orderByAsc(Category::sort).orderByDesc(Category::updateTime);
 		// 查詢分類結果集並返回；
 		final List<Category> list = this.categoryService.list(queryWrapper);
 		return Reggie.success(list);

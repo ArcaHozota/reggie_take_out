@@ -1,9 +1,8 @@
 package jp.co.reggie.newdeal.controller;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,22 +16,24 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import jp.co.reggie.newdeal.common.Constants;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.Employee;
 import jp.co.reggie.newdeal.service.EmployeeService;
 import jp.co.reggie.newdeal.utils.Reggie;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 員工管理控制器
  *
  * @author Administrator
  */
-@Slf4j
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Resource
 	private EmployeeService employeeService;
@@ -87,7 +88,7 @@ public class EmployeeController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final Employee employee) {
-		log.info("員工信息：{}", employee.toString());
+		LOGGER.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
 		this.employeeService.save(employee);
@@ -138,7 +139,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/{id}")
 	public Reggie<Employee> getById(@PathVariable final Long id) {
-		log.info("根據ID查詢員工信息...");
+		LOGGER.info("根據ID查詢員工信息...");
 		final Employee employee = this.employeeService.getById(id);
 		// 如果沒有相對應的結果，則返回錯誤信息；
 		if (employee == null) {

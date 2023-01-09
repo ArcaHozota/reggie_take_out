@@ -3,9 +3,9 @@ package jp.co.reggie.newdeal.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import jakarta.annotation.Resource;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.dto.SetmealDto;
 import jp.co.reggie.newdeal.entity.Category;
@@ -27,7 +28,6 @@ import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.service.SetmealDishService;
 import jp.co.reggie.newdeal.service.SetmealService;
 import jp.co.reggie.newdeal.utils.Reggie;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 套餐管理控制器
@@ -35,10 +35,11 @@ import lombok.extern.slf4j.Slf4j;
  * @author Administrator
  * @date 2022-11-29
  */
-@Slf4j
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(SetmealController.class);
 
 	@Resource
 	private SetmealService setmealService;
@@ -57,7 +58,7 @@ public class SetmealController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final SetmealDto setmealDto) {
-		log.info("套餐信息：{}", setmealDto);
+		LOGGER.info("套餐信息：{}", setmealDto);
 		// 儲存套餐；
 		this.setmealService.saveWithDish(setmealDto);
 		return Reggie.success(CustomMessage.SRP010);
@@ -71,7 +72,7 @@ public class SetmealController {
 	 */
 	@DeleteMapping
 	public Reggie<String> delete(@RequestParam("ids") final List<Long> ids) {
-		log.info("套餐ID：{}", ids);
+		LOGGER.info("套餐ID：{}", ids);
 		this.setmealService.removeWithDish(ids);
 		return Reggie.success(CustomMessage.SRP011);
 	}
@@ -115,7 +116,7 @@ public class SetmealController {
 			// 分類對象存在；
 			if (category != null) {
 				// 獲取分類名稱並設置到數據傳輸類中；
-				final String categoryName = category.getName();
+				final String categoryName = category.name();
 				setmealDto.setCategoryName(categoryName);
 			}
 			return setmealDto;

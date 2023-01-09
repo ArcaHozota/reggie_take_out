@@ -19,7 +19,7 @@ import jp.co.reggie.newdeal.common.JacksonObjectMapper;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-	private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(WebMvcConfig.class);
 
 	/**
 	 * 擴展SpringMVC框架的消息轉換器
@@ -28,7 +28,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
-		logger.info("擴展消息轉換器完畢");
+		LOGGER.info("擴展消息轉換器完畢");
 		// 創建消息轉換器對象；
 		final MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 		// 設置對象轉換器，底層使用Jackson將Java對象轉為JSON；
@@ -44,7 +44,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		logger.info("靜態資源映射開始...");
+		LOGGER.info("靜態資源映射開始...");
 		registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
 		registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
 	}

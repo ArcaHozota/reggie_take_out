@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import jakarta.annotation.Resource;
 import jp.co.reggie.newdeal.common.CustomException;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.dto.DishDto;
@@ -30,17 +30,17 @@ import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.service.DishFlavorService;
 import jp.co.reggie.newdeal.service.DishService;
 import jp.co.reggie.newdeal.utils.Reggie;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 菜品管理控制器
  *
  * @author Administrator
  */
-@Slf4j
 @RestController
 @RequestMapping("/dish")
 public class DishController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(DishController.class);
 
 	@Resource
 	private DishService dishService;
@@ -59,7 +59,7 @@ public class DishController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final DishDto dishDto) {
-		log.info("新增菜品：{}" + dishDto.toString());
+		LOGGER.info("新增菜品：{}" + dishDto.toString());
 		this.dishService.saveWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP004);
 	}
@@ -78,11 +78,11 @@ public class DishController {
 		final Page<Dish> pageInfo = Page.of(pageNum, pageSize);
 		final Page<DishDto> dtoPage = new Page<>();
 		// 創建條件構造器；
-		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+		final LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Dish::getName, name);
+		queryWrapper.like(!name.isBlank(), Dish::name, name);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Dish::getUpdateTime);
+		queryWrapper.orderByDesc(Dish::updateTime);
 		// 執行分頁查詢；
 		this.dishService.page(pageInfo, queryWrapper);
 		// 對象拷貝；
@@ -96,12 +96,12 @@ public class DishController {
 			// 拷貝除分類ID以外的屬性；
 			BeanUtils.copyProperties(item, dishDto);
 			// 獲取分類ID；
-			final Long categoryId = item.getCategoryId();
+			final Long categoryId = item.categoryId();
 			// 根據ID查詢分類對象；
 			final Category category = this.categoryService.getById(categoryId);
 			if (category != null) {
 				// 獲取分類名稱；
-				final String categoryName = category.getName();
+				final String categoryName = category.name();
 				// 存儲於DTO對象中並返回；
 				dishDto.setCategoryName(categoryName);
 			}
@@ -132,7 +132,7 @@ public class DishController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final DishDto dishDto) {
-		log.info(dishDto.toString());
+		LOGGER.info(dishDto.toString());
 		this.dishService.updateWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP005);
 	}
@@ -146,12 +146,12 @@ public class DishController {
 	@GetMapping("/list")
 	public Reggie<List<Dish>> list(@RequestBody final Dish dish) {
 		// 創建條件構造器；
-		final LambdaQueryWrapper<Dish> queryWrapper = Wrappers.lambdaQuery(new Dish());
+		final LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加搜索條件；
-		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
-		queryWrapper.eq(Dish::getStatus, 1);
+		queryWrapper.eq(dish.categoryId() != null, Dish::categoryId, dish.categoryId());
+		queryWrapper.eq(Dish::status, 1);
 		// 添加排序條件；
-		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+		queryWrapper.orderByAsc(Dish::sort).orderByDesc(Dish::updateTime);
 		// 查詢菜品信息並返回；
 		final List<Dish> list = this.dishService.list(queryWrapper);
 		return Reggie.success(list);
@@ -176,14 +176,18 @@ public class DishController {
 			throw new CustomException((CustomMessage.ERP017));
 		}
 		if (ids.length == 1) {
-			final Dish dish = this.dishService.getById(ids[0]);
-			dish.setStatus(status);
+			final Dish dish0 = this.dishService.getById(ids[0]);
+			final Dish dish = new Dish(dish0.id(), dish0.name(), dish0.categoryId(), dish0.price(), dish0.code(),
+					dish0.image(), dish0.description(), status, dish0.sort(), dish0.createTime(), null,
+					dish0.createUser(), null, dish0.isDeleted());
 			this.dishService.updateById(dish);
 		} else {
 			final List<Dish> dList = new ArrayList<>();
 			for (final Long id : ids) {
-				final Dish dish = this.dishService.getById(id);
-				dish.setStatus(status);
+				final Dish dish0 = this.dishService.getById(id);
+				final Dish dish = new Dish(dish0.id(), dish0.name(), dish0.categoryId(), dish0.price(), dish0.code(),
+						dish0.image(), dish0.description(), status, dish0.sort(), dish0.createTime(), null,
+						dish0.createUser(), null, dish0.isDeleted());
 				dList.add(dish);
 			}
 			this.dishService.updateBatchById(dList);
