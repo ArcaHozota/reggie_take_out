@@ -1,9 +1,9 @@
 package jp.co.reggie.newdeal.listener;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.sql.SQLIntegrityConstraintViolationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,9 +20,11 @@ import jp.co.reggie.newdeal.utils.Reggie;
  * @author Administrator
  * @date 2022-11-12
  */
-@ControllerAdvice(annotations = { RestController.class, Controller.class })
 @ResponseBody
+@ControllerAdvice(annotations = { RestController.class, Controller.class })
 public class GlobalExceptionHandler {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	/**
 	 * SQL整合性異常處理方法
@@ -32,7 +34,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public Reggie<String> exceptionHandler01(final SQLIntegrityConstraintViolationException exception) {
-		log.error(exception.getMessage());
+		LOGGER.error(exception.getMessage());
 		if (exception.getMessage().contains(Constants.DUPLICATED_KEY)) {
 			final String[] split = exception.getMessage().split(" ");
 			final String msg = split[2] + "已存在";
@@ -49,7 +51,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(CustomException.class)
 	public Reggie<String> exceptionHandler02(final CustomException exception) {
-		log.error(exception.getMessage());
+		LOGGER.error(exception.getMessage());
 		return Reggie.error(exception.getMessage());
 	}
 }

@@ -1,13 +1,14 @@
 package jp.co.reggie.newdeal.listener;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.AntPathMatcher;
 
 import com.alibaba.fastjson.JSON;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -34,6 +35,11 @@ public class LoginCheckFilter implements Filter {
 	 */
 	private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
+	/**
+	 * logger
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginCheckFilter.class);
+
 	@Override
 	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
 			final FilterChain filterChain) throws IOException, ServletException {
@@ -49,24 +55,24 @@ public class LoginCheckFilter implements Filter {
 		final Long UserId = (Long) request.getSession().getAttribute(Constants.getEntityName(new User()));
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
 		if (this.check(requestURI, urls)) {
-			log.info("本次請求{}不需要處理", requestURI);
+			LOGGER.info("本次請求{}不需要處理", requestURI);
 			filterChain.doFilter(request, response);
 			return;
 		} else if (empId != null) {
-			log.info("用戸已登錄，用戸ID為：{}", empId);
+			LOGGER.info("用戸已登錄，用戸ID為：{}", empId);
 			// 將當前ID儲存於内存綫程中；
 			BaseContext.setCurrentId(empId);
 			filterChain.doFilter(request, response);
 			return;
 		} else if (UserId != null) {
-			log.info("用戸已登錄，用戸ID為：{}", UserId);
+			LOGGER.info("用戸已登錄，用戸ID為：{}", UserId);
 			// 將當前ID儲存於内存綫程中；
 			BaseContext.setCurrentId(UserId);
 			filterChain.doFilter(request, response);
 			return;
 		}
 		// 如果未登錄，則返回未登錄結果；
-		log.info("訪問失敗：{}", Constants.NOT_LOGIN);
+		LOGGER.info("訪問失敗：{}", Constants.NOT_LOGIN);
 		response.getWriter().write(JSON.toJSONString(Reggie.error(Constants.NOT_LOGIN)));
 	}
 
@@ -86,5 +92,4 @@ public class LoginCheckFilter implements Filter {
 		}
 		return false;
 	}
-
 }
