@@ -18,8 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jp.co.reggie.newdeal.common.BaseContext;
 import jp.co.reggie.newdeal.common.Constants;
-import jp.co.reggie.newdeal.entity.Employee;
-import jp.co.reggie.newdeal.entity.User;
 import jp.co.reggie.newdeal.utils.Reggie;
 
 /**
@@ -51,8 +49,8 @@ public class LoginCheckFilter implements Filter {
 		final String[] urls = new String[] { "/employee/login", "/employee/logout", "/front/**", "/backend/**",
 				"/common/**", "/user/login", "/user/sendMsg" };
 		// 獲取用戸ID；
-		final Long empId = (Long) request.getSession().getAttribute(Constants.getEntityName(new Employee()));
-		final Long UserId = (Long) request.getSession().getAttribute(Constants.getEntityName(new User()));
+		final Long empId = (Long) request.getSession().getAttribute("employee");
+		final Long UserId = (Long) request.getSession().getAttribute("user");
 		// 判斷本次請求是否需要處理，如果勿需處理，則直接放行；
 		if (this.check(requestURI, urls)) {
 			LOGGER.info("本次請求{}不需要處理", requestURI);
