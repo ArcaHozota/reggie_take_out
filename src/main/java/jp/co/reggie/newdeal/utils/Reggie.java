@@ -1,13 +1,10 @@
 package jp.co.reggie.newdeal.utils;
 
-import lombok.Data;
-
 /**
  * 通用返回結果類
  *
  * @author Administrator
  */
-@Data
 public class Reggie<T> {
 
 	/**
