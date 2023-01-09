@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jakarta.annotation.Resource;
@@ -50,20 +49,20 @@ public class EmployeeController {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.password().getBytes()).toUpperCase();
 		// 根據頁面提交的用戸名查詢數據庫；
-		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
-		queryWrapper.eq(Employee::getUsername, employee.getUsername());
+		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(Employee::username, employee.username());
 		// 獲取One對象；
 		final Employee aEmployee = this.employeeService.getOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-		if (aEmployee == null || !password.equals(aEmployee.getPassword())) {
+		if (aEmployee == null || !password.equals(aEmployee.password())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
-		if (aEmployee.getStatus() == 0) {
+		if (aEmployee.status() == 0) {
 			return Reggie.error(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
-		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
+		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.id());
 		return Reggie.success(aEmployee);
 	}
 
@@ -76,7 +75,7 @@ public class EmployeeController {
 	@PostMapping("/logout")
 	public Reggie<String> logout(final HttpServletRequest request) {
 		// 清除Session中保存的當前登錄員工的ID；
-		request.getSession().removeAttribute(Constants.getEntityName(new Employee()));
+		request.getSession().removeAttribute("employee");
 		return Reggie.success(CustomMessage.SRP007);
 	}
 
@@ -87,10 +86,12 @@ public class EmployeeController {
 	 * @return R.success(成功增加員工的信息)
 	 */
 	@PostMapping
-	public Reggie<String> save(@RequestBody final Employee employee) {
+	public Reggie<String> save(@RequestBody Employee employee) {
 		LOGGER.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
-		employee.setPassword(DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase());
+		final String password = DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase();
+		employee = new Employee(employee.id(), employee.username(), employee.name(), password, employee.phoneNo(),
+				employee.gender(), employee.idNumber(), employee.status(), null, null, null, null);
 		this.employeeService.save(employee);
 		return Reggie.success(CustomMessage.SRP006);
 	}
@@ -109,11 +110,11 @@ public class EmployeeController {
 		// 聲明分頁構造器；
 		final Page<Employee> pageInfo = Page.of(pageNum, pageSize);
 		// 聲明條件構造器；
-		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
+		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Employee::getName, name);
+		queryWrapper.like(!name.isBlank(), Employee::name, name);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Employee::getUpdateTime);
+		queryWrapper.orderByDesc(Employee::updateTime);
 		// 執行查詢；
 		this.employeeService.page(pageInfo, queryWrapper);
 		return Reggie.success(pageInfo);

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import jakarta.annotation.Resource;
@@ -92,11 +91,11 @@ public class SetmealController {
 		final Page<Setmeal> pageInfo = Page.of(pageNum, pageSize);
 		final Page<SetmealDto> dtoPage = new Page<>();
 		// 聲明條件構造器；
-		final LambdaQueryWrapper<Setmeal> queryWrapper = Wrappers.lambdaQuery(new Setmeal());
+		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據檢索文進行模糊查詢；
-		queryWrapper.like(!name.isBlank(), Setmeal::getName, name);
+		queryWrapper.like(!name.isBlank(), Setmeal::name, name);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+		queryWrapper.orderByDesc(Setmeal::updateTime);
 		// 執行查詢；
 		this.setmealService.page(pageInfo, queryWrapper);
 		// 拷貝屬性；
@@ -110,7 +109,7 @@ public class SetmealController {
 			// 對象拷貝；
 			BeanUtils.copyProperties(item, setmealDto);
 			// 獲取分類ID；
-			final Long categoryId = item.getCategoryId();
+			final Long categoryId = item.categoryId();
 			// 根據分類ID獲取分類對象；
 			final Category category = this.categoryService.getById(categoryId);
 			// 分類對象存在；

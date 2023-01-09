@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +37,7 @@ public class UserController {
 	 * @return R.success(登錄成功的信息)
 	 */
 	@PostMapping("/login")
+	@SuppressWarnings("null")
 	public Reggie<User> login(@RequestBody final Map<String, String> userMap, final HttpSession session) {
 		// 獲取手機號；
 		final String phoneNo = userMap.get("phoneNo").toString();
@@ -48,14 +48,12 @@ public class UserController {
 		// 進行驗證碼的比對；
 		if (codeInSession != null && code.equals(codeInSession)) {
 			// 認證成功，放行登錄並驗證是否為新注冊手機號；
-			final LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery(new User());
-			queryWrapper.eq(User::getPhoneNo, phoneNo);
+			final LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+			queryWrapper.eq(User::phoneNo, phoneNo);
 			User user = this.userService.getOne(queryWrapper);
 			// 如果是新用戸則自動完成注冊；
 			if (user == null) {
-				user = new User();
-				user.setPhoneNo(phoneNo);
-				user.setStatus(1);
+				user = new User(null, user.name(), phoneNo, user.idNumber(), user.avatar(), code, 1);
 				this.userService.save(user);
 			}
 			return Reggie.success(user);
@@ -73,7 +71,7 @@ public class UserController {
 	@PostMapping("/sendMsg")
 	public Reggie<String> sendMsg(@RequestBody final User user, final HttpSession session) {
 		// 獲取手機號；
-		final String phoneNo = user.getPhoneNo();
+		final String phoneNo = user.phoneNo();
 		if (!phoneNo.isBlank()) {
 			// 生成隨機的6位數驗證碼；
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();
