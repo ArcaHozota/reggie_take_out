@@ -80,4 +80,58 @@ public class Reggie<T> {
 		this.msg = msg;
 		this.data = data;
 	}
+
+	/**
+	 * getter for code
+	 *
+	 * @return
+	 */
+	public String getCode() {
+		return this.code;
+	}
+
+	/**
+	 * setter of code
+	 *
+	 * @param code
+	 */
+	public void setCode(final String code) {
+		this.code = code;
+	}
+
+	/**
+	 * get for msg
+	 *
+	 * @return
+	 */
+	public String getMsg() {
+		return this.msg;
+	}
+
+	/**
+	 * setter of msg
+	 *
+	 * @param msg
+	 */
+	public void setMsg(final String msg) {
+		this.msg = msg;
+	}
+
+	/**
+	 * getter for data
+	 *
+	 * @return
+	 */
+	public T getData() {
+		return this.data;
+	}
+
+	/**
+	 * setter of data
+	 *
+	 * @param data
+	 */
+	public void setData(final T data) {
+		this.data = data;
+	}
 }
