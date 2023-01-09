@@ -48,7 +48,7 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public Reggie<Employee> login(final HttpServletRequest request, @RequestBody final Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
-		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
+		final String password = DigestUtils.md5DigestAsHex(employee.password().getBytes()).toUpperCase();
 		// 根據頁面提交的用戸名查詢數據庫；
 		final LambdaQueryWrapper<Employee> queryWrapper = Wrappers.lambdaQuery(new Employee());
 		queryWrapper.eq(Employee::getUsername, employee.getUsername());

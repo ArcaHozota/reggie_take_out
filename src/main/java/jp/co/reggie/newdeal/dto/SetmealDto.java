@@ -1,8 +1,8 @@
 package jp.co.reggie.newdeal.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-import jp.co.reggie.newdeal.entity.Setmeal;
 import jp.co.reggie.newdeal.entity.SetmealDish;
 
 /**
@@ -10,7 +10,7 @@ import jp.co.reggie.newdeal.entity.SetmealDish;
  *
  * @author Administrator
  */
-public class SetmealDto extends Setmeal {
+public class SetmealDto implements Serializable {
 
 	private static final long serialVersionUID = 5174917893420797875L;
 
