@@ -2,7 +2,7 @@ package jp.co.reggie.newdeal.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import jp.co.reggie.newdeal.entity.Dish;
+import jp.co.reggie.newdeal.entity.Category;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022-11-19
  */
 @Mapper
-public interface DishDao extends BaseMapper<Dish> {
+public interface CategoryMapper extends BaseMapper<Category> {
 }

@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jp.co.reggie.newdeal.dto.DishDto;
 import jp.co.reggie.newdeal.entity.Dish;
 import jp.co.reggie.newdeal.entity.DishFlavor;
-import jp.co.reggie.newdeal.mapper.DishDao;
+import jp.co.reggie.newdeal.mapper.DishMapper;
 import jp.co.reggie.newdeal.service.DishFlavorService;
 import jp.co.reggie.newdeal.service.DishService;
 
@@ -21,7 +21,7 @@ import jp.co.reggie.newdeal.service.DishService;
  * @date 2022-11-19
  */
 @Service
-public class DishServiceImpl extends ServiceImpl<DishDao, Dish> implements DishService {
+public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
 
 	/**
 	 * 菜品口味服務類

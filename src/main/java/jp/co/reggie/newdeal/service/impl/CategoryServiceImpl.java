@@ -10,7 +10,7 @@ import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.Category;
 import jp.co.reggie.newdeal.entity.Dish;
 import jp.co.reggie.newdeal.entity.Setmeal;
-import jp.co.reggie.newdeal.mapper.CategoryDao;
+import jp.co.reggie.newdeal.mapper.CategoryMapper;
 import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.service.DishService;
 import jp.co.reggie.newdeal.service.SetmealService;
@@ -20,7 +20,7 @@ import jp.co.reggie.newdeal.service.SetmealService;
  * @date 2022-11-19
  */
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryDao, Category> implements CategoryService {
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
 	/**
 	 * 菜品服務類；
