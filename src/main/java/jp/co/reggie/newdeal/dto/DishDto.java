@@ -1,7 +1,8 @@
 package jp.co.reggie.newdeal.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jp.co.reggie.newdeal.entity.DishFlavor;
@@ -11,72 +12,9 @@ import jp.co.reggie.newdeal.entity.DishFlavor;
  *
  * @author Administrator
  */
-public class DishDto implements Serializable {
-
+public record DishDto(Long id, String name, Long categoryId, BigDecimal price, String code, String image,
+		String description, Integer status, Integer sort, LocalDateTime createTime, LocalDateTime updateTime,
+		Long createUser, Long updateUser, Integer isDeleted, List<DishFlavor> flavors, String categoryName,
+		Integer copy) implements Serializable {
 	private static final long serialVersionUID = 363782191754121480L;
-
-	/**
-	 * 口味集合
-	 */
-	private final List<DishFlavor> flavors = new ArrayList<>();
-
-	/**
-	 * 分類名稱
-	 */
-	private String categoryName;
-
-	/**
-	 * 複製品
-	 */
-	private Integer copy;
-
-	/**
-	 * getter of categoryName
-	 *
-	 * @return
-	 */
-	public String getCategoryName() {
-		return this.categoryName;
-	}
-
-	/**
-	 * setter for categoryName
-	 *
-	 * @param categoryName
-	 */
-	public void setCategoryName(final String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	/**
-	 * getter of copy
-	 *
-	 * @return
-	 */
-	public Integer getCopy() {
-		return this.copy;
-	}
-
-	/**
-	 * setter for copy
-	 *
-	 * @param copy
-	 */
-	public void setCopy(final Integer copy) {
-		this.copy = copy;
-	}
-
-	/**
-	 * getter of flavors
-	 *
-	 * @return
-	 */
-	public List<DishFlavor> getFlavors() {
-		return this.flavors;
-	}
-
-	@Override
-	public String toString() {
-		return "DishDto [flavors=" + this.flavors + ", categoryName=" + this.categoryName + ", copy=" + this.copy + "]";
-	}
 }
