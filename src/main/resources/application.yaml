@@ -27,4 +27,4 @@ mybatis-plus:
    mapper-locations: classpath:mapper/*.xml
 # 自定義傳入文件根目錄路徑
 reggie:
-   path: D:\VC Code\Java_KaiHatsu\file_In\
+   path: D:\VSCode\JavaKaiHatsu\file_In\
