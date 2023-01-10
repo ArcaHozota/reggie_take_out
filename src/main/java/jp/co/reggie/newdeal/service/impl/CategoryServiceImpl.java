@@ -1,5 +1,6 @@
 package jp.co.reggie.newdeal.service.impl;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -25,18 +26,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	/**
 	 * 菜品服務類；
 	 */
-	private final DishService dishService;
+	@Resource
+	private DishService dishService;
 
 	/**
 	 * 套餐服務類；
 	 */
-	private final SetmealService setmealService;
-
-	// 構造器模式導入；
-	private CategoryServiceImpl(final DishService dishService, final SetmealService setmealService) {
-		this.dishService = dishService;
-		this.setmealService = setmealService;
-	}
+	@Resource
+	private SetmealService setmealService;
 
 	/**
 	 * 根據ID刪除分類

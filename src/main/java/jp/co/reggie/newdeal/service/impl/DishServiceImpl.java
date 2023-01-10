@@ -3,6 +3,7 @@ package jp.co.reggie.newdeal.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +27,8 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	/**
 	 * 菜品口味服務類
 	 */
-	private final DishFlavorService dishFlavorService;
-
-	// 構造器模式導入；
-	private DishServiceImpl(final DishFlavorService dishFlavorService) {
-		this.dishFlavorService = dishFlavorService;
-	}
+	@Resource
+	private DishFlavorService dishFlavorService;
 
 	/**
 	 * 新增菜品，同時插入菜品所對應的口味數據
