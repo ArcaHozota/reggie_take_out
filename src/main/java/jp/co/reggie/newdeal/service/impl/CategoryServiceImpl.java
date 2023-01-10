@@ -3,7 +3,6 @@ package jp.co.reggie.newdeal.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import jp.co.reggie.newdeal.common.CustomException;
@@ -54,7 +53,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, Category> impl
 		if (count1 > 0) {
 			throw new CustomException(CustomMessage.ERP009);
 		}
-		final LambdaQueryWrapper<Setmeal> setMealQueryWrapper = Wrappers.lambdaQuery(new Setmeal());
+		final LambdaQueryWrapper<Setmeal> setMealQueryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據ID進行查詢；
 		setMealQueryWrapper.eq(Setmeal::categoryId, id);
 		final long count2 = this.setmealService.count(setMealQueryWrapper);
