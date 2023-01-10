@@ -104,10 +104,6 @@ public class SetmealController {
 		final List<Setmeal> records = pageInfo.getRecords();
 		// 獲取數據傳輸類分頁；
 		final List<SetmealDto> list = records.stream().map((item) -> {
-			// 聲明套餐數據傳輸類；
-			final SetmealDto setmealDto = new SetmealDto();
-			// 對象拷貝；
-			BeanUtils.copyProperties(item, setmealDto);
 			// 獲取分類ID；
 			final Long categoryId = item.categoryId();
 			// 根據分類ID獲取分類對象；
@@ -116,9 +112,18 @@ public class SetmealController {
 			if (category != null) {
 				// 獲取分類名稱並設置到數據傳輸類中；
 				final String categoryName = category.name();
-				setmealDto.setCategoryName(categoryName);
+				// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
+				final SetmealDto setmealDto = new SetmealDto(item.id(), item.categoryId(), item.name(), item.price(),
+						item.status(), item.code(), item.description(), item.image(), item.createTime(),
+						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, categoryName);
+				return setmealDto;
+			} else {
+				// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
+				final SetmealDto setmealDto = new SetmealDto(item.id(), item.categoryId(), item.name(), item.price(),
+						item.status(), item.code(), item.description(), item.image(), item.createTime(),
+						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, null);
+				return setmealDto;
 			}
-			return setmealDto;
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；
 		dtoPage.setRecords(list);
