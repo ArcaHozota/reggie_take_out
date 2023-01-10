@@ -14,7 +14,7 @@ import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.dto.SetmealDto;
 import jp.co.reggie.newdeal.entity.Setmeal;
 import jp.co.reggie.newdeal.entity.SetmealDish;
-import jp.co.reggie.newdeal.mapper.SetmealDao;
+import jp.co.reggie.newdeal.mapper.SetmealMapper;
 import jp.co.reggie.newdeal.service.SetmealDishService;
 import jp.co.reggie.newdeal.service.SetmealService;
 
@@ -23,7 +23,7 @@ import jp.co.reggie.newdeal.service.SetmealService;
  * @date 2022-11-19
  */
 @Service
-public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> implements SetmealService {
+public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> implements SetmealService {
 
 	/**
 	 * 套餐與菜品服務類

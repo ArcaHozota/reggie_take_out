@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022-11-19
  */
 @Mapper
-public interface SetmealDao extends BaseMapper<Setmeal> {
+public interface SetmealMapper extends BaseMapper<Setmeal> {
 }

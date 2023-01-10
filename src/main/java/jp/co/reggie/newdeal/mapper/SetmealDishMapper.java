@@ -11,5 +11,5 @@ import jp.co.reggie.newdeal.entity.SetmealDish;
  * @date 2022-11-29
  */
 @Mapper
-public interface SetmealDishDao extends BaseMapper<SetmealDish> {
+public interface SetmealDishMapper extends BaseMapper<SetmealDish> {
 }

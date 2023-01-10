@@ -11,5 +11,5 @@ import jp.co.reggie.newdeal.entity.User;
  * @date 2022-11-29
  */
 @Mapper
-public interface UserDao extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<User> {
 }
