@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @author Administrator
  */
 @Mapper
-public interface EmployeeDao extends BaseMapper<Employee> {
+public interface EmployeeMapper extends BaseMapper<Employee> {
 }

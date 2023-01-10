@@ -11,5 +11,5 @@ import jp.co.reggie.newdeal.entity.DishFlavor;
  * @date 2022-11-23
  */
 @Mapper
-public interface DishFlavorDao extends BaseMapper<DishFlavor> {
+public interface DishFlavorMapper extends BaseMapper<DishFlavor> {
 }
