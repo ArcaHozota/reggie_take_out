@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.reggie.newdeal.mapper.CategoryMapper">
+    <resultMap id="ResultMap" type="jp.co.reggie.newdeal.entity.Category">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="continent" jdbcType="VARCHAR"
+                property="continent"/>
+        <result column="nation" jdbcType="VARCHAR" property="nation"/>
+        <result column="district" jdbcType="VARCHAR"
+                property="district"/>
+        <result column="population" jdbcType="INTEGER"
+                property="population"/>
+    </resultMap>
+    <select id="selectContinents" resultType="java.lang.String">
+        SELECT DISTINCT continent
+        FROM city_view
+        ORDER BY continent ASC
+    </select>
+    <select id="selectNations" parameterType="java.lang.String"
+            resultType="java.lang.String">
+        SELECT DISTINCT nation
+        FROM city_view
+        WHERE continent =
+              #{continent;jdbcType=VARCHAR}
+        ORDER BY nation ASC
+    </select>
+</mapper>
