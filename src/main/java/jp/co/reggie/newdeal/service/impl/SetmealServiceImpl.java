@@ -3,6 +3,7 @@ package jp.co.reggie.newdeal.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +29,8 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	/**
 	 * 套餐與菜品服務類
 	 */
-	private final SetmealDishService setmealDishService;
-
-	// 構造器模式導入；
-	private SetmealServiceImpl(final SetmealDishService setmealDishService) {
-		this.setmealDishService = setmealDishService;
-	}
+	@Resource
+	private SetmealDishService setmealDishService;
 
 	/**
 	 * 新增套餐同時保存套餐和菜品的關聯關係
