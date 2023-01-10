@@ -91,10 +91,6 @@ public class DishController {
 		final List<Dish> records = pageInfo.getRecords();
 		// 獲取數據傳輸類分頁；
 		final List<DishDto> list = records.stream().map((item) -> {
-			// 聲明菜品及口味數據傳輸類對象；
-			final DishDto dishDto = new DishDto();
-			// 拷貝除分類ID以外的屬性；
-			BeanUtils.copyProperties(item, dishDto);
 			// 獲取分類ID；
 			final Long categoryId = item.categoryId();
 			// 根據ID查詢分類對象；
@@ -102,10 +98,19 @@ public class DishController {
 			if (category != null) {
 				// 獲取分類名稱；
 				final String categoryName = category.name();
-				// 存儲於DTO對象中並返回；
-				dishDto.setCategoryName(categoryName);
+				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
+				final DishDto dishDto = new DishDto(item.id(), item.name(), categoryId, item.price(), item.code(),
+						item.image(), item.description(), item.status(), item.sort(), item.createTime(),
+						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, categoryName,
+						null);
+				return dishDto;
+			} else {
+				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
+				final DishDto dishDto = new DishDto(item.id(), item.name(), categoryId, item.price(), item.code(),
+						item.image(), item.description(), item.status(), item.sort(), item.createTime(),
+						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, null, null);
+				return dishDto;
 			}
-			return dishDto;
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；
 		dtoPage.setRecords(list);
