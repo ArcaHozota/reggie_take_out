@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jp.co.reggie.newdeal.utils.StringUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.Resource;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jakarta.annotation.Resource;
 import jp.co.reggie.newdeal.common.CustomException;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.dto.DishDto;
@@ -32,6 +28,8 @@ import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.service.DishFlavorService;
 import jp.co.reggie.newdeal.service.DishService;
 import jp.co.reggie.newdeal.utils.Reggie;
+import jp.co.reggie.newdeal.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 菜品管理控制器
@@ -93,6 +91,9 @@ public class DishController {
 		final List<Dish> records = pageInfo.getRecords();
 		// 獲取數據傳輸類分頁；
 		final List<DishDto> list = records.stream().map((item) -> {
+			// 聲明菜品及口味數據傳輸類對象並拷貝屬性；
+			final DishDto dishDto = new DishDto();
+			BeanUtils.copyProperties(item, dishDto);
 			// 獲取分類ID；
 			final Long categoryId = item.getCategoryId();
 			// 根據ID查詢分類對象；
@@ -100,18 +101,9 @@ public class DishController {
 			if (category != null) {
 				// 獲取分類名稱；
 				final String categoryName = category.getName();
-				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
-				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(), item.getCode(),
-						item.getImage(), item.getDescription(), item.getStatus(), item.getSort(), item.getCreateTime(),
-						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
-						categoryName, null);
-			} else {
-				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
-				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(), item.getCode(),
-						item.getImage(), item.getDescription(), item.getStatus(), item.getSort(), item.getCreateTime(),
-						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
-						null, null);
+				dishDto.setCategoryName(categoryName);
 			}
+			return dishDto;
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；
 		dtoPage.setRecords(list);
@@ -172,9 +164,14 @@ public class DishController {
 	@PostMapping("/status/{status}")
 	public Reggie<String> changeStatus(@PathVariable Integer status, @RequestParam("ids") final Long[] ids) {
 		switch (status) {
-		case 0 -> status = 1;
-		case 1 -> status = 0;
-		default -> throw new CustomException((CustomMessage.ERP017));
+		case 0:
+			status = 1;
+			break;
+		case 1:
+			status = 0;
+			break;
+		default:
+			throw new CustomException(CustomMessage.ERP017);
 		}
 		if (ids.length == 1) {
 			final Dish dish = this.dishService.getById(ids[0]);

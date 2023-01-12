@@ -3,8 +3,8 @@ package jp.co.reggie.newdeal.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jp.co.reggie.newdeal.utils.StringUtils;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jakarta.annotation.Resource;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.dto.SetmealDto;
 import jp.co.reggie.newdeal.entity.Category;
@@ -26,6 +25,8 @@ import jp.co.reggie.newdeal.service.CategoryService;
 import jp.co.reggie.newdeal.service.SetmealDishService;
 import jp.co.reggie.newdeal.service.SetmealService;
 import jp.co.reggie.newdeal.utils.Reggie;
+import jp.co.reggie.newdeal.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 套餐管理控制器
@@ -103,6 +104,8 @@ public class SetmealController {
 		final List<Setmeal> records = pageInfo.getRecords();
 		// 獲取數據傳輸類分頁；
 		final List<SetmealDto> list = records.stream().map((item) -> {
+			// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
+			final SetmealDto setmealDto = new SetmealDto();
 			// 獲取分類ID；
 			final Long categoryId = item.getCategoryId();
 			// 根據分類ID獲取分類對象；
@@ -111,18 +114,9 @@ public class SetmealController {
 			if (category != null) {
 				// 獲取分類名稱並設置到數據傳輸類中；
 				final String categoryName = category.getName();
-				// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
-				return new SetmealDto(item.getId(), item.getCategoryId(), item.getName(), item.getPrice(),
-						item.getStatus(), item.getCode(), item.getDescription(), item.getImage(), item.getCreateTime(),
-						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
-						categoryName);
-			} else {
-				// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
-				return new SetmealDto(item.getId(), item.getCategoryId(), item.getName(), item.getPrice(),
-						item.getStatus(), item.getCode(), item.getDescription(), item.getImage(), item.getCreateTime(),
-						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
-						null);
+				setmealDto.setCategoryName(categoryName);
 			}
+			return setmealDto;
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；
 		dtoPage.setRecords(list);

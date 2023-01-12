@@ -1,9 +1,8 @@
 package jp.co.reggie.newdeal.dto;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.reggie.newdeal.entity.Dish;
 import jp.co.reggie.newdeal.entity.DishFlavor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,14 +14,14 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class DishDto implements Serializable {
+public class DishDto extends Dish {
 
 	private static final long serialVersionUID = 363782191754121480L;
 
 	/**
 	 * 口味集合
 	 */
-	private final List<DishFlavor> flavors = new ArrayList<>();
+	private List<DishFlavor> flavors;
 
 	/**
 	 * 分類名稱

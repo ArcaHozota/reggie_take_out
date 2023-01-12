@@ -2,9 +2,9 @@ package jp.co.reggie.newdeal.controller;
 
 import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpSession;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.User;
 import jp.co.reggie.newdeal.service.UserService;
 import jp.co.reggie.newdeal.utils.Reggie;
 import jp.co.reggie.newdeal.utils.SMSUtils;
+import jp.co.reggie.newdeal.utils.StringUtils;
 import jp.co.reggie.newdeal.utils.ValidateCodeUtils;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -49,7 +49,7 @@ public class UserController {
 			// 認證成功，放行登錄並驗證是否為新注冊手機號；
 			final LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
 			queryWrapper.eq(User::getPhoneNo, phoneNo);
-			User user = this.userService.getOne(queryWrapper);
+			final User user = this.userService.getOne(queryWrapper);
 			// 如果是新用戸則自動完成注冊；
 			if (user == null) {
 				final User user1 = new User();
@@ -72,7 +72,7 @@ public class UserController {
 	public Reggie<String> sendMsg(@RequestBody final User user, final HttpSession session) {
 		// 獲取手機號；
 		final String phoneNo = user.getPhoneNo();
-		if (!phoneNo.isBlank()) {
+		if (StringUtils.isNotEmpty(phoneNo)) {
 			// 生成隨機的6位數驗證碼；
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();
 			// 將生成的驗證碼保存到Session中；

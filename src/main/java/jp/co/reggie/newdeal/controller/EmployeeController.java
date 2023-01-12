@@ -1,6 +1,8 @@
 package jp.co.reggie.newdeal.controller;
 
-import jp.co.reggie.newdeal.utils.StringUtils;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
@@ -16,13 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import jp.co.reggie.newdeal.common.Constants;
 import jp.co.reggie.newdeal.common.CustomMessage;
 import jp.co.reggie.newdeal.entity.Employee;
 import jp.co.reggie.newdeal.service.EmployeeService;
 import jp.co.reggie.newdeal.utils.Reggie;
+import jp.co.reggie.newdeal.utils.StringUtils;
 
 /**
  * 員工管理控制器
@@ -85,7 +86,7 @@ public class EmployeeController {
 	 * @return R.success(成功增加員工的信息)
 	 */
 	@PostMapping
-	public Reggie<String> save(@RequestBody Employee employee) {
+	public Reggie<String> save(@RequestBody final Employee employee) {
 		LOGGER.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase();
