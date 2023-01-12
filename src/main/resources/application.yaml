@@ -14,18 +14,12 @@ spring:
    output:
       ansi:
          enabled: ALWAYS
-mybatis-plus:
-   configuration:
-      map-underscore-to-camel-case: true
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-   global-config:
-      db-config:
-         id-type: ASSIGN_ID
-         logic-delete-field: deleted
-         logic-delete-value: 1
-         logic-not-delete-value: 0
-   mapper-locations: classpath:mapper/*.xml
-   type-aliases-package: jp.co.reggie.newdeal.enity
 # 自定義傳入文件根目錄路徑
 reggie:
    path: D:\VSCode\JavaKaiHatsu\file_In\
+mybatis:
+   configuration:
+      map-underscore-to-camel-case: true
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+   mapper-locations: classpath:mapper/*.xml
+   type-aliases-package: jp.co.reggie.newdeal.enity
