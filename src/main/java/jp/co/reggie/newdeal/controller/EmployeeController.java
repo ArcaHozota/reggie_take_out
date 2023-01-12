@@ -1,7 +1,6 @@
 package jp.co.reggie.newdeal.controller;
 
 import jp.co.reggie.newdeal.utils.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
