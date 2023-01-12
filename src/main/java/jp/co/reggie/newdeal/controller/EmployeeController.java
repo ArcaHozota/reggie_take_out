@@ -47,10 +47,10 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public Reggie<Employee> login(final HttpServletRequest request, @RequestBody final Employee employee) {
 		// 將頁面提交的密碼進行MD5加密；
-		final String password = DigestUtils.md5DigestAsHex(employee.password().getBytes()).toUpperCase();
+		final String password = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes()).toUpperCase();
 		// 根據頁面提交的用戸名查詢數據庫；
 		// 獲取One對象；
-		final Employee aEmployee = this.employeeService.findOneByUsernameProvided(employee.username());
+		final Employee aEmployee = this.employeeService.findOneByUsernameProvided(employee.getUsername());
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || !password.equals(aEmployee.getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
@@ -60,7 +60,7 @@ public class EmployeeController {
 			return Reggie.error(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
-		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.id());
+		request.getSession().setAttribute(Constants.getEntityName(employee), aEmployee.getId());
 		return Reggie.success(aEmployee);
 	}
 
