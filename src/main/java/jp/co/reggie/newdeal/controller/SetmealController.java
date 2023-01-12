@@ -3,6 +3,7 @@ package jp.co.reggie.newdeal.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jp.co.reggie.newdeal.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -85,15 +86,16 @@ public class SetmealController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<SetmealDto>> pagination(@Param("pageNum") final Integer pageNum,
-			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
+	public Reggie<Page<SetmealDto>> pagination(@RequestParam("pageNum") final Integer pageNum,
+			@RequestParam("pageSize") final Integer pageSize,
+			@RequestParam(name = "name", required = false) final String name) {
 		// 聲明分頁構造器；
 		final Page<Setmeal> pageInfo = Page.of(pageNum, pageSize);
 		final Page<SetmealDto> dtoPage = new Page<>();
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據檢索文進行模糊查詢；
-		queryWrapper.like(!name.isBlank(), Setmeal::getName, name);
+		queryWrapper.like(StringUtils.isNotEmpty(name), Setmeal::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
 		// 執行查詢；
