@@ -52,11 +52,11 @@ public class EmployeeController {
 		// 獲取One對象；
 		final Employee aEmployee = this.employeeService.findOneByUsernameProvided(employee.username());
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
-		if (aEmployee == null || !password.equals(aEmployee.password())) {
+		if (aEmployee == null || !password.equals(aEmployee.getPassword())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
 		}
 		// 查看用戸狀態，如果已被禁用，則返回賬號已禁用；
-		if (aEmployee.status() == 0) {
+		if (aEmployee.getStatus() == 0) {
 			return Reggie.error(Constants.FORBIDDEN);
 		}
 		// 登錄成功，將員工ID存入Session並返回登錄成功；
@@ -88,8 +88,7 @@ public class EmployeeController {
 		LOGGER.info("員工信息：{}", employee.toString());
 		// 設置初始密碼，需進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(Constants.PRIMARY_CODE.getBytes()).toUpperCase();
-		employee = new Employee(employee.id(), employee.username(), employee.name(), password, employee.phoneNo(),
-				employee.gender(), employee.idNumber(), employee.status(), null, null, null, null);
+		employee.setPassword(password);
 		this.employeeService.save(employee);
 		return Reggie.success(CustomMessage.SRP006);
 	}
@@ -110,9 +109,9 @@ public class EmployeeController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Employee::name, name);
+		queryWrapper.like(!name.isBlank(), Employee::getName, name);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Employee::updateTime);
+		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		// 執行查詢；
 		this.employeeService.page(pageInfo, queryWrapper);
 		return Reggie.success(pageInfo);
