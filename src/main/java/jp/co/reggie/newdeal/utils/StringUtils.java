@@ -17,7 +17,7 @@ public class StringUtils extends org.springframework.util.StringUtils {
 	 * @return boolean
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return (str == null || str.length() == 0 || str.isBlank());
+		return (str == null || str.length() == 0 || str.trim().equals(""));
 	}
 
 	/**
@@ -43,14 +43,10 @@ public class StringUtils extends org.springframework.util.StringUtils {
 			return true;
 		} else if (str1 == null || str2 == null) {
 			return false;
-		} else if (!str1.isBlank() || !str2.isBlank()) {
-			isEqual = str1.equals(str2);
-		} else if (str1.isBlank() && str2.isBlank()) {
-			if (str1.length() != str2.length()) {
-				return false;
-			} else {
-				isEqual = str1.trim().equals(str2.trim());
-			}
+		} else if (str1.length() != str2.length()) {
+			return false;
+		} else {
+			isEqual = str1.trim().equals(str2.trim());
 		}
 		return isEqual;
 	}

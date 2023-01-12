@@ -3,7 +3,9 @@ package jp.co.reggie.newdeal.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,22 +41,12 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	@Transactional
 	public void saveWithFlavour(final DishDto dishDto) {
 		// 保存菜品的基本信息到菜品表；
-		final Dish dish = new Dish();
-		dish.setId(dishDto.id());
-		dish.setName(dishDto.name());
-		dish.setCategoryId(dishDto.categoryId());
-		dish.setPrice(dishDto.price());
-		dish.setImage(dishDto.image());
-		dish.setDescription(dishDto.description());
-		dish.setStatus(dishDto.status());
-		dish.setSort(dishDto.sort());
-		dish.setIsDeleted(0);
-		this.save(dish);
+		this.save(dishDto);
 		// 獲取菜品口味的集合；
-		List<DishFlavor> flavors = dishDto.flavors();
+		List<DishFlavor> flavors = dishDto.getFlavors();
 		// 將菜品ID設置到口味集合中；
 		flavors = flavors.stream().map((item) -> {
-			item.setDishId(dishDto.id());
+			item.setDishId(dishDto.getId());
 			return item;
 		}).collect(Collectors.toList());
 		// 保存 菜品的口味數據到口味表；
@@ -77,10 +69,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 		// 獲取菜品口味列表；
 		final List<DishFlavor> flavors = this.dishFlavorService.list(queryWrapper);
 		// 聲明一個菜品及口味數據傳輸類對象並拷貝屬性；
-		return new DishDto(dish.getId(), dish.getName(), dish.getCategoryId(), dish.getPrice(), dish.getCode(),
-				dish.getImage(), dish.getDescription(), dish.getStatus(), dish.getSort(), dish.getCreateTime(),
-				dish.getUpdateTime(), dish.getCreateUser(), dish.getUpdateUser(), dish.getIsDeleted(), flavors, null,
-				null);
+		final DishDto dishDto = new DishDto();
+		BeanUtils.copyProperties(dish, dishDto);
+		dishDto.setFlavors(flavors);
+		return dishDto;
 	}
 
 	/**
@@ -91,28 +83,17 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 	@Override
 	@Transactional
 	public void updateWithFlavour(final DishDto dishDto) {
-		// 聲明一個菜品實體類對象；
-		final Dish dish = new Dish();
-		dish.setId(dishDto.id());
-		dish.setName(dishDto.name());
-		dish.setCategoryId(dishDto.categoryId());
-		dish.setPrice(dishDto.price());
-		dish.setImage(dishDto.image());
-		dish.setDescription(dishDto.description());
-		dish.setStatus(dishDto.status());
-		dish.setSort(dishDto.sort());
-		dish.setIsDeleted(0);
 		// 更新菜品信息；
-		this.updateById(dish);
+		this.updateById(dishDto);
 		// 清理當前菜品所對應的口味信息；
 		final LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(DishFlavor::getId, dishDto.id());
+		queryWrapper.eq(DishFlavor::getId, dishDto.getId());
 		this.dishFlavorService.remove(queryWrapper);
 		// 添加當前菜品的口味數據；
-		List<DishFlavor> flavors = dishDto.flavors();
+		List<DishFlavor> flavors = dishDto.getFlavors();
 		// 將菜品ID設置到口味集合中；
 		flavors = flavors.stream().map((item) -> {
-			item.setDishId(dishDto.id());
+			item.setDishId(dishDto.getId());
 			return item;
 		}).collect(Collectors.toList());
 		this.dishFlavorService.saveBatch(flavors);

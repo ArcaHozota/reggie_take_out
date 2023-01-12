@@ -3,7 +3,8 @@ package jp.co.reggie.newdeal.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,23 +41,13 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	@Override
 	@Transactional
 	public void saveWithDish(final SetmealDto setmealDto) {
-		final Setmeal setmeal = new Setmeal();
-		setmeal.setId(setmealDto.id());
-		setmeal.setCategoryId(setmealDto.categoryId());
-		setmeal.setName(setmealDto.name());
-		setmeal.setPrice(setmealDto.price());
-		setmeal.setStatus(setmealDto.status());
-		setmeal.setCode(setmealDto.code());
-		setmeal.setDescription(setmealDto.description());
-		setmeal.setImage(setmealDto.image());
-		setmeal.setIsDeleted(0);
 		// 保存套餐的基本信息；
-		this.save(setmeal);
+		this.save(setmealDto);
 		// 獲取套餐菜品關聯集合；
-		List<SetmealDish> setmealDishes = setmealDto.setmealDishes();
+		List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
 		// 獲取菜品ID並插入集合；
 		setmealDishes = setmealDishes.stream().map((item) -> {
-			item.setDishId(setmealDto.id());
+			item.setDishId(setmealDto.getId());
 			return item;
 		}).collect(Collectors.toList());
 		// 保存套餐和菜品的關聯關係；

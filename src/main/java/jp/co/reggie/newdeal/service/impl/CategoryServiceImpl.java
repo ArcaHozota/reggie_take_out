@@ -1,6 +1,7 @@
 package jp.co.reggie.newdeal.service.impl;
 
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
