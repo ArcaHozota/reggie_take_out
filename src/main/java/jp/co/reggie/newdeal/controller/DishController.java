@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jp.co.reggie.newdeal.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +38,10 @@ import jp.co.reggie.newdeal.utils.Reggie;
  *
  * @author Administrator
  */
+@Slf4j
 @RestController
 @RequestMapping("/dish")
 public class DishController {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(DishController.class);
 
 	@Resource
 	private DishService dishService;
@@ -59,7 +60,7 @@ public class DishController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final DishDto dishDto) {
-		LOGGER.info("新增菜品：{}" + dishDto.toString());
+		log.info("新增菜品：{}" + dishDto.toString());
 		this.dishService.saveWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP004);
 	}
@@ -80,9 +81,9 @@ public class DishController {
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Dish::name, name);
+		queryWrapper.like(StringUtils.isNotEmpty(name), Dish::getName, name);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Dish::updateTime);
+		queryWrapper.orderByDesc(Dish::getUpdateTime);
 		// 執行分頁查詢；
 		this.dishService.page(pageInfo, queryWrapper);
 		// 對象拷貝；
@@ -92,24 +93,23 @@ public class DishController {
 		// 獲取數據傳輸類分頁；
 		final List<DishDto> list = records.stream().map((item) -> {
 			// 獲取分類ID；
-			final Long categoryId = item.categoryId();
+			final Long categoryId = item.getCategoryId();
 			// 根據ID查詢分類對象；
 			final Category category = this.categoryService.getById(categoryId);
 			if (category != null) {
 				// 獲取分類名稱；
-				final String categoryName = category.name();
+				final String categoryName = category.getName();
 				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
-				final DishDto dishDto = new DishDto(item.id(), item.name(), categoryId, item.price(), item.code(),
-						item.image(), item.description(), item.status(), item.sort(), item.createTime(),
-						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, categoryName,
-						null);
-				return dishDto;
+				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(),
+						item.getCode(), item.getImage(), item.getDescription(), item.getStatus(), item.getSort(),
+						item.getCreateTime(), item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(),
+						item.getIsDeleted(), null, categoryName, null);
 			} else {
 				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
-				final DishDto dishDto = new DishDto(item.id(), item.name(), categoryId, item.price(), item.code(),
-						item.image(), item.description(), item.status(), item.sort(), item.createTime(),
-						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, null, null);
-				return dishDto;
+				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(),
+						item.getCode(), item.getImage(), item.getDescription(), item.getStatus(), item.getSort(),
+						item.getCreateTime(), item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(),
+						item.getIsDeleted(), null, null, null);
 			}
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；
@@ -137,7 +137,7 @@ public class DishController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final DishDto dishDto) {
-		LOGGER.info(dishDto.toString());
+		log.info(dishDto.toString());
 		this.dishService.updateWithFlavour(dishDto);
 		return Reggie.success(CustomMessage.SRP005);
 	}
@@ -153,10 +153,10 @@ public class DishController {
 		// 創建條件構造器；
 		final LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加搜索條件；
-		queryWrapper.eq(dish.categoryId() != null, Dish::categoryId, dish.categoryId());
-		queryWrapper.eq(Dish::status, 1);
+		queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+		queryWrapper.eq(Dish::getStatus, 1);
 		// 添加排序條件；
-		queryWrapper.orderByAsc(Dish::sort).orderByDesc(Dish::updateTime);
+		queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
 		// 查詢菜品信息並返回；
 		final List<Dish> list = this.dishService.list(queryWrapper);
 		return Reggie.success(list);
@@ -165,7 +165,7 @@ public class DishController {
 	/**
 	 * 修改菜品在售狀態
 	 *
-	 * @param dishState 菜品狀態
+	 * @param status 菜品狀態
 	 * @return R.success(修改成功信息)
 	 */
 	@PostMapping("/status/{status}")
@@ -181,18 +181,14 @@ public class DishController {
 			throw new CustomException((CustomMessage.ERP017));
 		}
 		if (ids.length == 1) {
-			final Dish dish0 = this.dishService.getById(ids[0]);
-			final Dish dish = new Dish(dish0.id(), dish0.name(), dish0.categoryId(), dish0.price(), dish0.code(),
-					dish0.image(), dish0.description(), status, dish0.sort(), dish0.createTime(), null,
-					dish0.createUser(), null, dish0.isDeleted());
+			final Dish dish = this.dishService.getById(ids[0]);
+			dish.setStatus(status);
 			this.dishService.updateById(dish);
 		} else {
 			final List<Dish> dList = new ArrayList<>();
 			for (final Long id : ids) {
-				final Dish dish0 = this.dishService.getById(id);
-				final Dish dish = new Dish(dish0.id(), dish0.name(), dish0.categoryId(), dish0.price(), dish0.code(),
-						dish0.image(), dish0.description(), status, dish0.sort(), dish0.createTime(), null,
-						dish0.createUser(), null, dish0.isDeleted());
+				final Dish dish = this.dishService.getById(id);
+				dish.setStatus(status);
 				dList.add(dish);
 			}
 			this.dishService.updateBatchById(dList);

@@ -3,6 +3,7 @@ package jp.co.reggie.newdeal.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +35,10 @@ import jp.co.reggie.newdeal.utils.Reggie;
  * @author Administrator
  * @date 2022-11-29
  */
+@Slf4j
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(SetmealController.class);
 
 	@Resource
 	private SetmealService setmealService;
@@ -57,7 +57,7 @@ public class SetmealController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final SetmealDto setmealDto) {
-		LOGGER.info("套餐信息：{}", setmealDto);
+		log.info("套餐信息：{}", setmealDto);
 		// 儲存套餐；
 		this.setmealService.saveWithDish(setmealDto);
 		return Reggie.success(CustomMessage.SRP010);
@@ -71,7 +71,7 @@ public class SetmealController {
 	 */
 	@DeleteMapping
 	public Reggie<String> delete(@RequestParam("ids") final List<Long> ids) {
-		LOGGER.info("套餐ID：{}", ids);
+		log.info("套餐ID：{}", ids);
 		this.setmealService.removeWithDish(ids);
 		return Reggie.success(CustomMessage.SRP011);
 	}
@@ -93,9 +93,9 @@ public class SetmealController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據檢索文進行模糊查詢；
-		queryWrapper.like(!name.isBlank(), Setmeal::name, name);
+		queryWrapper.like(!name.isBlank(), Setmeal::getName, name);
 		// 添加排序條件；
-		queryWrapper.orderByDesc(Setmeal::updateTime);
+		queryWrapper.orderByDesc(Setmeal::getUpdateTime);
 		// 執行查詢；
 		this.setmealService.page(pageInfo, queryWrapper);
 		// 拷貝屬性；
@@ -105,24 +105,24 @@ public class SetmealController {
 		// 獲取數據傳輸類分頁；
 		final List<SetmealDto> list = records.stream().map((item) -> {
 			// 獲取分類ID；
-			final Long categoryId = item.categoryId();
+			final Long categoryId = item.getCategoryId();
 			// 根據分類ID獲取分類對象；
 			final Category category = this.categoryService.getById(categoryId);
 			// 分類對象存在；
 			if (category != null) {
 				// 獲取分類名稱並設置到數據傳輸類中；
-				final String categoryName = category.name();
+				final String categoryName = category.getName();
 				// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
-				final SetmealDto setmealDto = new SetmealDto(item.id(), item.categoryId(), item.name(), item.price(),
-						item.status(), item.code(), item.description(), item.image(), item.createTime(),
-						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, categoryName);
-				return setmealDto;
+				return new SetmealDto(item.getId(), item.getCategoryId(), item.getName(), item.getPrice(),
+						item.getStatus(), item.getCode(), item.getDescription(), item.getImage(), item.getCreateTime(),
+						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
+						categoryName);
 			} else {
 				// 聲明套餐數據傳輸類並拷貝除分類ID以外的屬性；
-				final SetmealDto setmealDto = new SetmealDto(item.id(), item.categoryId(), item.name(), item.price(),
-						item.status(), item.code(), item.description(), item.image(), item.createTime(),
-						item.updateTime(), item.createUser(), item.updateUser(), item.isDeleted(), null, null);
-				return setmealDto;
+				return new SetmealDto(item.getId(), item.getCategoryId(), item.getName(), item.getPrice(),
+						item.getStatus(), item.getCode(), item.getDescription(), item.getImage(), item.getCreateTime(),
+						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
+						null);
 			}
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；

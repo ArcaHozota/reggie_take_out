@@ -32,29 +32,29 @@ public class UserController {
 	/**
 	 * 用戸登錄
 	 *
-	 * @param user    用戸實體類
+	 * @param userMap    用戸實體map
 	 * @param session 本次會話
 	 * @return R.success(登錄成功的信息)
 	 */
 	@PostMapping("/login")
-	@SuppressWarnings("null")
 	public Reggie<User> login(@RequestBody final Map<String, String> userMap, final HttpSession session) {
 		// 獲取手機號；
-		final String phoneNo = userMap.get("phoneNo").toString();
+		final String phoneNo = userMap.get("phoneNo");
 		// 獲取驗證碼；
-		final String code = userMap.get("code").toString();
+		final String code = userMap.get("code");
 		// 獲取Session中保存的驗證碼；
 		final Object codeInSession = session.getAttribute(phoneNo);
 		// 進行驗證碼的比對；
-		if (codeInSession != null && code.equals(codeInSession)) {
+		if (code.equals(codeInSession)) {
 			// 認證成功，放行登錄並驗證是否為新注冊手機號；
 			final LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-			queryWrapper.eq(User::phoneNo, phoneNo);
+			queryWrapper.eq(User::getPhoneNo, phoneNo);
 			User user = this.userService.getOne(queryWrapper);
 			// 如果是新用戸則自動完成注冊；
 			if (user == null) {
-				user = new User(null, user.name(), phoneNo, user.idNumber(), user.avatar(), code, 1);
-				this.userService.save(user);
+				final User user1 = new User();
+				user1.setPhoneNo(phoneNo);
+				this.userService.save(user1);
 			}
 			return Reggie.success(user);
 		}
@@ -71,7 +71,7 @@ public class UserController {
 	@PostMapping("/sendMsg")
 	public Reggie<String> sendMsg(@RequestBody final User user, final HttpSession session) {
 		// 獲取手機號；
-		final String phoneNo = user.phoneNo();
+		final String phoneNo = user.getPhoneNo();
 		if (!phoneNo.isBlank()) {
 			// 生成隨機的6位數驗證碼；
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();

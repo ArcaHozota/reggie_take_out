@@ -51,7 +51,7 @@ public class CategoryController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加排序條件，根據sort進行排序；
-		queryWrapper.orderByAsc(Category::sort);
+		queryWrapper.orderByAsc(Category::getSort);
 		// 執行查詢；
 		this.categoryService.page(pageInfo, queryWrapper);
 		return Reggie.success(pageInfo);
@@ -109,9 +109,9 @@ public class CategoryController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加條件；
-		queryWrapper.eq(category.type() != null, Category::type, category.type());
+		queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
 		// 添加排序條件；
-		queryWrapper.orderByAsc(Category::sort).orderByDesc(Category::updateTime);
+		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
 		// 查詢分類結果集並返回；
 		final List<Category> list = this.categoryService.list(queryWrapper);
 		return Reggie.success(list);
