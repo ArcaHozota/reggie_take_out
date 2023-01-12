@@ -44,7 +44,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	public void remove(final Long id) {
 		final LambdaQueryWrapper<Dish> dishQueryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據ID進行查詢；
-		dishQueryWrapper.eq(Dish::categoryId, id);
+		dishQueryWrapper.eq(Dish::getCategoryId, id);
 		final long count1 = this.dishService.count(dishQueryWrapper);
 		// 查詢當前分類是否已經關聯了菜品，如果已經關聯抛出一個異常；
 		if (count1 > 0) {
@@ -52,7 +52,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		}
 		final LambdaQueryWrapper<Setmeal> setMealQueryWrapper = new LambdaQueryWrapper<>();
 		// 添加查詢條件，根據ID進行查詢；
-		setMealQueryWrapper.eq(Setmeal::categoryId, id);
+		setMealQueryWrapper.eq(Setmeal::getCategoryId, id);
 		final long count2 = this.setmealService.count(setMealQueryWrapper);
 		// 查詢當前分類是否已經關聯了套餐，如果已經關聯抛出一個異常；
 		if (count2 > 0) {
