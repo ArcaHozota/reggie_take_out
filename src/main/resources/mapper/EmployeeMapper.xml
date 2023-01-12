@@ -14,4 +14,9 @@
         <result column="create_user" jdbcType="BIGINT" property="createUser"/>
         <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
     </resultMap>
+    <select id="selectByUsername" parameterType="string" resultMap="ResultMap">
+        select *
+        from employee ea
+        where ea.username like #{username;jdbcType=VARCHAR}
+    </select>
 </mapper>
