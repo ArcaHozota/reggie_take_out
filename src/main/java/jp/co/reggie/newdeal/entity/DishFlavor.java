@@ -13,11 +13,59 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
  *
  * @author Administrator
  */
-public record DishFlavor(@TableId Long id, Long dishId, String name, String value,
-		@TableField(fill = FieldFill.INSERT) LocalDateTime createTime,
-		@TableField(fill = FieldFill.INSERT_UPDATE) LocalDateTime updateTime,
-		@TableField(fill = FieldFill.INSERT) Long createUser,
-		@TableField(fill = FieldFill.INSERT_UPDATE) Long updateUser, @TableLogic Integer isDeleted)
-		implements Serializable {
+@Data
+public class DishFlavor implements Serializable {
+
 	private static final long serialVersionUID = 6752106293794210881L;
+
+	/**
+	 * ID
+	 */
+	@TableId
+	private Long id;
+
+	/**
+	 * 菜品ID
+	 */
+	private Long dishId;
+
+	/**
+	 * 口味名稱
+	 */
+	private String name;
+
+	/**
+	 * 口味數據list
+	 */
+	private String value;
+
+	/**
+	 * 創建時間
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
+
+	/**
+	 * 更新時間
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
+
+	/**
+	 * 創建人
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private Long createUser;
+
+	/**
+	 * 修改者
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long updateUser;
+
+	/**
+	 * 邏輯刪除字段
+	 */
+	@TableLogic
+	private Integer isDeleted;
 }
