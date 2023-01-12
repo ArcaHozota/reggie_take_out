@@ -40,19 +40,24 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	@Override
 	@Transactional
 	public void saveWithDish(final SetmealDto setmealDto) {
-		final Setmeal setmeal = new Setmeal(setmealDto.id(), setmealDto.categoryId(), setmealDto.name(),
-				setmealDto.price(), setmealDto.status(), setmealDto.code(), setmealDto.description(),
-				setmealDto.image(), null, null, null, null, 0);
+		final Setmeal setmeal = new Setmeal();
+		setmeal.setId(setmealDto.id());
+		setmeal.setCategoryId(setmealDto.categoryId());
+		setmeal.setName(setmealDto.name());
+		setmeal.setPrice(setmealDto.price());
+		setmeal.setStatus(setmealDto.status());
+		setmeal.setCode(setmealDto.code());
+		setmeal.setDescription(setmealDto.description());
+		setmeal.setImage(setmealDto.image());
+		setmeal.setIsDeleted(0);
 		// 保存套餐的基本信息；
 		this.save(setmeal);
 		// 獲取套餐菜品關聯集合；
 		List<SetmealDish> setmealDishes = setmealDto.setmealDishes();
 		// 獲取菜品ID並插入集合；
 		setmealDishes = setmealDishes.stream().map((item) -> {
-			final SetmealDish setmealDish = new SetmealDish(item.id(), item.setmealId(), setmealDto.id(), item.name(),
-					item.price(), item.copies(), item.sort(), item.createTime(), item.updateTime(), item.createUser(),
-					item.updateUser(), item.isDeleted());
-			return setmealDish;
+			item.setDishId(setmealDto.id());
+			return item;
 		}).collect(Collectors.toList());
 		// 保存套餐和菜品的關聯關係；
 		this.setmealDishService.saveBatch(setmealDishes);
@@ -67,8 +72,8 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 	public void removeWithDish(final List<Long> ids) {
 		// 查詢套餐狀態以確認是否可以刪除；
 		final LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.in(Setmeal::id, ids);
-		queryWrapper.eq(Setmeal::status, 1);
+		queryWrapper.in(Setmeal::getId, ids);
+		queryWrapper.eq(Setmeal::getStatus, 1);
 		final long count = this.count(queryWrapper);
 		if (count > 0) {
 			// 如果無法刪除，則抛出異常；
@@ -78,7 +83,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 		this.removeByIds(ids);
 		// 刪除套餐口味表中的數據；
 		final LambdaQueryWrapper<SetmealDish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-		lambdaQueryWrapper.in(SetmealDish::setmealId, ids);
+		lambdaQueryWrapper.in(SetmealDish::getSetmealId, ids);
 		this.setmealDishService.remove(lambdaQueryWrapper);
 	}
 }
