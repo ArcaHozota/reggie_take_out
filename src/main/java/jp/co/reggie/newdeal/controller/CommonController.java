@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,11 +25,10 @@ import jp.co.reggie.newdeal.utils.Reggie;
  * @author Administrator
  * @date 2022-11-22
  */
+@Slf4j
 @RestController
 @RequestMapping("/common")
 public class CommonController {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
 
 	@Value("${reggie.path}")
 	private String basePath;
@@ -41,7 +41,7 @@ public class CommonController {
 	 */
 	@PostMapping("/upload")
 	public Reggie<String> upload(final MultipartFile file) {
-		LOGGER.info("Input:{}" + file.toString());
+		log.info("Input:{}" + file.toString());
 		// 獲取文件的原始名稱；
 		String fileName = file.getOriginalFilename();
 		// 獲取後綴；
