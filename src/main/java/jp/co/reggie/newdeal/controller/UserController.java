@@ -2,6 +2,7 @@ package jp.co.reggie.newdeal.controller;
 
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,11 +21,10 @@ import jp.co.reggie.newdeal.utils.Reggie;
 import jp.co.reggie.newdeal.utils.SMSUtils;
 import jp.co.reggie.newdeal.utils.ValidateCodeUtils;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	@Resource
 	private UserService userService;
@@ -32,7 +32,7 @@ public class UserController {
 	/**
 	 * 用戸登錄
 	 *
-	 * @param userMap    用戸實體map
+	 * @param userMap 用戸實體map
 	 * @param session 本次會話
 	 * @return R.success(登錄成功的信息)
 	 */
@@ -77,7 +77,7 @@ public class UserController {
 			final String code = ValidateCodeUtils.generateValidateCode(6).toString();
 			// 將生成的驗證碼保存到Session中；
 			session.setAttribute(phoneNo, code);
-			LOGGER.info("本次的驗證碼為：{}", code);
+			log.info("本次的驗證碼為：{}", code);
 			// 調用阿里雲提供的訊息服務API完成送訊；
 			SMSUtils.sendMessage("瑞吉外賣", "00024", phoneNo, code);
 			return Reggie.success(CustomMessage.SRP015);
