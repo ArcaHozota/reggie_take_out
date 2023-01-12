@@ -17,6 +17,6 @@
     <select id="selectByUsername" parameterType="string" resultMap="ResultMap">
         select *
         from employee ea
-        where ea.username like #{username;jdbcType=VARCHAR}
+        where ea.username = #{username}
     </select>
 </mapper>
