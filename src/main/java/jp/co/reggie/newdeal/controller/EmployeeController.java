@@ -50,7 +50,9 @@ public class EmployeeController {
 		final String password = DigestUtils.md5DigestAsHex(employee.password().getBytes()).toUpperCase();
 		// 根據頁面提交的用戸名查詢數據庫；
 		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(Employee::username, employee.username());
+		queryWrapper.eq(Employee::
+
+				, employee.username());
 		// 獲取One對象；
 		final Employee aEmployee = this.employeeService.getOne(queryWrapper);
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
