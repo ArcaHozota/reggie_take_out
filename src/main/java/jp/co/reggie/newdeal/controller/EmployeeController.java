@@ -49,10 +49,8 @@ public class EmployeeController {
 		// 將頁面提交的密碼進行MD5加密；
 		final String password = DigestUtils.md5DigestAsHex(employee.password().getBytes()).toUpperCase();
 		// 根據頁面提交的用戸名查詢數據庫；
-		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(Employee::username, employee.username());
 		// 獲取One對象；
-		final Employee aEmployee = this.employeeService.getOne(queryWrapper);
+		final Employee aEmployee = this.employeeService.findOneByUsernameProvided(employee.username());
 		// 如果沒有查詢到或者密碼錯誤則返回登錄失敗；
 		if (aEmployee == null || !password.equals(aEmployee.password())) {
 			return Reggie.error(Constants.LOGIN_FAILED);
