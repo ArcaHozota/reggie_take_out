@@ -1,5 +1,6 @@
 package jp.co.reggie.newdeal.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -14,6 +15,7 @@ import lombok.Data;
 @Data
 public class User implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 2324630650798877027L;
 
 	/**

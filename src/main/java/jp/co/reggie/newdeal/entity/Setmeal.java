@@ -1,5 +1,6 @@
 package jp.co.reggie.newdeal.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,11 +19,13 @@ import lombok.Data;
 @Data
 public class Setmeal implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 4020217756505140488L;
 
 	/**
 	 * ID
 	 */
+	@TableId
 	private Long id;
 
 	/**
