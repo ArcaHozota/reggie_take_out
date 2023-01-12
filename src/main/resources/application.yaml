@@ -25,6 +25,7 @@ mybatis-plus:
          logic-delete-value: 1
          logic-not-delete-value: 0
    mapper-locations: classpath:mapper/*.xml
+   type-aliases-package: jp.co.reggie.newdeal.enity
 # 自定義傳入文件根目錄路徑
 reggie:
    path: D:\VSCode\JavaKaiHatsu\file_In\
