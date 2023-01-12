@@ -1,6 +1,5 @@
 package jp.co.reggie.newdeal.entity;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -8,9 +7,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 分類管理實體類
@@ -20,7 +18,6 @@ import lombok.Setter;
 @Data
 public class Category implements Serializable {
 
-	@Serial
 	private static final long serialVersionUID = -5583580956537498025L;
 
 	/**
