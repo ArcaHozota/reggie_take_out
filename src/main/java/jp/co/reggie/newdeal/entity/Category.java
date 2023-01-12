@@ -1,5 +1,6 @@
 package jp.co.reggie.newdeal.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ import lombok.Setter;
 @Data
 public class Category implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -5583580956537498025L;
 
 	/**
