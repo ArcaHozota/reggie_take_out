@@ -1,5 +1,6 @@
 package jp.co.reggie.newdeal.controller;
 
+import jp.co.reggie.newdeal.utils.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +110,7 @@ public class EmployeeController {
 		// 聲明條件構造器；
 		final LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
 		// 添加過濾條件；
-		queryWrapper.like(!name.isBlank(), Employee::getName, name);
+		queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
 		// 添加排序條件；
 		queryWrapper.orderByDesc(Employee::getUpdateTime);
 		// 執行查詢；
