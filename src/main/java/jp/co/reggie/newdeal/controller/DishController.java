@@ -73,8 +73,8 @@ public class DishController {
 	 * @return R.success(分頁信息)
 	 */
 	@GetMapping("/page")
-	public Reggie<Page<DishDto>> pagination(@Param("pageNum") final Integer pageNum,
-			@Param("pageSize") final Integer pageSize, @Param("name") final String name) {
+	public Reggie<Page<DishDto>> pagination(@RequestParam("pageNum") final Integer pageNum,
+			@RequestParam("pageSize") final Integer pageSize, @RequestParam("name") final String name) {
 		// 聲明分頁構造器對象；
 		final Page<Dish> pageInfo = Page.of(pageNum, pageSize);
 		final Page<DishDto> dtoPage = new Page<>();
@@ -100,16 +100,16 @@ public class DishController {
 				// 獲取分類名稱；
 				final String categoryName = category.getName();
 				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
-				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(),
-						item.getCode(), item.getImage(), item.getDescription(), item.getStatus(), item.getSort(),
-						item.getCreateTime(), item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(),
-						item.getIsDeleted(), null, categoryName, null);
+				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(), item.getCode(),
+						item.getImage(), item.getDescription(), item.getStatus(), item.getSort(), item.getCreateTime(),
+						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
+						categoryName, null);
 			} else {
 				// 聲明菜品及口味數據傳輸類對象並拷貝除分類ID以外的屬性；
-				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(),
-						item.getCode(), item.getImage(), item.getDescription(), item.getStatus(), item.getSort(),
-						item.getCreateTime(), item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(),
-						item.getIsDeleted(), null, null, null);
+				return new DishDto(item.getId(), item.getName(), categoryId, item.getPrice(), item.getCode(),
+						item.getImage(), item.getDescription(), item.getStatus(), item.getSort(), item.getCreateTime(),
+						item.getUpdateTime(), item.getCreateUser(), item.getUpdateUser(), item.getIsDeleted(), null,
+						null, null);
 			}
 		}).collect(Collectors.toList());
 		// 設置分頁數據於構造器中並返回；
@@ -171,14 +171,9 @@ public class DishController {
 	@PostMapping("/status/{status}")
 	public Reggie<String> changeStatus(@PathVariable Integer status, @RequestParam("ids") final Long[] ids) {
 		switch (status) {
-		case 0:
-			status = 1;
-			break;
-		case 1:
-			status = 0;
-			break;
-		default:
-			throw new CustomException((CustomMessage.ERP017));
+			case 0 -> status = 1;
+			case 1 -> status = 0;
+			default -> throw new CustomException((CustomMessage.ERP017));
 		}
 		if (ids.length == 1) {
 			final Dish dish = this.dishService.getById(ids[0]);
