@@ -2,6 +2,7 @@ package jp.co.reggie.newdeal.controller;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,11 +28,10 @@ import jp.co.reggie.newdeal.utils.Reggie;
  *
  * @author Administrator
  */
+@Slf4j
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
 	@Resource
 	private CategoryService categoryService;
@@ -65,7 +65,7 @@ public class CategoryController {
 	 */
 	@PostMapping
 	public Reggie<String> save(@RequestBody final Category category) {
-		LOGGER.info("category:{}", category);
+		log.info("category:{}", category);
 		this.categoryService.save(category);
 		return Reggie.success(CustomMessage.SRP001);
 	}
@@ -78,7 +78,7 @@ public class CategoryController {
 	 */
 	@DeleteMapping
 	public Reggie<String> delete(@RequestParam("ids") final Long id) {
-		LOGGER.info("刪除ID={}的分類", id);
+		log.info("刪除ID={}的分類", id);
 		// 實施刪除；
 		this.categoryService.remove(id);
 		return Reggie.success(CustomMessage.SRP003);
@@ -92,7 +92,7 @@ public class CategoryController {
 	 */
 	@PutMapping
 	public Reggie<String> update(@RequestBody final Category category) {
-		LOGGER.info("修改分類信息：{}", category);
+		log.info("修改分類信息：{}", category);
 		// 執行修改操作；
 		this.categoryService.updateById(category);
 		return Reggie.success(CustomMessage.SRP002);
