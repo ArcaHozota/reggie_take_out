@@ -23,7 +23,7 @@
 		SELECT *
 		FROM category ca
 		<if test="_parameter != null">
-			WHERE ca.type = #{type;jdbcType=INTEGER}
+			WHERE ca.type = #{type,jdbcType=INTEGER}
 		</if>
 		ORDER BY sort ASC,
 		update_time DESC
