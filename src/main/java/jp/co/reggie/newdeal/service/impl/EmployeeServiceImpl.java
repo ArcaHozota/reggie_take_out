@@ -20,6 +20,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 	@Resource
 	private EmployeeMapper employeeMapper;
 
+	/**
+	 * 根據所提供的用戸名進行查詢
+	 *
+	 * @param userName 用戸名
+	 * @return Employee
+	 */
 	@Override
 	public Employee findOneByUsernameProvided(final String username) {
 		return this.employeeMapper.selectByUsername(username);

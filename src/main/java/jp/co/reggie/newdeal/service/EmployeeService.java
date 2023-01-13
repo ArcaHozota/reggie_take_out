@@ -9,10 +9,11 @@ import jp.co.reggie.newdeal.entity.Employee;
  */
 public interface EmployeeService extends IService<Employee> {
 
-    /**
-     * get one by username
-     *
-     * @param username 用戸名
-     */
-    Employee findOneByUsernameProvided(final String username);
+	/**
+	 * 根據所提供的用戸名進行查詢
+	 *
+	 * @param username 用戸名
+	 * @return Employee
+	 */
+	Employee findOneByUsernameProvided(final String username);
 }
