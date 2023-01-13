@@ -1,5 +1,7 @@
 package jp.co.reggie.newdeal.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -23,6 +25,12 @@ import jp.co.reggie.newdeal.service.SetmealService;
  */
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
+
+	/**
+	 * 分類mapper
+	 */
+	@Resource
+	private CategoryMapper categoryMapper;
 
 	/**
 	 * 菜品服務類；
@@ -61,5 +69,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		}
 		// 正常刪除分類；
 		super.removeById(id);
+	}
+
+	/**
+	 * 根據類型查詢數據
+	 *
+	 * @param categoryType 類型
+	 * @return List<Category>
+	 */
+	@Override
+	public List<Category> findByType(final Integer categoryType) {
+		return this.categoryMapper.selectByType(categoryType);
 	}
 }
