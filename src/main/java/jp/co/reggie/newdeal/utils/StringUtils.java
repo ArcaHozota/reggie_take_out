@@ -17,7 +17,7 @@ public class StringUtils extends org.springframework.util.StringUtils {
 	 * @return boolean
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return (str == null || str.length() == 0 || str.trim().equals(""));
+		return (str == null || str.length() == 0 || "".equals(str.trim()));
 	}
 
 	/**
