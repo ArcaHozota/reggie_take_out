@@ -27,6 +27,6 @@
 		resultMap="ResultMap">
 		SELECT *
 		FROM employee ea
-		WHERE ea.username = #{username;jdbcType=VARCHAR}
+		WHERE ea.username = #{username,jdbcType=VARCHAR}
 	</select>
 </mapper>
